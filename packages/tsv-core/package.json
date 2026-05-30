@@ -1,0 +1,52 @@
+{
+  "name": "@gmcode/tsv-core",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "MIT",
+  "author": "Girometta Marco",
+  "description": "Typescript schema validations with i18n support. Core package for tsv-advanced and tsv-input.",
+  "homepage": "https://github.com/GiromettaMarco/forms#readme",
+  "bugs": {
+    "url": "https://github.com/GiromettaMarco/forms/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GiromettaMarco/forms.git"
+  },
+  "keywords": [
+    "core",
+    "i18n",
+    "schema",
+    "typescript",
+    "validation"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "packageManager": "pnpm@11.5.0",
+  "scripts": {
+    "build": "vite build",
+    "preinstall": "npx only-allow pnpm",
+    "test": "vitest --typecheck --coverage",
+    "types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.58.1",
+    "@vitest/coverage-v8": "^4.1.7",
+    "unplugin-dts": "^1.0.1",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.14",
+    "vitest": "^4.1.7"
+  }
+}

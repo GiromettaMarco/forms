@@ -1,0 +1,21 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/.pnpm-store
+node_modules
+
+# eslint
+.eslintcache
+
+# IDE
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+
+# compiled
+dist
+
+# artifacts
+coverage

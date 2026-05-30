@@ -1,0 +1,79 @@
+{
+  // Avoid polluting search results
+  "search.exclude": {
+    "**/coverage/**": true,
+    "**/dist/**": true,
+    "composer.lock": true,
+    "pnpm-lock.yaml": true,
+    "node_modules/": true
+  },
+
+  // Ensure VSCode uses pnpm instead of npm
+  "npm.packageManager": "pnpm",
+
+  // Nest *.d.cts under *.cjs
+  "explorer.fileNesting.patterns": {
+    "*.cjs": "$(capture).cjs.map, $(capture).*.cjs, $(capture)_*.cjs, $(capture).*.cts"
+  },
+
+  // Don't suggest compiled files for autocompletion
+  "typescript.preferences.autoImportFileExcludePatterns": ["./**/dist"],
+  "javascript.preferences.autoImportFileExcludePatterns": ["./**/dist"],
+
+  // TODO Tree settings
+  "todo-tree.tree.showBadges": true,
+  "todo-tree.highlights.defaultHighlight": {
+    "icon": "alert",
+    "type": "tag",
+    "opacity": 0,
+    "iconColour": "#0000FF",
+    "gutterIcon": true
+  },
+  "todo-tree.highlights.customHighlight": {
+    "TODO": {
+      "icon": "check",
+      "background": "#FFFF00",
+      "iconColour": "#FFFF00"
+    },
+    "NOTE": {
+      "icon": "note",
+      "background": "#6495ED",
+      "iconColour": "#6495ED"
+    },
+    "LEARN": {
+      "icon": "note",
+      "background": "#FF69B4",
+      "iconColour": "#FF69B4"
+    },
+    "FIXME": {
+      "background": "#DEB887",
+      "iconColour": "#DEB887"
+    },
+    "BUG": {
+      "background": "#DC143C",
+      "iconColour": "#DC143C"
+    },
+    "[ ]": {
+      "icon": "check",
+      "background": "#FFFFFF",
+      "iconColour": "#FFFF00"
+    },
+    "[x]": {
+      "icon": "check",
+      "background": "#008000",
+      "iconColour": "#008000"
+    }
+  },
+  "todo-tree.general.tags": [
+    "TODO",
+    "NOTE",
+    "LEARN",
+    "FIXME",
+    "BUG",
+    "[ ]",
+    "[x]"
+  ],
+  "todo-tree.regex.regex": "(\\*|//|#|<!--|\\{\\{--|;|/\\*|^|^\\s*(-|\\d+.))\\s*@($TAGS).*(\\n\\s*//\\s{2,}.*)*",
+  "todo-tree.regex.regexCaseSensitive": false,
+  "todo-tree.tree.scanMode": "workspace only"
+}

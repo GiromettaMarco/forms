@@ -1,0 +1,51 @@
+{
+  "name": "@gmcode/forms",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "author": "Girometta Marco",
+  "description": "Typescript validations with fully typed rules, form input rules, i18n support and schema validation.",
+  "homepage": "https://github.com/GiromettaMarco/forms#readme",
+  "bugs": {
+    "url": "https://github.com/GiromettaMarco/forms/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GiromettaMarco/forms.git"
+  },
+  "packageManager": "pnpm@11.5.0",
+  "scripts": {
+    "build": "pnpm --filter=tsv-core build && pnpm --filter=tsv-input build && pnpm --filter=tsv-advanced build",
+    "check": "pnpm types && pnpm lint && pnpm prettier",
+    "lint": "eslint . --cache",
+    "lint:fix": "eslint . --cache --fix",
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "node .husky/install.mjs || true",
+    "prettier": "prettier . --check",
+    "prettier:fix": "prettier . --write",
+    "prettier:watch": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}",
+    "test": "pnpm --filter=tsv-core test",
+    "types": "pnpm --filter=tsv-core types && pnpm --filter=tsv-input types && pnpm --filter=tsv-advanced types"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.4",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5",
+    "prettier": "^3.8.3",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.60.0"
+  },
+  "dependencies": {
+    "@gmcode/tsv-core": "link:packages/tsv-core"
+  },
+  "lint-staged": {
+    "**/*": [
+      "prettier --write --ignore-unknown",
+      "eslint --cache --fix"
+    ]
+  }
+}

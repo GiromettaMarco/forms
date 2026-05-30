@@ -1,0 +1,11 @@
+{
+  "extends": "../../config/typescript/vanilla.json",
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}

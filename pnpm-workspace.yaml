@@ -1,0 +1,6 @@
+packages:
+  - apps/*
+  - packages/*
+
+overrides:
+  '@gmcode/tsv-core': link:packages/tsv-core
