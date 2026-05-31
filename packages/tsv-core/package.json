@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/tsv-core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "license": "MIT",
   "author": "Girometta Marco",
@@ -29,7 +29,6 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
