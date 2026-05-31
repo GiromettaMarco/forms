@@ -1,19 +1,5 @@
 {
-  "name": "@gmcode/forms",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "license": "MIT",
-  "author": "Girometta Marco",
-  "description": "Typescript validations with fully typed rules, form input rules, i18n support and schema validation.",
-  "homepage": "https://github.com/GiromettaMarco/forms#readme",
-  "bugs": {
-    "url": "https://github.com/GiromettaMarco/forms/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GiromettaMarco/forms.git"
-  },
   "packageManager": "pnpm@11.5.0",
   "scripts": {
     "build": "pnpm --filter=tsv-core build && pnpm --filter=tsv-input build && pnpm --filter=tsv-advanced build",
