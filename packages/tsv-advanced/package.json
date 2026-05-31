@@ -29,7 +29,6 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
@@ -41,7 +40,7 @@
     "types": "tsc --noEmit"
   },
   "dependencies": {
-    "@gmcode/tsv-core": "^0.0.1"
+    "@gmcode/tsv-core": "^0.0.3"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.58.1",

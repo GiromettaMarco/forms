@@ -1,6 +1,7 @@
 packages:
   - apps/*
   - packages/*
-
-overrides:
-  '@gmcode/tsv-core': link:packages/tsv-core
+allowBuilds:
+  '@gmcode/tsv-core': true
+minimumReleaseAgeExclude:
+  - '@gmcode/tsv-core@0.0.3'

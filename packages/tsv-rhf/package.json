@@ -29,7 +29,6 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
@@ -41,6 +40,7 @@
     "types": "tsc --noEmit"
   },
   "peerDependencies": {
+    "@gmcode/tsv-core": "^0.0.3",
     "react-hook-form": "^7.71.2"
   },
   "devDependencies": {
