@@ -16,10 +16,6 @@
     "*.cjs": "$(capture).cjs.map, $(capture).*.cjs, $(capture)_*.cjs, $(capture).*.cts"
   },
 
-  // Don't suggest compiled files for autocompletion
-  "typescript.preferences.autoImportFileExcludePatterns": ["./**/dist"],
-  "javascript.preferences.autoImportFileExcludePatterns": ["./**/dist"],
-
   // TODO Tree settings
   "todo-tree.tree.showBadges": true,
   "todo-tree.highlights.defaultHighlight": {
