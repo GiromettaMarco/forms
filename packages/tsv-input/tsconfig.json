@@ -1,6 +1,6 @@
 {
   "extends": "../../config/typescript/vanilla.json",
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/**/*"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "baseUrl": ".",

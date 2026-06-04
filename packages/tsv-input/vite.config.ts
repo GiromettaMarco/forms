@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { copyFileSync } from 'node:fs'
 import { resolve } from 'path'
 import dts from 'unplugin-dts/vite'
@@ -24,9 +25,17 @@ export default defineConfig({
     dts({
       bundleTypes: true,
       copyDtsFiles: true,
+      exclude: ['dist', 'node_modules', 'tests'],
       afterBuild: () => {
         copyFileSync('dist/index.d.ts', 'dist/index.d.cts')
       }
     })
-  ]
+  ],
+  test: {
+    coverage: {
+      provider: 'v8',
+      enabled: true,
+      include: ['src/**']
+    }
+  }
 })
