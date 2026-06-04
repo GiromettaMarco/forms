@@ -3,5 +3,3 @@ packages:
   - packages/*
 allowBuilds:
   '@gmcode/tsv-core': true
-minimumReleaseAgeExclude:
-  - '@gmcode/tsv-core@0.0.3'

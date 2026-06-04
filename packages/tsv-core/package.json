@@ -37,7 +37,7 @@
   "scripts": {
     "build": "vite build",
     "preinstall": "npx only-allow pnpm",
-    "test": "vitest --typecheck --coverage",
+    "test": "vitest --coverage",
     "types": "tsc --noEmit"
   },
   "devDependencies": {
