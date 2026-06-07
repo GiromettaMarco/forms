@@ -1,4 +1,4 @@
-import { Message } from '@/message.ts'
+import type { Message } from '@/message'
 
 /**
  * Validation rule base class.

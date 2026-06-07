@@ -1,4 +1,4 @@
-import type { MessageParams } from '@/types.ts'
+import type { MessageParams } from '@/types'
 
 export class Message {
   /**

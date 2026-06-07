@@ -2,7 +2,7 @@ import type {
   AdvancedRuleOptions,
   AdvancedSanitized,
   ParseEmpty
-} from '@/types.ts'
+} from '@/types'
 import { BasicRule } from '@gmcode/tsv-core'
 
 /**

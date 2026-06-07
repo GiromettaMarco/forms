@@ -1,4 +1,4 @@
-import { InputColorRule } from '@/rules/input-color.ts'
+import { InputColorRule } from '@/rules/input-color'
 import { Schema } from '@gmcode/tsv-core'
 import { expect, test } from 'vitest'
 

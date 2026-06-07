@@ -3,3 +3,4 @@ packages:
   - packages/*
 allowBuilds:
   '@gmcode/tsv-core': true
+  esbuild: true

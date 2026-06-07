@@ -4,9 +4,6 @@
 /.pnpm-store
 node_modules
 
-# eslint
-.eslintcache
-
 # IDE
 /.fleet
 /.idea
@@ -18,4 +15,7 @@ node_modules
 dist
 
 # artifacts
+*.tsbuildinfo
+.eslintcache
+.turbo
 coverage

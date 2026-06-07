@@ -1,16 +1,16 @@
 import fs from 'node:fs'
 
-function getBadgeColors($pct) {
-  if ($pct < 60) {
+function getBadgeColors(pct: number) {
+  if (pct < 60) {
     return ['#D73A49', '#CB2431']
-  } else if ($pct < 90) {
+  } else if (pct < 90) {
     return ['#FFD53D', '#B99614']
   } else {
     return ['#34D058', '#28A745']
   }
 }
 
-function getBadgeSVG(pct) {
+function getBadgeSVG(pct: number) {
   const colors = getBadgeColors(pct)
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="114" height="20">
@@ -45,38 +45,19 @@ function getBadgeSVG(pct) {
 `
 }
 
-function makeBadge(packageName) {
-  try {
-    const data = fs.readFileSync(
-      `./packages/${packageName}/coverage/coverage-summary.json`,
-      'utf8'
-    )
-    const pct = JSON.parse(data).total.lines.pct
+try {
+  const data = fs.readFileSync('./coverage/coverage-summary.json', 'utf8')
+  const pct = JSON.parse(data).total.lines.pct
 
-    try {
-      fs.writeFileSync(
-        `./packages/${packageName}/docs/coverage.svg`,
-        getBadgeSVG(pct)
-      )
-      return true
-    } catch (err) {
-      console.error(err)
-    }
+  if (!fs.existsSync('./docs')) {
+    fs.mkdirSync('./docs')
+  }
+
+  try {
+    fs.writeFileSync('./docs/coverage.svg', getBadgeSVG(pct))
   } catch (err) {
     console.error(err)
   }
-
-  return false
+} catch (err) {
+  console.error(err)
 }
-
-function makeBadges(packages) {
-  packages.forEach((packageName) => {
-    if (makeBadge(packageName) === true) {
-      console.log(`✅ ${packageName}`)
-    } else {
-      console.log(`❌ ${packageName}`)
-    }
-  })
-}
-
-makeBadges(['tsv-core', 'tsv-input'])

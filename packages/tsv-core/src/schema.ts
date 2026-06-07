@@ -1,4 +1,4 @@
-import type { Message } from '@/message.ts'
+import type { Message } from '@/message'
 import type {
   ResultError,
   ResultSuccess,
@@ -8,7 +8,7 @@ import type {
   SchemaRule,
   SchemaValues,
   ValidationResult
-} from '@/types.ts'
+} from '@/types'
 
 /**
  * Validation schema

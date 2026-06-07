@@ -1,5 +1,5 @@
-import { AdvancedRule } from '@/advanced-rule.ts'
-import type { AdvancedRuleOptions, ParseEmpty } from '@/types.ts'
+import { AdvancedRule } from '@/advanced-rule'
+import type { AdvancedRuleOptions, ParseEmpty } from '@/types'
 import { emailRegex, Message } from '@gmcode/tsv-core'
 
 interface Messages {

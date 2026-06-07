@@ -1,5 +1,5 @@
-import type { BasicRule } from '@/basic-rule.ts'
-import type { Message } from '@/message.ts'
+import type { BasicRule } from '@/basic-rule'
+import type { Message } from '@/message'
 
 export type Ruleset = Record<string, BasicRule>
 

@@ -36,14 +36,20 @@
   "packageManager": "pnpm@11.5.0",
   "scripts": {
     "build": "vite build",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "preinstall": "npx only-allow pnpm",
-    "test": "vitest --coverage",
-    "types": "tsc --noEmit"
+    "test": "vitest run --coverage",
+    "test:badge": "node node_modules/@repo/vite-config/dist/scripts/badge.js"
   },
   "dependencies": {
     "@gmcode/tsv-core": "^0.0.3"
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@repo/vite-config": "workspace:*",
     "@microsoft/api-extractor": "^7.58.1",
     "typescript": "^5.9.3",
     "unplugin-dts": "^1.0.1",

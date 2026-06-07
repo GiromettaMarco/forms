@@ -2,7 +2,7 @@ import {
   InputRule,
   inputRuleMessages,
   type InputRuleOptions
-} from '@/input-rule.ts'
+} from '@/input-rule'
 import { hexColorRegex, Message } from '@gmcode/tsv-core'
 
 const defaultMessages = {

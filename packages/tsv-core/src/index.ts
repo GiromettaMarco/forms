@@ -1,7 +1,7 @@
-export { BasicRule } from '@/basic-rule.ts'
-export { Message } from '@/message.ts'
-export { emailRegex, floatRegex, hexColorRegex, integerRegex } from '@/regex.ts'
-export { Schema } from '@/schema.ts'
+export { BasicRule } from '@/basic-rule'
+export { Message } from '@/message'
+export { emailRegex, floatRegex, hexColorRegex, integerRegex } from '@/regex'
+export { Schema } from '@/schema'
 export type {
   MessageParams,
   ResultError,
@@ -13,4 +13,4 @@ export type {
   SchemaRule,
   SchemaValues,
   ValidationResult
-} from '@/types.ts'
+} from '@/types'

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["@repo/eslint-config#build", "^lint"]
+    },
+    "lint:fix": {
+      "dependsOn": ["@repo/eslint-config#build", "^lint:fix"]
+    },
+    "test": {
+      "dependsOn": ["@repo/vite-config#build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/vitest.config.ts"],
+      "outputs": ["coverage/**", "docs/coverage.svg"]
+    },
+    "test:badge": {
+      "dependsOn": ["test", "^test:badge"],
+      "outputs": ["docs/coverage.svg"]
+    }
+  }
+}

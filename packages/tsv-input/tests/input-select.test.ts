@@ -1,4 +1,4 @@
-import { InputSelectRule } from '@/rules/input-select.ts'
+import { InputSelectRule } from '@/rules/input-select'
 import { Schema } from '@gmcode/tsv-core'
 import { expect, test } from 'vitest'
 

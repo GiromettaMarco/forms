@@ -1,6 +1,4 @@
-import { BasicRule } from '@/basic-rule.ts'
-import { Message } from '@/message.ts'
-import { Schema } from '@/schema.ts'
+import { BasicRule, Message, Schema } from '@/index'
 import { expect, test } from 'vitest'
 
 class FooRule extends BasicRule {

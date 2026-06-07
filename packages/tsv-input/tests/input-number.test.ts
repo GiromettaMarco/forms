@@ -1,4 +1,4 @@
-import { InputNumberRule } from '@/rules/input-number.ts'
+import { InputNumberRule } from '@/rules/input-number'
 import { Schema } from '@gmcode/tsv-core'
 import { expect, test } from 'vitest'
 

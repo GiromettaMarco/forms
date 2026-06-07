@@ -1,22 +1,26 @@
 {
   "private": true,
   "type": "module",
+  "name": "forms",
   "packageManager": "pnpm@11.5.0",
   "scripts": {
-    "badges": "node bin/badges.js",
-    "build": "pnpm --filter=tsv-core build && pnpm --filter=tsv-input build && pnpm --filter=tsv-advanced build",
-    "check": "pnpm types && pnpm lint && pnpm prettier",
-    "lint": "eslint . --cache",
-    "lint:fix": "eslint . --cache --fix",
+    "build": "turbo run build",
+    "check": "pnpm check-types && pnpm lint && pnpm prettier",
+    "check-types": "turbo run check-types",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
     "preinstall": "npx only-allow pnpm",
     "prepare": "node .husky/install.mjs || true",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
-    "prettier:watch": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}",
-    "test": "pnpm --filter=tsv-core test && pnpm --filter=tsv-input test",
-    "types": "pnpm --filter=tsv-core types && pnpm --filter=tsv-input types && pnpm --filter=tsv-advanced types"
+    "test": "turbo run test",
+    "test:badge": "turbo run test:badge",
+    "test:projects": "vitest run",
+    "test:watch": "vitest --watch"
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/vite-config": "workspace:*",
     "@types/node": "^24.12.4",
     "eslint": "^10.4.0",
     "eslint-config-prettier": "^10.1.8",
@@ -24,8 +28,10 @@
     "lint-staged": "^17.0.5",
     "prettier": "^3.8.3",
     "prettier-plugin-organize-imports": "^4.3.0",
+    "turbo": "^2.9.16",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.60.0"
+    "typescript-eslint": "^8.60.0",
+    "vitest": "^4.1.7"
   },
   "lint-staged": {
     "**/*": [

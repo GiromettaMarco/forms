@@ -1,0 +1,24 @@
+{
+  "name": "@repo/vite-config",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./vite": "./dist/configs/vite.js",
+    "./vitest": "./dist/configs/vitest.js"
+  },
+  "scripts": {
+    "build": "pnpm exec rimraf dist && tsc",
+    "dev": "tsc --watch"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@vitest/coverage-v8": "^4.1.7",
+    "rimraf": "^6.1.3",
+    "typescript": "^5.9.3",
+    "unplugin-dts": "^1.0.1",
+    "vite": "^8.0.14",
+    "vitest": "^4.1.7"
+  }
+}

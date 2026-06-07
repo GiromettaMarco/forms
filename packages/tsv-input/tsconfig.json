@@ -1,8 +1,12 @@
 {
-  "extends": "../../config/typescript/vanilla.json",
-  "include": ["src/**/*", "tests/**/*"],
+  "extends": "@repo/typescript-config/bundler.json",
+
+  // Files
+  "include": ["src", "tests"],
   "exclude": ["dist", "node_modules"],
+
   "compilerOptions": {
+    // Paths
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]

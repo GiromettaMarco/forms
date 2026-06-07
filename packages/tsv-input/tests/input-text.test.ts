@@ -1,4 +1,4 @@
-import { InputTextRule } from '@/rules/input-text.ts'
+import { InputTextRule } from '@/rules/input-text'
 import { Schema } from '@gmcode/tsv-core'
 import { expect, test } from 'vitest'
 

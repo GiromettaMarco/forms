@@ -1,13 +1,16 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "React",
   "extends": "./base.json",
+
   "compilerOptions": {
-    "jsx": "react-jsx",
+    // Environment
     "lib": ["dom", "ES2020"],
     "target": "es6",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "importHelpers": true
+    "module": "esnext",
+    "moduleResolution": "bundler",
+
+    // Emit
+    "importHelpers": true,
+    "noEmit": true
   }
 }

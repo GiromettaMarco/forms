@@ -1,2 +1,1 @@
-export { useTsvResolver } from '@/hookform.ts'
-export type { InferSchema } from '@/hookform.ts'
+export { useTsvResolver, type InferSchema } from '@/hookform'

@@ -1,4 +1,4 @@
-import { BoolRule } from '@/rules/bool.ts'
+import { BoolRule } from '@/rules/bool'
 
 /**
  * Parse value as a boolean.

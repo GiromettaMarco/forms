@@ -1,4 +1,4 @@
-import { InputEmailRule } from '@/rules/input-email.ts'
+import { InputEmailRule } from '@/rules/input-email'
 import { Schema } from '@gmcode/tsv-core'
 import { expect, test } from 'vitest'
 
