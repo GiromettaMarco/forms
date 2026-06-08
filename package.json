@@ -14,9 +14,7 @@
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
     "test": "turbo run test",
-    "test:badge": "turbo run test:badge",
-    "test:projects": "vitest run",
-    "test:watch": "vitest --watch"
+    "test:badge": "turbo run test:badge"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -30,8 +28,7 @@
     "prettier-plugin-organize-imports": "^4.3.0",
     "turbo": "^2.9.16",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.60.0",
-    "vitest": "^4.1.7"
+    "typescript-eslint": "^8.60.0"
   },
   "lint-staged": {
     "**/*": [
