@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "gruntfuggly.todo-tree",
-    "antfu.file-nesting"
+    "antfu.file-nesting",
+    "vitest.explorer"
   ]
 }
