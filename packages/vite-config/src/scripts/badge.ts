@@ -47,7 +47,7 @@ function getBadgeSVG(pct: number) {
 
 try {
   const data = fs.readFileSync('./coverage/coverage-summary.json', 'utf8')
-  const pct = JSON.parse(data).total.lines.pct
+  const pct = Math.round(JSON.parse(data).total.lines.pct)
 
   if (!fs.existsSync('./docs')) {
     fs.mkdirSync('./docs')
