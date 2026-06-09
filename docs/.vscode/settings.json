@@ -16,16 +16,22 @@
     "*.cjs": "$(capture).cjs.map, $(capture).*.cjs, $(capture)_*.cjs, $(capture).*.cts"
   },
 
-  // TODO Tree settings
-  "todo-tree.tree.showBadges": true,
-  "todo-tree.highlights.defaultHighlight": {
-    "icon": "alert",
-    "type": "tag",
-    "opacity": 0,
-    "iconColour": "#0000FF",
-    "gutterIcon": true
+  // Allow comments in json
+  "files.associations": {
+    "*.json": "jsonc"
   },
-  "todo-tree.highlights.customHighlight": {
+
+  // Better Todo Tree
+  "better-todo-tree.general.tags": [
+    "TODO",
+    "NOTE",
+    "LEARN",
+    "FIXME",
+    "BUG",
+    "[ ]",
+    "[x]"
+  ],
+  "better-todo-tree.highlights.customHighlight": {
     "TODO": {
       "icon": "check",
       "background": "#FFFF00",
@@ -60,21 +66,16 @@
       "iconColour": "#008000"
     }
   },
-  "todo-tree.general.tags": [
-    "TODO",
-    "NOTE",
-    "LEARN",
-    "FIXME",
-    "BUG",
-    "[ ]",
-    "[x]"
-  ],
-  "todo-tree.regex.regex": "(\\*|//|#|<!--|\\{\\{--|;|/\\*|^|^\\s*(-|\\d+.))\\s*@($TAGS).*(\\n\\s*//\\s{2,}.*)*",
-  "todo-tree.regex.regexCaseSensitive": false,
-  "todo-tree.tree.scanMode": "workspace only",
-
-  // Allow comments in json
-  "files.associations": {
-    "*.json": "jsonc"
-  }
+  "better-todo-tree.highlights.defaultHighlight": {
+    "icon": "alert",
+    "type": "tag",
+    "opacity": 0,
+    "iconColour": "#0000FF",
+    "gutterIcon": true
+  },
+  "better-todo-tree.tree.scanMode": "workspace only",
+  "better-todo-tree.tree.showBadges": true,
+  "better-todo-tree.regex.regex": "(\\*|//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*@($TAGS).*(\\n\\s*//\\s{2,}.*)*",
+  "better-todo-tree.regex.regexCaseSensitive": false,
+  "better-todo-tree.general.tagGroups": {}
 }

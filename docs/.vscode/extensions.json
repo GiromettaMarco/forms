@@ -2,8 +2,8 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "gruntfuggly.todo-tree",
     "antfu.file-nesting",
-    "vitest.explorer"
+    "vitest.explorer",
+    "fanaticpythoner.better-todo-tree"
   ]
 }
