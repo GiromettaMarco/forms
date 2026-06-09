@@ -1,6 +1,6 @@
 {
-  "name": "@gmcode/tsv-rhf",
-  "version": "0.0.1",
+  "name": "@gmcode/tsv-hookform",
+  "version": "0.0.3",
   "type": "module",
   "license": "MIT",
   "author": "Girometta Marco",
