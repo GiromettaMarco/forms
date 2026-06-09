@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/typescript-config/bundler.json",
+  "extends": "@repo/typescript-config/react.json",
 
   // Files
   "include": ["src", "tests"],
@@ -10,6 +10,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+
+    // Types
+    "types": ["vitest/jsdom"]
   }
 }

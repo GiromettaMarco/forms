@@ -1,32 +1,17 @@
-import { copyFileSync } from 'node:fs'
+import { sharedConfig } from '@repo/vite-config'
+import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
-import dts from 'unplugin-dts/vite'
-import { defineConfig } from 'vite'
+import { mergeConfig } from 'vite'
 
-export default defineConfig({
+export default mergeConfig(sharedConfig, {
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')
     }
   },
-  build: {
-    minify: true,
-    reportCompressedSize: true,
-    sourcemap: true,
-    lib: {
-      entry: resolve('src/index.ts'),
-      fileName: 'index',
-      formats: ['es', 'cjs']
-    },
-    outDir: 'dist'
-  },
-  plugins: [
-    dts({
-      bundleTypes: true,
-      copyDtsFiles: true,
-      afterBuild: () => {
-        copyFileSync('dist/index.d.ts', 'dist/index.d.cts')
-      }
-    })
-  ]
+  plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    setupFiles: './tests/setup.ts'
+  }
 })
