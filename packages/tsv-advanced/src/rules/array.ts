@@ -20,7 +20,7 @@ type RuleOptions<
 export class ArrayRule<
   O extends boolean | undefined = undefined,
   PE extends ParseEmpty | undefined = 'undefined'
-> extends AdvancedRule<Array<string>, Messages, O, PE> {
+> extends AdvancedRule<Array<unknown>, Messages, O, PE> {
   /**
    * Error messages.
    */
