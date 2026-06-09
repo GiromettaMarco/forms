@@ -10,7 +10,6 @@
     "moduleResolution": "bundler",
 
     // Emit
-    "importHelpers": true,
     "noEmit": true
   }
 }
