@@ -1,5 +1,4 @@
-import { ArrayRule } from '@/index'
-import { Schema } from '@gmcode/tsv-core'
+import { ArrayRule, Schema } from '@/index'
 import { expect, test } from 'vitest'
 
 test('array rule', () => {

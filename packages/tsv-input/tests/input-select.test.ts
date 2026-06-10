@@ -1,5 +1,4 @@
-import { InputSelectRule } from '@/rules/input-select'
-import { Schema } from '@gmcode/tsv-core'
+import { InputSelectRule, Schema } from '@/index'
 import { expect, test } from 'vitest'
 
 test('input select rule', () => {

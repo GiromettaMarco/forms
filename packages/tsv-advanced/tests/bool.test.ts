@@ -1,5 +1,4 @@
-import { BoolRule } from '@/index'
-import { Schema } from '@gmcode/tsv-core'
+import { BoolRule, Schema } from '@/index'
 import { expect, test } from 'vitest'
 
 test('bool rule', () => {

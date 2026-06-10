@@ -1,5 +1,4 @@
-import { InputEmailRule } from '@/rules/input-email'
-import { Schema } from '@gmcode/tsv-core'
+import { InputEmailRule, Schema } from '@/index'
 import { expect, test } from 'vitest'
 
 test('input email rule', () => {
