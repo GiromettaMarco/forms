@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/tsv-input",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "license": "MIT",
   "author": "Girometta Marco",
@@ -44,7 +44,7 @@
     "test:badge": "node node_modules/@repo/vite-config/dist/scripts/badge.js"
   },
   "dependencies": {
-    "@gmcode/tsv-core": "^0.0.6"
+    "@gmcode/tsv-core": "^0.0.7"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
