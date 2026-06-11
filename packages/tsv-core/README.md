@@ -5,7 +5,8 @@
 
 Typescript schema validations with i18n interpolation support.
 
-Core package for [`@gmcode/tsv-advanced`](../tsv-advanced) and [`@gmcode/tsv-input`](../tsv-input).
+> [!NOTE]
+> This package is meant to be a common base for further implementations such as [`@gmcode/tsv-advanced`](https://github.com/GiromettaMarco/forms/tree/master/packages/tsv-advanced) and [`@gmcode/tsv-input`](https://github.com/GiromettaMarco/forms/tree/master/packages/tsv-input).
 
 ## Installation
 
