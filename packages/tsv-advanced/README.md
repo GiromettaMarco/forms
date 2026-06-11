@@ -1,6 +1,5 @@
 # @gmcode/tsv-advanced
 
-[![coverage](https://github.com/GiromettaMarco/forms/tree/master/packages/tsv-advanced/docs/coverage.svg)](https://github.com/GiromettaMarco/forms/actions.yml)
 [![npm](https://img.shields.io/npm/v/@gmcode/tsv-advanced)](https://npm.im/@gmcode/tsv-advanced)
 
 Typescript schema validations with type conversion and i18n interpolation support.

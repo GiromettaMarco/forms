@@ -1,6 +1,5 @@
 # @gmcode/tsv-input
 
-[![coverage](https://github.com/GiromettaMarco/forms/tree/master/packages/tsv-input/docs/coverage.svg)](https://github.com/GiromettaMarco/forms/actions.yml)
 [![npm](https://img.shields.io/npm/v/@gmcode/tsv-input)](https://npm.im/@gmcode/tsv-input)
 
 Typescript schema validations for form inputs with i18n interpolation support.
