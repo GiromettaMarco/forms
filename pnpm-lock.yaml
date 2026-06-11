@@ -81,8 +81,8 @@ importers:
   packages/tsv-advanced:
     dependencies:
       '@gmcode/tsv-core':
-        specifier: ^0.0.3
-        version: 0.0.3
+        specifier: ^0.0.6
+        version: 0.0.6
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.58.1
@@ -142,8 +142,8 @@ importers:
   packages/tsv-hookform:
     dependencies:
       '@gmcode/tsv-core':
-        specifier: ^0.0.3
-        version: 0.0.3
+        specifier: ^0.0.6
+        version: 0.0.6
       '@hookform/resolvers':
         specifier: ^5.4.0
         version: 5.4.0(react-hook-form@7.76.1(react@19.2.7))
@@ -203,8 +203,8 @@ importers:
   packages/tsv-input:
     dependencies:
       '@gmcode/tsv-core':
-        specifier: ^0.0.3
-        version: 0.0.3
+        specifier: ^0.0.6
+        version: 0.0.6
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.58.1
@@ -602,8 +602,8 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@gmcode/tsv-core@0.0.3':
-    resolution: {integrity: sha512-5jYp9KtgvKaJH7SiZsT0ID0rIi/4FkVhDD51yFgJvGcJZrNuP9v5we0nNpkrBDwuj0Un/1MDNGqYygsWRISqAg==}
+  '@gmcode/tsv-core@0.0.6':
+    resolution: {integrity: sha512-Kct9lJCy7TYQE5zBoU/SKbQAip5gJ+FEFu8HvxeZDrKaEVqE2C4qwb7ioBGWrWNrSLik53H/I9WzXXOFJHM2mQ==}
 
   '@hookform/resolvers@5.4.0':
     resolution: {integrity: sha512-EIsqr/t/qbinPIhGjMdtvutIN1Kk4uwbROE9/UQ93CAVGR7GkA7Y92+fX80OzXi/OB67jVFYwKGO1WzkxmkFZw==}
@@ -3293,7 +3293,7 @@ snapshots:
 
   '@exodus/bytes@1.15.1': {}
 
-  '@gmcode/tsv-core@0.0.3': {}
+  '@gmcode/tsv-core@0.0.6': {}
 
   '@hookform/resolvers@5.4.0(react-hook-form@7.76.1(react@19.2.7))':
     dependencies:

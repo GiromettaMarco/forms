@@ -1,10 +1,10 @@
 {
   "name": "@gmcode/tsv-hookform",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "type": "module",
   "license": "MIT",
   "author": "Girometta Marco",
-  "description": "Custom React Hook Form resolver for Typescript Validation Schema.",
+  "description": "Custom react-hook-form resolver for @gmcode/tsv-input.",
   "homepage": "https://github.com/GiromettaMarco/forms#readme",
   "bugs": {
     "url": "https://github.com/GiromettaMarco/forms/issues"
@@ -44,7 +44,7 @@
     "test:badge": "node node_modules/@repo/vite-config/dist/scripts/badge.js"
   },
   "peerDependencies": {
-    "@gmcode/tsv-core": "^0.0.3",
+    "@gmcode/tsv-core": "^0.0.6",
     "react-hook-form": "^7.71.0"
   },
   "devDependencies": {

@@ -4,3 +4,5 @@ packages:
 allowBuilds:
   '@gmcode/tsv-core': true
   esbuild: true
+minimumReleaseAgeExclude:
+  - '@gmcode/tsv-core@0.0.6'
