@@ -13,14 +13,14 @@ interface Messages {
  * May be optional.
  */
 export class OneOfRule<
-  const T,
+  const TItems,
   O extends boolean | undefined = undefined,
   PE extends ParseEmpty | undefined = 'string'
-> extends AdvancedRule<T, Messages, O, PE> {
+> extends AdvancedRule<TItems, Messages, O, PE> {
   /**
    * Accepted values.
    */
-  acceptedValues: T[]
+  acceptedValues: TItems[]
 
   /**
    * Error messages.
@@ -28,7 +28,7 @@ export class OneOfRule<
   messages: Messages
 
   constructor(
-    acceptedValues: T[],
+    acceptedValues: TItems[],
     options?: AdvancedRuleOptions<Messages, O, PE>
   ) {
     super(options)
@@ -55,7 +55,7 @@ export class OneOfRule<
     }
 
     // Missing in array
-    if (!this.acceptedValues.includes(value as T)) {
+    if (!this.acceptedValues.includes(value as TItems)) {
       return new Message(this.messages.missing)
     }
 

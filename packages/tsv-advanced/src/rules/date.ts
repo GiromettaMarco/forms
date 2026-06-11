@@ -8,8 +8,8 @@ interface Messages {
 }
 
 /**
- * Value must be a javascript Date object or it must produce a valid date
- * through the Date() constructor.
+ * Value must be a javascript `Date` object or it must produce a valid date
+ * through the `Date()` constructor.
  *
  * May be optional.
  */

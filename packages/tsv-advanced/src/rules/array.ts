@@ -7,10 +7,17 @@ interface Messages {
   required: string
 }
 
-type RuleOptions<
+interface RuleOptions<
   O extends boolean | undefined,
   PE extends ParseEmpty | undefined
-> = AdvancedRuleOptions<Messages, O, PE>
+> extends AdvancedRuleOptions<Messages, O, PE> {
+  /**
+   * If set, converts the string to an array by splitting it according to the specified token.
+   *
+   * @defaultValue `undefined`
+   */
+  splitStringBy?: string
+}
 
 /**
  * Validate as array.
@@ -18,31 +25,46 @@ type RuleOptions<
  * May be optional.
  */
 export class ArrayRule<
+  TItem = unknown,
   O extends boolean | undefined = undefined,
   PE extends ParseEmpty | undefined = 'undefined'
-> extends AdvancedRule<Array<unknown>, Messages, O, PE> {
+> extends AdvancedRule<Array<TItem>, Messages, O, PE> {
   /**
    * Error messages.
    */
   messages
 
-  constructor(options?: RuleOptions<O, PE>) {
-    super(options)
+  /**
+   * If set, converts the string to an array by splitting it according to the specified token.
+   *
+   * @defaultValue `undefined`
+   */
+  splitStringBy?: string
+
+  constructor({
+    messages,
+    optional,
+    parseEmpty,
+    splitStringBy
+  }: RuleOptions<O, PE> = {}) {
+    super({ messages, optional, parseEmpty })
+
+    this.splitStringBy = splitStringBy
 
     this.messages = Object.assign(
       {
         array: 'array',
         required: 'required'
       },
-      options?.messages
+      messages
     )
   }
 
   sanitize(value: unknown) {
     const trimmed = super.sanitize(value)
 
-    if (typeof trimmed === 'string' && trimmed) {
-      return trimmed.split(',')
+    if (this.splitStringBy && typeof trimmed === 'string' && trimmed) {
+      return trimmed.split(this.splitStringBy)
     }
 
     return trimmed

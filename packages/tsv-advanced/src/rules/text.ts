@@ -26,6 +26,13 @@ interface RuleOptions<
    * @defaultValue `null`
    */
   minChars?: number | null
+
+  /**
+   * Convert numbers to strings.
+   *
+   * @defaultValue `false`
+   */
+  parseNumber?: boolean
 }
 
 /**
@@ -56,17 +63,26 @@ export class TextRule<
    */
   minChars: number | null
 
+  /**
+   * Convert numbers to strings.
+   *
+   * @defaultValue `false`
+   */
+  parseNumber: boolean
+
   constructor({
     maxChars = 255,
     messages,
     minChars = null,
     optional,
-    parseEmpty
+    parseEmpty,
+    parseNumber = false
   }: RuleOptions<O, PE> = {}) {
     super({ messages, optional, parseEmpty })
 
     this.maxChars = maxChars
     this.minChars = minChars
+    this.parseNumber = parseNumber
 
     this.messages = Object.assign(
       {
@@ -81,7 +97,7 @@ export class TextRule<
 
   sanitize(value: unknown) {
     // Number
-    if (typeof value === 'number') {
+    if (this.parseNumber && typeof value === 'number') {
       return value.toString()
     }
 

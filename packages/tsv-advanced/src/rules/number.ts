@@ -29,7 +29,14 @@ interface RuleOptions<
   minValue?: number | null
 
   /**
-   * If true and tested value is a string, value will be parsed as an integer.
+   * Whether the number must be an integer.
+   *
+   * @defaultValue `false`
+   */
+  integer?: boolean
+
+  /**
+   * If true, value will be parsed as an integer (rounded down).
    *
    * @defaultValue `true`
    */
@@ -37,11 +44,11 @@ interface RuleOptions<
 }
 
 /**
- * Validate as an integer.
+ * Validate as number.
  *
  * May be optional.
  */
-export class IntegerRule<
+export class NumberRule<
   O extends boolean | undefined = undefined,
   PE extends ParseEmpty | undefined = 'string'
 > extends AdvancedRule<number, Messages, O, PE> {
@@ -65,7 +72,14 @@ export class IntegerRule<
   minValue: number | null
 
   /**
-   * If true and tested value is a string, value will be parsed as an integer.
+   * Whether the number must be an integer.
+   *
+   * @defaultValue `false`
+   */
+  integer: boolean
+
+  /**
+   * If true, value will be parsed as an integer (rounded down).
    *
    * @defaultValue `true`
    */
@@ -75,14 +89,16 @@ export class IntegerRule<
     maxValue = null,
     messages,
     minValue = 0,
+    integer = false,
     optional,
     parseEmpty,
-    parseInt = true
+    parseInt = false
   }: RuleOptions<O, PE> = {}) {
     super({ messages, optional, parseEmpty })
 
     this.maxValue = maxValue
     this.minValue = minValue
+    this.integer = integer
     this.parseInt = parseInt
 
     this.messages = Object.assign(
@@ -102,8 +118,14 @@ export class IntegerRule<
     const parsedValue = super.sanitize(value)
 
     // Parse int
-    if (this.parseInt && parsedValue && typeof parsedValue === 'string') {
-      return parseInt(parsedValue)
+    if (this.parseInt) {
+      if (typeof parsedValue === 'number') {
+        return Math.floor(parsedValue)
+      }
+
+      if (parsedValue && typeof parsedValue === 'string') {
+        return parseInt(parsedValue)
+      }
     }
 
     return parsedValue
@@ -141,7 +163,7 @@ export class IntegerRule<
     }
 
     // Not integer
-    if (!Number.isInteger(value)) {
+    if (this.integer && !Number.isInteger(value)) {
       return new Message(this.messages.integer)
     }
 
