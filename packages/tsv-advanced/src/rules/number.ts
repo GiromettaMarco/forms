@@ -41,6 +41,13 @@ interface RuleOptions<
    * @defaultValue `true`
    */
   parseInt?: boolean
+
+  /**
+   * Convert strings to numbers.
+   *
+   * @defaultValue `false`
+   */
+  parseNumber?: boolean
 }
 
 /**
@@ -85,6 +92,13 @@ export class NumberRule<
    */
   parseInt: boolean
 
+  /**
+   * Convert strings to numbers.
+   *
+   * @defaultValue `false`
+   */
+  parseNumber: boolean
+
   constructor({
     maxValue = null,
     messages,
@@ -92,7 +106,8 @@ export class NumberRule<
     integer = false,
     optional,
     parseEmpty,
-    parseInt = false
+    parseInt = false,
+    parseNumber = false
   }: RuleOptions<O, PE> = {}) {
     super({ messages, optional, parseEmpty })
 
@@ -100,6 +115,7 @@ export class NumberRule<
     this.minValue = minValue
     this.integer = integer
     this.parseInt = parseInt
+    this.parseNumber = parseNumber
 
     this.messages = Object.assign(
       {
@@ -126,6 +142,11 @@ export class NumberRule<
       if (parsedValue && typeof parsedValue === 'string') {
         return parseInt(parsedValue)
       }
+    }
+
+    // Parse number
+    if (this.parseNumber && parsedValue && typeof parsedValue === 'string') {
+      return Number(parsedValue)
     }
 
     return parsedValue

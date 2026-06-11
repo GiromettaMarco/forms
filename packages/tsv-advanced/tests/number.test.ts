@@ -3,7 +3,9 @@ import { expect, test } from 'vitest'
 
 test('array rule', () => {
   const schema = new Schema({
-    number: new NumberRule(),
+    number: new NumberRule({
+      parseNumber: true
+    }),
     integer: new NumberRule({
       integer: true
     }),
@@ -15,7 +17,7 @@ test('array rule', () => {
 
   expect(
     schema.validate({
-      number: 5,
+      number: '5',
       integer: 5,
       parsedInteger: 5.5
     }).success
