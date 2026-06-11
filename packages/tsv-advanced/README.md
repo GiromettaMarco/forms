@@ -14,21 +14,22 @@ npm install @gmcode/tsv-advanced
 ## Usage
 
 ```ts
-import { DateRule, IntegerRule, Schema } from '@gmcode/tsv-advanced'
+import { DateRule, NumberRule, Schema } from '@gmcode/tsv-advanced'
 
 // Define the schema
 const schema = new Schema({
   date: new DateRule(),
-  integer: new IntegerRule({
+  number: new NumberRule({
     maxValue: 10,
-    minValue: 0
+    minValue: 0,
+    parseNumber: true
   })
 })
 
 // Validate some values
 const result = schema.validate({
   date: 'December 17, 1995 03:24:00',
-  integer: '6'
+  number: '6'
 })
 
 if (result.success) {
