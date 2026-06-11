@@ -3,7 +3,7 @@
 [![coverage](docs/coverage.svg)](https://github.com/GiromettaMarco/forms/actions.yml)
 [![npm](https://img.shields.io/npm/v/@gmcode/tsv-hookform)](https://npm.im/@gmcode/tsv-hookform)
 
-Custom react-hook-form resolver for [`@gmcode/tsv-input`](../tsv-input).
+Custom react-hook-form resolver for [`@gmcode/tsv-input`](https://github.com/GiromettaMarco/forms/tree/master/packages/tsv-input).
 
 ## Installation
 
