@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/tsv-hookform",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "type": "module",
   "license": "MIT",
   "author": "Girometta Marco",
@@ -47,6 +47,9 @@
     "@gmcode/tsv-core": "^0.0.7",
     "react-hook-form": "^7.71.0"
   },
+  "dependencies": {
+    "@hookform/resolvers": "^5.4.0"
+  },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.58.1",
     "@repo/eslint-config": "workspace:*",
@@ -58,14 +61,12 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
+    "@vitest/coverage-v8": "^4.1.8",
     "jsdom": "^29.1.1",
     "react": "^19.2.7",
     "typescript": "^5.9.3",
     "unplugin-dts": "^1.0.1",
     "vite": "^8.0.14",
-    "vitest": "^4.1.7"
-  },
-  "dependencies": {
-    "@hookform/resolvers": "^5.4.0"
+    "vitest": "^4.1.8"
   }
 }
