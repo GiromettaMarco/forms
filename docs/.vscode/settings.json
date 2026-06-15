@@ -16,8 +16,10 @@
     "*.cjs": "$(capture).cjs.map, $(capture).*.cjs, $(capture)_*.cjs, $(capture).*.cts"
   },
 
-  // Allow comments in json
   "files.associations": {
+    // Tailwind
+    "*.css": "tailwindcss",
+    // Allow comments in json
     "*.json": "jsonc"
   },
 

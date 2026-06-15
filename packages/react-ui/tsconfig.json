@@ -1,0 +1,16 @@
+{
+  "extends": "@repo/typescript-config/react.json",
+
+  // Files
+  // @see https://github.com/microsoft/TypeScript/issues/49555
+  "include": [".storybook/**/*", "src", "stories", "tests"],
+  "exclude": ["dist", "node_modules"],
+
+  "compilerOptions": {
+    // Paths
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}

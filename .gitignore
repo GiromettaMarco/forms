@@ -19,3 +19,4 @@ dist
 .eslintcache
 .turbo
 coverage
+debug-storybook.log

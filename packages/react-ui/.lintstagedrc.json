@@ -1,0 +1,6 @@
+{
+  "**/*": [
+    "prettier --write --ignore-unknown",
+    "eslint --cache --no-warn-ignored --fix"
+  ]
+}

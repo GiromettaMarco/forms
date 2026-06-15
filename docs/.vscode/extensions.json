@@ -4,6 +4,8 @@
     "esbenp.prettier-vscode",
     "antfu.file-nesting",
     "vitest.explorer",
-    "fanaticpythoner.better-todo-tree"
+    "fanaticpythoner.better-todo-tree",
+    "bradlc.vscode-tailwindcss",
+    "unifiedjs.vscode-mdx"
   ]
 }
