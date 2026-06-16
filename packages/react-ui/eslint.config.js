@@ -1,3 +1,3 @@
-import config from '@repo/eslint-config/storybook'
+import config from '@gmcode/eslint-config/storybook'
 
 export default config

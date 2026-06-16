@@ -8,10 +8,10 @@ importers:
 
   .:
     devDependencies:
-      '@repo/eslint-config':
+      '@gmcode/eslint-config':
         specifier: workspace:*
         version: link:packages/eslint-config
-      '@repo/vite-config':
+      '@gmcode/vite-config':
         specifier: workspace:*
         version: link:packages/vite-config
       '@types/node':
@@ -50,7 +50,7 @@ importers:
 
   packages/eslint-config:
     devDependencies:
-      '@repo/typescript-config':
+      '@gmcode/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       eslint:
@@ -117,18 +117,18 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0
     devDependencies:
+      '@gmcode/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@gmcode/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@gmcode/vite-config':
+        specifier: workspace:*
+        version: link:../vite-config
       '@microsoft/api-extractor':
         specifier: ^7.58.1
         version: 7.58.7(@types/node@24.12.4)
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@repo/vite-config':
-        specifier: workspace:*
-        version: link:../vite-config
       '@storybook/addon-a11y':
         specifier: ^10.4.4
         version: 10.4.4(storybook@10.4.4(@testing-library/dom@10.4.1)(@types/react@19.2.17)(prettier@3.8.4)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))
@@ -193,18 +193,18 @@ importers:
         specifier: ^0.0.7
         version: 0.0.7
     devDependencies:
+      '@gmcode/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@gmcode/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@gmcode/vite-config':
+        specifier: workspace:*
+        version: link:../vite-config
       '@microsoft/api-extractor':
         specifier: ^7.58.1
         version: 7.58.7(@types/node@24.12.4)
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@repo/vite-config':
-        specifier: workspace:*
-        version: link:../vite-config
       '@vitest/coverage-istanbul':
         specifier: ^4.1.8
         version: 4.1.8(vitest@4.1.8)
@@ -223,18 +223,18 @@ importers:
 
   packages/tsv-core:
     devDependencies:
+      '@gmcode/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@gmcode/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@gmcode/vite-config':
+        specifier: workspace:*
+        version: link:../vite-config
       '@microsoft/api-extractor':
         specifier: ^7.58.1
         version: 7.58.7(@types/node@24.12.4)
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@repo/vite-config':
-        specifier: workspace:*
-        version: link:../vite-config
       '@vitest/coverage-istanbul':
         specifier: ^4.1.8
         version: 4.1.8(vitest@4.1.8)
@@ -263,18 +263,18 @@ importers:
         specifier: ^7.71.0
         version: 7.76.1(react@19.2.7)
     devDependencies:
+      '@gmcode/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@gmcode/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@gmcode/vite-config':
+        specifier: workspace:*
+        version: link:../vite-config
       '@microsoft/api-extractor':
         specifier: ^7.58.1
         version: 7.58.7(@types/node@24.12.4)
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@repo/vite-config':
-        specifier: workspace:*
-        version: link:../vite-config
       '@testing-library/dom':
         specifier: ^10.4.1
         version: 10.4.1
@@ -321,18 +321,18 @@ importers:
         specifier: ^0.0.7
         version: 0.0.7
     devDependencies:
+      '@gmcode/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@gmcode/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@gmcode/vite-config':
+        specifier: workspace:*
+        version: link:../vite-config
       '@microsoft/api-extractor':
         specifier: ^7.58.1
         version: 7.58.7(@types/node@24.12.4)
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@repo/vite-config':
-        specifier: workspace:*
-        version: link:../vite-config
       '@vitest/coverage-istanbul':
         specifier: ^4.1.8
         version: 4.1.8(vitest@4.1.8)
@@ -353,7 +353,7 @@ importers:
 
   packages/vite-config:
     devDependencies:
-      '@repo/typescript-config':
+      '@gmcode/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       '@vitest/coverage-istanbul':

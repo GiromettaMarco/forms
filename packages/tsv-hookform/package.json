@@ -40,7 +40,7 @@
     "lint:fix": "eslint . --fix",
     "preinstall": "npx only-allow pnpm",
     "test": "vitest run --coverage",
-    "test:badge": "node node_modules/@repo/vite-config/dist/scripts/badge.js"
+    "test:badge": "node node_modules/@gmcode/vite-config/dist/scripts/badge.js"
   },
   "peerDependencies": {
     "@gmcode/tsv-core": "^0.0.7",
@@ -50,10 +50,10 @@
     "@hookform/resolvers": "^5.4.0"
   },
   "devDependencies": {
+    "@gmcode/eslint-config": "workspace:*",
+    "@gmcode/typescript-config": "workspace:*",
+    "@gmcode/vite-config": "workspace:*",
     "@microsoft/api-extractor": "^7.58.1",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@repo/vite-config": "workspace:*",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",

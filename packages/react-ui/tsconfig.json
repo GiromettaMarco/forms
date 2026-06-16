@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/typescript-config/react.json",
+  "extends": "@gmcode/typescript-config/react.json",
 
   // Files
   // @see https://github.com/microsoft/TypeScript/issues/49555

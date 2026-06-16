@@ -1,4 +1,4 @@
-import { sharedConfig } from '@repo/vite-config'
+import { sharedConfig } from '@gmcode/vite-config'
 import { resolve } from 'path'
 import { mergeConfig } from 'vite'
 

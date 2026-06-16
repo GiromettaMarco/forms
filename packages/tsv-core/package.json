@@ -40,12 +40,12 @@
     "lint:fix": "eslint . --fix",
     "preinstall": "npx only-allow pnpm",
     "test": "vitest run --coverage",
-    "test:badge": "node node_modules/@repo/vite-config/dist/scripts/badge.js"
+    "test:badge": "node node_modules/@gmcode/vite-config/dist/scripts/badge.js"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@repo/vite-config": "workspace:*",
+    "@gmcode/eslint-config": "workspace:*",
+    "@gmcode/typescript-config": "workspace:*",
+    "@gmcode/vite-config": "workspace:*",
     "@microsoft/api-extractor": "^7.58.1",
     "@vitest/coverage-istanbul": "^4.1.8",
     "unplugin-dts": "^1.0.1",

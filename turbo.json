@@ -13,13 +13,13 @@
       "persistent": true
     },
     "lint": {
-      "dependsOn": ["@repo/eslint-config#build", "^lint"]
+      "dependsOn": ["@gmcode/eslint-config#build", "^lint"]
     },
     "lint:fix": {
-      "dependsOn": ["@repo/eslint-config#build", "^lint:fix"]
+      "dependsOn": ["@gmcode/eslint-config#build", "^lint:fix"]
     },
     "test": {
-      "dependsOn": ["@repo/vite-config#build"],
+      "dependsOn": ["@gmcode/vite-config#build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/vitest.config.ts"],
       "outputs": ["coverage/**", "docs/coverage.svg"]
     },

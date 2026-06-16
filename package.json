@@ -17,8 +17,8 @@
     "test:badge": "turbo run test:badge"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/vite-config": "workspace:*",
+    "@gmcode/eslint-config": "workspace:*",
+    "@gmcode/vite-config": "workspace:*",
     "@types/node": "^24.12.4",
     "eslint": "^10.4.0",
     "eslint-config-prettier": "^10.1.8",

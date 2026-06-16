@@ -42,7 +42,7 @@
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
     "test": "vitest run --project=storybook --coverage",
-    "test:badge": "node node_modules/@repo/vite-config/dist/scripts/badge.js"
+    "test:badge": "node node_modules/@gmcode/vite-config/dist/scripts/badge.js"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
@@ -58,10 +58,10 @@
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
+    "@gmcode/eslint-config": "workspace:*",
+    "@gmcode/typescript-config": "workspace:*",
+    "@gmcode/vite-config": "workspace:*",
     "@microsoft/api-extractor": "^7.58.1",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@repo/vite-config": "workspace:*",
     "@storybook/addon-a11y": "^10.4.4",
     "@storybook/addon-docs": "^10.4.4",
     "@storybook/addon-themes": "^10.4.4",

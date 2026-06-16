@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/typescript-config/vanilla.json",
+  "extends": "@gmcode/typescript-config/vanilla.json",
 
   // Files
   "include": ["src"],

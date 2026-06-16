@@ -1,5 +1,5 @@
 {
-  "name": "@repo/eslint-config",
+  "name": "@gmcode/eslint-config",
   "type": "module",
   "private": true,
   "main": "dist/index.js",
@@ -14,7 +14,7 @@
     "dev": "tsc --watch"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
+    "@gmcode/typescript-config": "workspace:*",
     "eslint": "^10.4.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
