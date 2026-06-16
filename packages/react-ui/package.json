@@ -4,7 +4,7 @@
   "type": "module",
   "license": "MIT",
   "author": "Girometta Marco",
-  "description": "Shadcn registry with general purpose UI.",
+  "description": "General purpose React UI based on shadcn components.",
   "homepage": "https://github.com/GiromettaMarco/forms#readme",
   "bugs": {
     "url": "https://github.com/GiromettaMarco/forms/issues"
@@ -14,6 +14,7 @@
     "url": "git+https://github.com/GiromettaMarco/forms.git"
   },
   "keywords": [
+    "radix-ui",
     "react",
     "shadcn",
     "tailwind",
