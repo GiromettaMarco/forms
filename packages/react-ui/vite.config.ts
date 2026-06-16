@@ -1,4 +1,4 @@
-import { sharedConfigESOnly } from '@repo/vite-config'
+import { sharedConfig } from '@repo/vite-config'
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
@@ -16,7 +16,7 @@ const dirname =
 /** Vitest or Storybook environment */
 const testing = process.env.VITEST || process.argv[1]?.includes('storybook')
 
-export default mergeConfig(sharedConfigESOnly, {
+export default mergeConfig(sharedConfig, {
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

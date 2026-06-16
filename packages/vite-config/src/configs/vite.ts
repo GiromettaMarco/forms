@@ -1,4 +1,3 @@
-import { copyFileSync } from 'node:fs'
 import { resolve } from 'path'
 import dts from 'unplugin-dts/vite'
 import { defineConfig } from 'vite'
@@ -11,7 +10,7 @@ export const viteConfig = defineConfig({
     lib: {
       entry: resolve('src/index.ts'),
       fileName: 'index',
-      formats: ['es', 'cjs']
+      formats: ['es']
     },
     outDir: 'dist'
   },
@@ -19,10 +18,7 @@ export const viteConfig = defineConfig({
     dts({
       bundleTypes: true,
       copyDtsFiles: true,
-      exclude: ['dist', 'node_modules', 'tests'],
-      afterBuild: () => {
-        copyFileSync('dist/index.d.ts', 'dist/index.d.cts')
-      }
+      exclude: ['dist', 'node_modules', 'tests']
     })
   ]
 })
