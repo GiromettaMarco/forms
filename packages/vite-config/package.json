@@ -7,6 +7,7 @@
   "exports": {
     ".": "./dist/index.js",
     "./vite": "./dist/configs/vite.js",
+    "./vite-es-only": "./dist/configs/vite-es-only.js",
     "./vitest": "./dist/configs/vitest.js"
   },
   "scripts": {
