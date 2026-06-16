@@ -51,7 +51,7 @@
     "@repo/typescript-config": "workspace:*",
     "@repo/vite-config": "workspace:*",
     "@microsoft/api-extractor": "^7.58.1",
-    "@vitest/coverage-v8": "^4.1.8",
+    "@vitest/coverage-istanbul": "^4.1.8",
     "typescript": "^5.9.3",
     "unplugin-dts": "^1.0.1",
     "vite": "^8.0.14",
