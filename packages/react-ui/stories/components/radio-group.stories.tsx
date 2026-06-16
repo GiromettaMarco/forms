@@ -16,27 +16,27 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: () => (
     <RadioGroup
-      defaultValue="auto"
       className="w-fit"
+      defaultValue="auto"
     >
       <div className="flex items-center gap-3">
         <RadioGroupItem
-          value="auto"
           id="auto"
+          value="auto"
         />
         <Label htmlFor="auto">Auto</Label>
       </div>
       <div className="flex items-center gap-3">
         <RadioGroupItem
-          value="light"
           id="light"
+          value="light"
         />
         <Label htmlFor="light">Light</Label>
       </div>
       <div className="flex items-center gap-3">
         <RadioGroupItem
-          value="dark"
           id="dark"
+          value="dark"
         />
         <Label htmlFor="dark">Dark</Label>
       </div>
@@ -46,27 +46,27 @@ export const Default: Story = {
     docs: {
       source: {
         code: `<RadioGroup
-  defaultValue="auto"
   className="w-fit"
+  defaultValue="auto"
 >
   <div className="flex items-center gap-3">
     <RadioGroupItem
-      value="auto"
       id="auto"
+      value="auto"
     />
     <Label htmlFor="auto">Auto</Label>
   </div>
   <div className="flex items-center gap-3">
     <RadioGroupItem
-      value="light"
       id="light"
+      value="light"
     />
     <Label htmlFor="light">Light</Label>
   </div>
   <div className="flex items-center gap-3">
     <RadioGroupItem
-      value="dark"
       id="dark"
+      value="dark"
     />
     <Label htmlFor="dark">Dark</Label>
   </div>

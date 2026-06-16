@@ -59,9 +59,9 @@ export const Textarea: Story = {
   render: () => (
     <InputGroup className="w-96">
       <InputGroupTextarea
+        className="min-h-50"
         id="textarea-code-32"
         placeholder="console.log('Hello, world!');"
-        className="min-h-50"
       />
       <InputGroupAddon
         align="block-end"
@@ -69,8 +69,8 @@ export const Textarea: Story = {
       >
         <InputGroupText>Line 1, Column 1</InputGroupText>
         <InputGroupButton
-          size="sm"
           className="ml-auto"
+          size="sm"
           variant="default"
         >
           Run <CornerDownLeft />
@@ -84,14 +84,16 @@ export const Textarea: Story = {
           script.js
         </InputGroupText>
         <InputGroupButton
+          aria-label="Refresh"
           className="ml-auto"
           size="icon-xs"
         >
           <RefreshCcw />
         </InputGroupButton>
         <InputGroupButton
-          variant="ghost"
+          aria-label="Copy"
           size="icon-xs"
+          variant="ghost"
         >
           <Copy />
         </InputGroupButton>
@@ -103,9 +105,9 @@ export const Textarea: Story = {
       source: {
         code: `<InputGroup className="w-96">
   <InputGroupTextarea
+    className="min-h-50"
     id="textarea-code-32"
     placeholder="console.log('Hello, world!');"
-    className="min-h-50"
   />
   <InputGroupAddon
     align="block-end"
@@ -113,8 +115,8 @@ export const Textarea: Story = {
   >
     <InputGroupText>Line 1, Column 1</InputGroupText>
     <InputGroupButton
-      size="sm"
       className="ml-auto"
+      size="sm"
       variant="default"
     >
       Run <CornerDownLeft />
@@ -128,14 +130,16 @@ export const Textarea: Story = {
       script.js
     </InputGroupText>
     <InputGroupButton
+      aria-label="Refresh"
       className="ml-auto"
       size="icon-xs"
     >
       <RefreshCcw />
     </InputGroupButton>
     <InputGroupButton
-      variant="ghost"
+      aria-label="Copy"
       size="icon-xs"
+      variant="ghost"
     >
       <Copy />
     </InputGroupButton>
@@ -158,16 +162,16 @@ export const Addon: Story = {
           placeholder="0.00"
         />
         <InputGroupAddon
-          data-testid="addon-text"
           align="inline-end"
+          data-testid="addon-text"
         >
           <InputGroupText>USD</InputGroupText>
         </InputGroupAddon>
       </InputGroup>
       <InputGroup>
         <InputGroupInput
-          type="email"
           placeholder="Enter your email"
+          type="email"
         />
         <InputGroupAddon>
           <Mail />
@@ -185,7 +189,10 @@ export const Addon: Story = {
       <InputGroup>
         <InputGroupInput placeholder="Type to search..." />
         <InputGroupAddon align="inline-end">
-          <InputGroupButton data-testid="addon-button">
+          <InputGroupButton
+            aria-label="Search"
+            data-testid="addon-button"
+          >
             <Search />
           </InputGroupButton>
         </InputGroupAddon>
@@ -210,15 +217,21 @@ export const Addon: Story = {
     <InputGroupAddon>
       <InputGroupText>$</InputGroupText>
     </InputGroupAddon>
-    <InputGroupInput placeholder="0.00" />
-    <InputGroupAddon align="inline-end">
+    <InputGroupInput
+      data-testid="input-with-addon-test"
+      placeholder="0.00"
+    />
+    <InputGroupAddon
+      align="inline-end"
+      data-testid="addon-text"
+    >
       <InputGroupText>USD</InputGroupText>
     </InputGroupAddon>
   </InputGroup>
   <InputGroup>
     <InputGroupInput
-      type="email"
       placeholder="Enter your email"
+      type="email"
     />
     <InputGroupAddon>
       <Mail />
@@ -231,6 +244,17 @@ export const Addon: Story = {
     </InputGroupAddon>
     <InputGroupAddon align="inline-end">
       <Check />
+    </InputGroupAddon>
+  </InputGroup>
+  <InputGroup>
+    <InputGroupInput placeholder="Type to search..." />
+    <InputGroupAddon align="inline-end">
+      <InputGroupButton
+        aria-label="Search"
+        data-testid="addon-button"
+      >
+        <Search />
+      </InputGroupButton>
     </InputGroupAddon>
   </InputGroup>
 </div>`

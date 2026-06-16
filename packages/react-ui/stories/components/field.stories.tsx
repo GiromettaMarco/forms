@@ -243,6 +243,7 @@ export const Content: Story = {
         </Field>
         <Field orientation="horizontal">
           <Checkbox
+            aria-label="Checkbox with title"
             defaultChecked
             id="checkbox_2"
             name="checkbox_2"
@@ -290,6 +291,7 @@ export const Content: Story = {
     </Field>
     <Field orientation="horizontal">
       <Checkbox
+        aria-label="Checkbox with title"
         defaultChecked
         id="checkbox_2"
         name="checkbox_2"
