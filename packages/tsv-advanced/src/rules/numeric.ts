@@ -128,16 +128,16 @@ export class NumericRule<
     // Min value
     if (this.minValue !== null && Number(value) < this.minValue) {
       return new Message(this.messages.minValue, {
-        value: value,
-        min: this.minValue
+        min: this.minValue,
+        value: value
       })
     }
 
     // Max value
     if (this.maxValue !== null && Number(value) > this.maxValue) {
       return new Message(this.messages.maxValue, {
-        value: value,
-        max: this.maxValue
+        max: this.maxValue,
+        value: value
       })
     }
 

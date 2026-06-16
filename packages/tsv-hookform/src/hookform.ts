@@ -33,13 +33,12 @@ export function useTsvResolver<
 
     if (success) {
       return {
-        values: sanitized as Output,
-        errors: {}
+        errors: {},
+        values: sanitized as Output
       } satisfies ResolverSuccess<Output>
     }
 
     return {
-      values: {},
       errors: toNestErrors(
         Object.fromEntries(
           Object.entries(errors).map(([key, message]) => [
@@ -52,7 +51,8 @@ export function useTsvResolver<
           ])
         ),
         options
-      )
+      ),
+      values: {}
     } satisfies ResolverError<Input>
   }
 }

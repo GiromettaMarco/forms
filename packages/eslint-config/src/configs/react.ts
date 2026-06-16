@@ -12,7 +12,8 @@ export default defineConfig([
       react
     },
     rules: {
-      ...react.configs['jsx-runtime'].rules
+      ...react.configs['jsx-runtime'].rules,
+      'react/jsx-sort-props': 'error'
     },
     settings: {
       react: {

@@ -102,16 +102,16 @@ export class InputNumberRule<
     // Min value
     if (this.minValue !== null && number < this.minValue) {
       return new Message(this.messages.minValue, {
-        value: number,
-        min: this.minValue
+        min: this.minValue,
+        value: number
       })
     }
 
     // Max value
     if (this.maxValue !== null && number > this.maxValue) {
       return new Message(this.messages.maxValue, {
-        value: number,
-        max: this.maxValue
+        max: this.maxValue,
+        value: number
       })
     }
 

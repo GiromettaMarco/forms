@@ -19,6 +19,11 @@ export default defineConfig([
 
   // Typescript
   ...typescript.configs.recommended,
+  {
+    rules: {
+      'sort-keys': 'warn'
+    }
+  },
 
   // Prettier
   prettier
