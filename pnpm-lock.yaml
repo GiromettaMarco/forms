@@ -190,8 +190,8 @@ importers:
   packages/tsv-advanced:
     dependencies:
       '@gmcode/tsv-core':
-        specifier: ^0.0.7
-        version: 0.0.7
+        specifier: ^0.0.8
+        version: 0.0.8
     devDependencies:
       '@gmcode/eslint-config':
         specifier: workspace:*
@@ -254,8 +254,8 @@ importers:
   packages/tsv-hookform:
     dependencies:
       '@gmcode/tsv-core':
-        specifier: ^0.0.7
-        version: 0.0.7
+        specifier: ^0.0.8
+        version: 0.0.8
       '@hookform/resolvers':
         specifier: ^5.4.0
         version: 5.4.0(react-hook-form@7.76.1(react@19.2.7))
@@ -318,8 +318,8 @@ importers:
   packages/tsv-input:
     dependencies:
       '@gmcode/tsv-core':
-        specifier: ^0.0.7
-        version: 0.0.7
+        specifier: ^0.0.8
+        version: 0.0.8
     devDependencies:
       '@gmcode/eslint-config':
         specifier: workspace:*
@@ -737,8 +737,8 @@ packages:
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
 
-  '@gmcode/tsv-core@0.0.7':
-    resolution: {integrity: sha512-reBF+kBuGAHf1FhxmiXtOZGengj7q96VDDIQHtemsF/R4WTvidH5ZpKAUWUlX2biPHHKMmT5zpmYW4V+BZ7RlA==}
+  '@gmcode/tsv-core@0.0.8':
+    resolution: {integrity: sha512-gUu/hrv591pHBeU/P5b6puZkZQta9fPck+L8FOCl51ia0xt949gpvEWAG+9G/MOjmZVQd7GlTYftb5OtcBXB8A==}
 
   '@hookform/resolvers@5.4.0':
     resolution: {integrity: sha512-EIsqr/t/qbinPIhGjMdtvutIN1Kk4uwbROE9/UQ93CAVGR7GkA7Y92+fX80OzXi/OB67jVFYwKGO1WzkxmkFZw==}
@@ -4696,7 +4696,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.11': {}
 
-  '@gmcode/tsv-core@0.0.7': {}
+  '@gmcode/tsv-core@0.0.8': {}
 
   '@hookform/resolvers@5.4.0(react-hook-form@7.76.1(react@19.2.7))':
     dependencies:

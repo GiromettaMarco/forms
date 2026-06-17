@@ -43,7 +43,7 @@
     "test:badge": "node node_modules/@gmcode/vite-config/dist/scripts/badge.js"
   },
   "dependencies": {
-    "@gmcode/tsv-core": "^0.0.7"
+    "@gmcode/tsv-core": "^0.0.8"
   },
   "devDependencies": {
     "@gmcode/eslint-config": "workspace:*",

@@ -43,7 +43,7 @@
     "test:badge": "node node_modules/@gmcode/vite-config/dist/scripts/badge.js"
   },
   "peerDependencies": {
-    "@gmcode/tsv-core": "^0.0.7",
+    "@gmcode/tsv-core": "^0.0.8",
     "react-hook-form": "^7.71.0"
   },
   "dependencies": {
