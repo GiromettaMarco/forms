@@ -12,6 +12,7 @@
 
     // Constraints
     "forceConsistentCasingInFileNames": true,
+    "noUncheckedSideEffectImports": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "strict": true,

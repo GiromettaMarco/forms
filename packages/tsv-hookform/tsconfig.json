@@ -1,15 +1,13 @@
 {
-  "extends": "@gmcode/typescript-config/react.json",
+  "extends": "../../tooling/typescript/react.json",
 
   // Files
   "include": ["src", "tests"],
   "exclude": ["dist", "node_modules"],
 
   "compilerOptions": {
-    // Paths
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
 
     // Types

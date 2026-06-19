@@ -1,5 +1,5 @@
 import { BoolRule, Schema } from '@/index'
-import { expect, test } from 'vitest'
+import { expect, test } from 'vite-plus/test'
 
 test('bool rule', () => {
   const schema = new Schema({

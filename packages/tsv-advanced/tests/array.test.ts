@@ -1,5 +1,5 @@
 import { ArrayRule, Schema } from '@/index'
-import { expect, test } from 'vitest'
+import { expect, test } from 'vite-plus/test'
 
 test('array rule', () => {
   const schema = new Schema({

@@ -1,5 +1,5 @@
 {
-  "extends": "@gmcode/typescript-config/react.json",
+  "extends": "../../tooling/typescript/react.json",
 
   // Files
   // @see https://github.com/microsoft/TypeScript/issues/49555
@@ -7,10 +7,8 @@
   "exclude": ["dist", "node_modules"],
 
   "compilerOptions": {
-    // Paths
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   }
 }

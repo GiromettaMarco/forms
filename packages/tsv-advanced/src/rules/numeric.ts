@@ -1,6 +1,6 @@
-import { AdvancedRule } from '@/advanced-rule'
 import type { AdvancedRuleOptions, ParseEmpty } from '@/types'
-import { floatRegex, integerRegex, Message } from '@gmcode/tsv-core'
+import { Message, floatRegex, integerRegex } from '@gmcode/tsv-core'
+import { AdvancedRule } from '@/advanced-rule'
 
 interface Messages {
   integer: string

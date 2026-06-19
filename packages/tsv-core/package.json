@@ -1,18 +1,7 @@
 {
   "name": "@gmcode/tsv-core",
-  "version": "0.0.8",
-  "type": "module",
-  "license": "MIT",
-  "author": "Girometta Marco",
+  "version": "0.1.0",
   "description": "Typescript schema validations with i18n support. Core package for tsv-advanced and tsv-input.",
-  "homepage": "https://github.com/GiromettaMarco/forms#readme",
-  "bugs": {
-    "url": "https://github.com/GiromettaMarco/forms/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GiromettaMarco/forms.git"
-  },
   "keywords": [
     "core",
     "i18n",
@@ -20,37 +9,37 @@
     "typescript",
     "validation"
   ],
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "sideEffects": false,
+  "homepage": "https://github.com/GiromettaMarco/forms#readme",
+  "bugs": {
+    "url": "https://github.com/GiromettaMarco/forms/issues"
+  },
+  "license": "MIT",
+  "author": "Girometta Marco",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GiromettaMarco/forms.git"
+  },
   "files": [
     "dist"
   ],
+  "type": "module",
+  "sideEffects": false,
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./types/index.d.ts"
-    }
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
   },
-  "packageManager": "pnpm@11.5.0",
   "scripts": {
-    "build": "vite build",
-    "check-types": "tsc --noEmit",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "build": "vp pack --minify",
     "preinstall": "npx only-allow pnpm",
-    "test": "vitest run --coverage",
-    "test:badge": "node node_modules/@gmcode/vite-config/dist/scripts/badge.js"
+    "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
   },
   "devDependencies": {
-    "@gmcode/eslint-config": "workspace:*",
-    "@gmcode/typescript-config": "workspace:*",
-    "@gmcode/vite-config": "workspace:*",
-    "@microsoft/api-extractor": "^7.58.1",
-    "@vitest/coverage-istanbul": "^4.1.8",
-    "unplugin-dts": "^1.0.1",
-    "typescript": "^5.9.3",
-    "vite": "^8.0.14",
-    "vitest": "^4.1.8"
-  }
+    "@typescript/native-preview": "7.0.0-dev.20260509.2",
+    "@vitest/coverage-istanbul": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  },
+  "packageManager": "pnpm@11.5.0"
 }

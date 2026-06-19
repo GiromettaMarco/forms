@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils'
 import type { ComponentProps } from 'react'
 import { default as TextareaAutosizePrimitive } from 'react-textarea-autosize'
+import { cn } from '@/lib/utils'
 
 export function TextareaAutosize({
   className,

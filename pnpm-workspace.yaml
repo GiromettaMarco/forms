@@ -1,8 +1,49 @@
 packages:
   - apps/*
   - packages/*
+
 allowBuilds:
   '@gmcode/tsv-core': true
   esbuild: true
 minimumReleaseAgeExclude:
   - '@gmcode/tsv-core'
+  - '@voidzero-dev/vite-plus-core@0.2.1'
+  - '@voidzero-dev/vite-plus-darwin-arm64@0.2.1'
+  - '@voidzero-dev/vite-plus-darwin-x64@0.2.1'
+  - '@voidzero-dev/vite-plus-linux-arm64-gnu@0.2.1'
+  - '@voidzero-dev/vite-plus-linux-arm64-musl@0.2.1'
+  - '@voidzero-dev/vite-plus-linux-x64-gnu@0.2.1'
+  - '@voidzero-dev/vite-plus-linux-x64-musl@0.2.1'
+  - '@voidzero-dev/vite-plus-win32-arm64-msvc@0.2.1'
+  - '@voidzero-dev/vite-plus-win32-x64-msvc@0.2.1'
+  - vite-plus@0.2.1
+
+catalogMode: prefer
+catalog:
+  '@storybook/addon-a11y': '^10.4.6'
+  '@storybook/addon-docs': '^10.4.6'
+  '@storybook/addon-themes': '^10.4.6'
+  '@storybook/addon-vitest': '^10.4.6'
+  '@storybook/react-vite': '^10.4.6'
+  '@vitest/browser-playwright': ^4.1.9
+  '@vitest/coverage-istanbul': '^4.1.9'
+  eslint-plugin-storybook: ^10.4.6
+  storybook: '^10.4.6'
+  typescript: '^6.0.3'
+  vite: ^8.0.16
+  vitest: ^4.1.9
+  vite-plus: ^0.2.1
+overrides:
+  '@storybook/addon-a11y': 'catalog:'
+  '@storybook/addon-docs': 'catalog:'
+  '@storybook/addon-themes': 'catalog:'
+  '@storybook/addon-vitest': 'catalog:'
+  '@storybook/react-vite': 'catalog:'
+  '@vitest/browser-playwright': 'catalog:'
+  '@vitest/coverage-istanbul': 'catalog:'
+  eslint-plugin-storybook: 'catalog:'
+  storybook: 'catalog:'
+  typescript: 'catalog:'
+  vite: 'catalog:'
+  vitest: 'catalog:'
+  vite-plus: 'catalog:'

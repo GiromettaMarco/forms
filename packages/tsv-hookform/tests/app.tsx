@@ -1,7 +1,7 @@
-import { useTsvResolver } from '@/index'
 import { BasicRule, Message, Schema } from '@gmcode/tsv-core'
-import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { useState } from 'react'
+import { useTsvResolver } from '@/index'
 
 class FooRule extends BasicRule {
   test(value: unknown): true | Message {

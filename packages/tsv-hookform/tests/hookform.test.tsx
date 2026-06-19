@@ -1,7 +1,7 @@
+import { describe, expect, test } from 'vite-plus/test'
 import { fireEvent, render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { describe, expect, test } from 'vitest'
 import { App } from './app'
+import userEvent from '@testing-library/user-event'
 
 describe('use tsv resolver', () => {
   test('default', async () => {
