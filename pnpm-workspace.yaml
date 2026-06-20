@@ -20,7 +20,7 @@ minimumReleaseAgeExclude:
 
 catalogMode: prefer
 catalog:
-  '@gmcode/tsv-core': '^0.1.0'
+  '@gmcode/tsv-core': '^0.1.1'
   '@storybook/addon-a11y': '^10.4.6'
   '@storybook/addon-docs': '^10.4.6'
   '@storybook/addon-themes': '^10.4.6'
