@@ -23,7 +23,7 @@ jobs:
           cache: true
 
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Run Tests
         run: vp run test
