@@ -30,11 +30,8 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Lint
-        run: pnpm run lint:fix
-
-      - name: Format
-        run: pnpm run prettier:fix
+      - name: Format and Lint
+        run: vp check --fix
 
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v7

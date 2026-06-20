@@ -32,10 +32,7 @@ jobs:
         run: pnpm exec playwright install --with-deps
 
       - name: Run Tests
-        run: pnpm run test
-
-      - name: Update Coverage Badges
-        run: pnpm run test:badge
+        run: vp run test
 
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v7
