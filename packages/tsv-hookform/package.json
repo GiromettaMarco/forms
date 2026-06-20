@@ -52,7 +52,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@gmcode/tsv-core": "^0.0.8",
+    "@gmcode/tsv-core": "catalog:",
     "react-hook-form": "^7.71.0"
   },
   "packageManager": "pnpm@11.5.0"

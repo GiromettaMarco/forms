@@ -34,7 +34,7 @@
     "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
   },
   "dependencies": {
-    "@gmcode/tsv-core": "^0.0.8"
+    "@gmcode/tsv-core": "catalog:"
   },
   "devDependencies": {
     "@vitest/coverage-istanbul": "catalog:",
