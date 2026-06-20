@@ -28,6 +28,7 @@ catalog:
   '@vitest/browser-playwright': ^4.1.9
   '@vitest/coverage-istanbul': '^4.1.9'
   eslint-plugin-storybook: ^10.4.6
+  playwright: ^1.60.0
   storybook: '^10.4.6'
   typescript: '^6.0.3'
   vite: ^8.0.16
@@ -42,6 +43,7 @@ overrides:
   '@vitest/browser-playwright': 'catalog:'
   '@vitest/coverage-istanbul': 'catalog:'
   eslint-plugin-storybook: 'catalog:'
+  playwright: 'catalog:'
   storybook: 'catalog:'
   typescript: 'catalog:'
   vite: 'catalog:'
