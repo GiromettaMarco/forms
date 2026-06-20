@@ -15,8 +15,5 @@ node_modules
 dist
 
 # artifacts
-*.tsbuildinfo
-.eslintcache
-.turbo
 coverage
 debug-storybook.log
