@@ -1,13 +1,13 @@
 import { NumberRule, Schema } from '@/index'
-import { expect, test } from 'vitest'
+import { expect, test } from 'vite-plus/test'
 
 test('array rule', () => {
   const schema = new Schema({
-    number: new NumberRule({
-      parseNumber: true
-    }),
     integer: new NumberRule({
       integer: true
+    }),
+    number: new NumberRule({
+      parseNumber: true
     }),
     parsedInteger: new NumberRule({
       integer: true,
@@ -17,15 +17,15 @@ test('array rule', () => {
 
   expect(
     schema.validate({
-      number: '5',
       integer: 5,
+      number: '5',
       parsedInteger: 5.5
     }).success
   ).toBe(true)
 
   const result = schema.validate({
-    number: 'A',
     integer: 5.5,
+    number: 'A',
     parsedInteger: 'B'
   })
 

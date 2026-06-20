@@ -1,9 +1,0 @@
-{
-  "semi": false,
-  "singleQuote": true,
-  "singleAttributePerLine": true,
-  "htmlWhitespaceSensitivity": "css",
-  "plugins": ["prettier-plugin-organize-imports"],
-  "tabWidth": 2,
-  "trailingComma": "none"
-}

@@ -1,24 +1,24 @@
 import { Schema, TextRule } from '@/index'
-import { expect, test } from 'vitest'
+import { expect, test } from 'vite-plus/test'
 
 test('text rule', () => {
   const schema = new Schema({
-    text: new TextRule(),
     parsedText: new TextRule({
       parseNumber: true
-    })
+    }),
+    text: new TextRule()
   })
 
   expect(
     schema.validate({
-      text: 'John',
-      parsedText: 5
+      parsedText: 5,
+      text: 'John'
     }).success
   ).toBe(true)
 
   const result = schema.validate({
-    text: 5,
-    parsedText: true
+    parsedText: true,
+    text: 5
   })
 
   expect(result.success).toBe(false)

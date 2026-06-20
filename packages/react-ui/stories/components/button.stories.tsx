@@ -1,14 +1,9 @@
-import { Button } from '@/index'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Button } from '@/index'
 import { MenuIcon } from 'lucide-react'
 import { fn } from 'storybook/test'
 
 const meta = {
-  title: 'Components/Button',
-  component: Button,
-  parameters: { layout: 'centered' },
-  tags: ['autodocs'],
-  args: { onClick: fn() },
   argTypes: {
     size: {
       control: 'radio',
@@ -25,7 +20,12 @@ const meta = {
         'destructive'
       ]
     }
-  }
+  },
+  args: { onClick: fn() },
+  component: Button,
+  parameters: { layout: 'centered' },
+  tags: ['autodocs'],
+  title: 'Components/Button'
 } satisfies Meta<typeof Button>
 
 export default meta

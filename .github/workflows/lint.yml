@@ -18,23 +18,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v6
-
-      - name: Setup Node with cache
-        uses: actions/setup-node@v6
+      - name: Setup Vite+
+        uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: 24
-          cache: 'pnpm'
+          node-version: '24'
+          cache: true
 
-      - name: Install Dependencies
-        run: pnpm install
-
-      - name: Lint
-        run: pnpm run lint:fix
-
-      - name: Format
-        run: pnpm run prettier:fix
+      - name: Format and Lint
+        run: vp check --fix
 
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v7

@@ -1,5 +1,5 @@
 import { BasicRule, Message, Schema } from '@/index'
-import { expect, test } from 'vitest'
+import { expect, test } from 'vite-plus/test'
 
 class FooRule extends BasicRule {
   test(value: unknown): true | Message {
@@ -13,6 +13,7 @@ class FooRule extends BasicRule {
 
 class BarRule extends BasicRule<string> {
   sanitize(value: unknown): string | null {
+    // oxlint-disable-next-line typescript/no-base-to-string
     return value ? String(value).trim() : null
   }
 
@@ -39,8 +40,8 @@ test('basic rule', () => {
 
   const schema2 = new Schema(
     {
-      foo: new FooRule(),
-      bar: new BarRule()
+      bar: new BarRule(),
+      foo: new FooRule()
     },
     {
       postValidation: [
@@ -58,7 +59,7 @@ test('basic rule', () => {
     }
   )
 
-  const foobarResult = schema2.validate({ foo: 'foo', bar: 'bar' })
+  const foobarResult = schema2.validate({ bar: 'bar', foo: 'foo' })
 
   expect(foobarResult.success).toBe(false)
   expect(foobarResult.errors?.foo.text).toBe('"foo" is different from "bar"!')

@@ -1,14 +1,14 @@
-import { Textarea } from '@/index'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Textarea } from '@/index'
 
 const meta = {
-  title: 'Components/Textarea',
+  args: {
+    placeholder: 'Text goes here...'
+  },
   component: Textarea,
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
-  args: {
-    placeholder: 'Text goes here...'
-  }
+  title: 'Components/Textarea'
 } satisfies Meta<typeof Textarea>
 
 export default meta

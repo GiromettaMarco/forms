@@ -1,12 +1,12 @@
-import { defineConfig } from 'vitest/config'
+import type { UserConfig } from 'vite-plus'
 
-export const vitestConfig = defineConfig({
+export default {
   test: {
     coverage: {
-      provider: 'istanbul',
       enabled: true,
       include: ['src/**'],
+      provider: 'istanbul',
       reporter: ['text', 'json-summary']
     }
   }
-})
+} satisfies UserConfig

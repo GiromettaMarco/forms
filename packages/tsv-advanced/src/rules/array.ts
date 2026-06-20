@@ -1,5 +1,5 @@
-import { AdvancedRule } from '@/advanced-rule'
 import type { AdvancedRuleOptions, ParseEmpty } from '@/types'
+import { AdvancedRule } from '@/advanced-rule'
 import { Message } from '@gmcode/tsv-core'
 
 interface Messages {

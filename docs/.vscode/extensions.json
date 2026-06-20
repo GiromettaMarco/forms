@@ -1,11 +1,10 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
     "antfu.file-nesting",
     "vitest.explorer",
     "fanaticpythoner.better-todo-tree",
     "bradlc.vscode-tailwindcss",
-    "unifiedjs.vscode-mdx"
+    "unifiedjs.vscode-mdx",
+    "oxc.oxc-vscode"
   ]
 }

@@ -23,6 +23,9 @@
     "*.json": "jsonc"
   },
 
+  // Allow to switch to the workspace version of TypeScript
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+
   // Better Todo Tree
   "better-todo-tree.general.tags": [
     "TODO",
@@ -79,5 +82,45 @@
   "better-todo-tree.tree.showBadges": true,
   "better-todo-tree.regex.regex": "(\\*|//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*@($TAGS).*(\\n\\s*//\\s{2,}.*)*",
   "better-todo-tree.regex.regexCaseSensitive": false,
-  "better-todo-tree.general.tagGroups": {}
+  "better-todo-tree.general.tagGroups": {},
+
+  // Vite Plus
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "oxc.fmt.configPath": "./vite.config.ts",
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit"
+  },
+  "npm.scriptRunner": "vp",
+
+  // @see https://vite.dev/config/#debugging-the-config-file-on-vs-code
+  "debug.javascript.terminalOptions": {
+    "resolveSourceMapLocations": [
+      "${workspaceFolder}/**",
+      "!**/node_modules/**",
+      "**/node_modules/.vite-temp/**"
+    ]
+  }
 }

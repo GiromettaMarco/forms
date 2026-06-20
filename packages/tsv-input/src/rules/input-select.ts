@@ -1,7 +1,7 @@
 import {
   InputRule,
-  inputRuleMessages,
-  type InputRuleOptions
+  type InputRuleOptions,
+  inputRuleMessages
 } from '@/input-rule'
 import { Message } from '@gmcode/tsv-core'
 

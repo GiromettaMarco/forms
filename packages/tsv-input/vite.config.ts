@@ -1,8 +1,8 @@
-import { sharedConfig } from '@gmcode/vite-config'
+import defaultConfig from '../../tooling/vite/default'
+import { mergeConfig } from 'vite-plus'
 import { resolve } from 'path'
-import { mergeConfig } from 'vite'
 
-export default mergeConfig(sharedConfig, {
+export default mergeConfig(defaultConfig, {
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')

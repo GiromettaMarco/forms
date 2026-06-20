@@ -54,6 +54,7 @@ export class InputRule<
   }
 
   sanitize(value: unknown): string | null {
+    // oxlint-disable-next-line typescript/no-base-to-string
     return value ? String(value).trim() : null
   }
 

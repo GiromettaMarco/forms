@@ -1,7 +1,7 @@
+import { type VariantProps, cva } from 'class-variance-authority'
 import { Label } from '@/components/label'
 import { Separator } from '@/components/separator'
 import { cn } from '@/lib/utils'
-import { cva, type VariantProps } from 'class-variance-authority'
 import { useMemo } from 'react'
 
 function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
@@ -54,9 +54,11 @@ function FieldGroup({ className, ...props }: React.ComponentProps<'div'>) {
 const fieldVariants = cva(
   'group/field flex w-full gap-2 data-[invalid=true]:text-destructive',
   {
+    defaultVariants: {
+      orientation: 'vertical'
+    },
     variants: {
       orientation: {
-        vertical: ['flex-col [&>*]:w-full [&>.sr-only]:w-auto'],
         horizontal: [
           'flex-row items-center',
           '[&>[data-slot=field-label]]:flex-auto',
@@ -66,11 +68,9 @@ const fieldVariants = cva(
           'flex-col @md/field-group:flex-row @md/field-group:items-center [&>*]:w-full @md/field-group:[&>*]:w-auto [&>.sr-only]:w-auto',
           '@md/field-group:[&>[data-slot=field-label]]:flex-auto',
           '@md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px'
-        ]
+        ],
+        vertical: ['flex-col [&>*]:w-full [&>.sr-only]:w-auto']
       }
-    },
-    defaultVariants: {
-      orientation: 'vertical'
     }
   }
 )

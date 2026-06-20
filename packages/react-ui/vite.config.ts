@@ -1,12 +1,12 @@
-import { sharedConfig } from '@gmcode/vite-config'
+import defaultConfig from '../../tooling/vite/default'
+import { fileURLToPath } from 'node:url'
+import { mergeConfig } from 'vite-plus'
+import path from 'node:path'
+import { playwright } from 'vite-plus/test/browser-playwright'
+import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react'
-import { playwright } from '@vitest/browser-playwright'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { resolve } from 'path'
-import { mergeConfig } from 'vite'
 
 const dirname =
   typeof __dirname !== 'undefined'
@@ -16,7 +16,7 @@ const dirname =
 /** Vitest or Storybook environment */
 const testing = process.env.VITEST || process.argv[1]?.includes('storybook')
 
-export default mergeConfig(sharedConfig, {
+export default mergeConfig(defaultConfig, {
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
@@ -33,13 +33,13 @@ export default mergeConfig(sharedConfig, {
             : null
         ],
         test: {
-          name: 'storybook',
           browser: {
             enabled: true,
             headless: true,
-            provider: playwright({}),
-            instances: [{ browser: 'chromium' }]
-          }
+            instances: [{ browser: 'chromium' }],
+            provider: playwright({})
+          },
+          name: 'storybook'
         }
       }
     ]
