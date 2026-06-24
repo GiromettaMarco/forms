@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/tsv-core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Typescript schema validations with i18n support. Core package for tsv-advanced and tsv-input.",
   "keywords": [
     "core",
@@ -30,7 +30,6 @@
   },
   "scripts": {
     "build": "vp pack --minify",
-    "preinstall": "npx only-allow pnpm",
     "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
   },
   "devDependencies": {
@@ -40,6 +39,5 @@
     "vite": "catalog:",
     "vite-plus": "catalog:",
     "vitest": "catalog:"
-  },
-  "packageManager": "pnpm@11.5.0"
+  }
 }
