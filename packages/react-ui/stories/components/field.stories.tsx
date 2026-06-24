@@ -143,6 +143,28 @@ export const Error: Story = {
         ]}
       />
     </Field>
+    <Field>
+      <FieldLabel htmlFor="single">Single</FieldLabel>
+      <Input
+        aria-invalid
+        autoComplete="off"
+        id="single"
+        name="single"
+      />
+      <FieldError errors={{ message: 'Single error object' }} />
+    </Field>
+    <Field>
+      <FieldLabel htmlFor="empty">Empty Array</FieldLabel>
+      <Input
+        autoComplete="off"
+        id="empty"
+        name="empty"
+      />
+      <FieldError errors={[]} />
+      <FieldDescription>
+        An empty array of errors doesn't get rendered.
+      </FieldDescription>
+    </Field>
   </FieldGroup>
 </FieldSet>`
       }
@@ -211,6 +233,28 @@ export const Error: Story = {
               { message: 'A repeated error appears only once' }
             ]}
           />
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="single">Single</FieldLabel>
+          <Input
+            aria-invalid
+            autoComplete="off"
+            id="single"
+            name="single"
+          />
+          <FieldError errors={{ message: 'Single error object' }} />
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="empty">Empty Array</FieldLabel>
+          <Input
+            autoComplete="off"
+            id="empty"
+            name="empty"
+          />
+          <FieldError errors={[]} />
+          <FieldDescription>
+            An empty array of errors doesn't get rendered.
+          </FieldDescription>
         </Field>
       </FieldGroup>
     </FieldSet>

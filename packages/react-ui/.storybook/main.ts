@@ -10,6 +10,9 @@ const config: StorybookConfig = {
   core: {
     disableTelemetry: true
   },
+  features: {
+    sidebarOnboardingChecklist: false
+  },
   framework: '@storybook/react-vite',
   stories: [
     '../stories/**/*.mdx',
