@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/tsv-advanced",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Fully typed Typescript schema validations with i18n support.",
   "keywords": [
     "i18n",
@@ -30,7 +30,6 @@
   },
   "scripts": {
     "build": "vp pack --minify",
-    "preinstall": "npx only-allow pnpm",
     "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
   },
   "dependencies": {
@@ -42,6 +41,5 @@
     "vite": "catalog:",
     "vite-plus": "catalog:",
     "vitest": "catalog:"
-  },
-  "packageManager": "pnpm@11.5.0"
+  }
 }

@@ -7,8 +7,8 @@ settings:
 catalogs:
   default:
     '@gmcode/tsv-core':
-      specifier: ^0.1.1
-      version: 0.1.1
+      specifier: ^0.1.2
+      version: 0.1.2
 
 overrides:
   '@storybook/addon-a11y': ^10.4.6
@@ -141,7 +141,7 @@ importers:
     dependencies:
       '@gmcode/tsv-core':
         specifier: 'catalog:'
-        version: 0.1.1
+        version: 0.1.2
     devDependencies:
       '@vitest/coverage-istanbul':
         specifier: ^4.1.9
@@ -184,7 +184,7 @@ importers:
     dependencies:
       '@gmcode/tsv-core':
         specifier: 'catalog:'
-        version: 0.1.1
+        version: 0.1.2
       '@hookform/resolvers':
         specifier: ^5.4.0
         version: 5.4.0(react-hook-form@7.76.1(react@19.2.7))
@@ -236,7 +236,7 @@ importers:
     dependencies:
       '@gmcode/tsv-core':
         specifier: 'catalog:'
-        version: 0.1.1
+        version: 0.1.2
     devDependencies:
       '@vitest/coverage-istanbul':
         specifier: ^4.1.9
@@ -586,8 +586,8 @@ packages:
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
 
-  '@gmcode/tsv-core@0.1.1':
-    resolution: {integrity: sha512-HeDqyPOPkdhoAHGCdDoweG3Tsc2r3ZJ5OBnv462CyIIJJjKFHq9oCLMl6EC++6M20UddMffnaBxHFiHTJee/jA==}
+  '@gmcode/tsv-core@0.1.2':
+    resolution: {integrity: sha512-aGitf8FoeXJT1YE0EBvUan2tSsnJXlxxAM2a1tYZ2NVbbmxB/JIL537NKo8vSJHKRTwHynsHRDRPuiW6AQ1/zQ==}
 
   '@hookform/resolvers@5.4.0':
     resolution: {integrity: sha512-EIsqr/t/qbinPIhGjMdtvutIN1Kk4uwbROE9/UQ93CAVGR7GkA7Y92+fX80OzXi/OB67jVFYwKGO1WzkxmkFZw==}
@@ -3798,7 +3798,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.11': {}
 
-  '@gmcode/tsv-core@0.1.1': {}
+  '@gmcode/tsv-core@0.1.2': {}
 
   '@hookform/resolvers@5.4.0(react-hook-form@7.76.1(react@19.2.7))':
     dependencies:

@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/tsv-hookform",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Custom react-hook-form resolver for @gmcode/tsv-input.",
   "keywords": [
     "i18n",
@@ -30,7 +30,6 @@
   },
   "scripts": {
     "build": "vp pack --minify",
-    "preinstall": "npx only-allow pnpm",
     "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
   },
   "dependencies": {
@@ -54,6 +53,5 @@
   "peerDependencies": {
     "@gmcode/tsv-core": "catalog:",
     "react-hook-form": "^7.71.0"
-  },
-  "packageManager": "pnpm@11.5.0"
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/tsv-input",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Form input schema validations with i18n support.",
   "keywords": [
     "forms",
@@ -30,7 +30,6 @@
   },
   "scripts": {
     "build": "vp pack --minify",
-    "preinstall": "npx only-allow pnpm",
     "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
   },
   "dependencies": {
@@ -42,6 +41,5 @@
     "vite": "catalog:",
     "vite-plus": "catalog:",
     "vitest": "catalog:"
-  },
-  "packageManager": "pnpm@11.5.0"
+  }
 }
