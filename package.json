@@ -11,6 +11,7 @@
     "prepare": "vp config"
   },
   "devDependencies": {
+    "@storybook/addon-vitest": "catalog:",
     "@types/node": "^24.12.4",
     "@vitest/browser-playwright": "catalog:",
     "playwright": "catalog:",
