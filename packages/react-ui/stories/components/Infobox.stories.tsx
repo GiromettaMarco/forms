@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Infobox } from '@/components/infobox'
+import { Infobox } from '@/index'
 
 const meta = {
   argTypes: {
