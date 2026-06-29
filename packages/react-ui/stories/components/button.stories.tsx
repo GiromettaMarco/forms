@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect, fn, waitFor } from 'storybook/test'
 import { Button } from '@/index'
 import { MenuIcon } from 'lucide-react'
-import { fn } from 'storybook/test'
 
 const meta = {
   argTypes: {
@@ -35,6 +35,10 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     children: 'Click Me'
+  },
+  play: async ({ args, canvas, userEvent }) => {
+    await userEvent.click(canvas.getByRole('button'))
+    await waitFor(() => expect(args.onClick).toHaveBeenCalled())
   }
 }
 

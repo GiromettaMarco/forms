@@ -63,7 +63,7 @@ export const Textarea: Story = {
   <InputGroupTextarea
     className="min-h-50"
     id="textarea-code-32"
-    placeholder="console.log('Hello, world!');"
+    placeholder="alert('Hello, world!');"
   />
   <InputGroupAddon
     align="block-end"
@@ -109,7 +109,7 @@ export const Textarea: Story = {
       <InputGroupTextarea
         className="min-h-50"
         id="textarea-code-32"
-        placeholder="console.log('Hello, world!');"
+        placeholder="alert('Hello, world!');"
       />
       <InputGroupAddon
         align="block-end"
