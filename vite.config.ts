@@ -3,8 +3,22 @@ import { defineConfig } from 'vite-plus'
 export default defineConfig({
   fmt: {
     htmlWhitespaceSensitivity: 'css',
-    ignorePatterns: ['composer.lock', 'pnpm-lock.yaml', '**/dist'],
+    ignorePatterns: [
+      'composer.lock',
+      'pnpm-lock.yaml',
+      '**/dist',
+      'packages/forms/.storybook/mocks/@inertiajs/core.js'
+    ],
     overrides: [
+      {
+        files: ['packages/forms/**'],
+        options: {
+          sortTailwindcss: {
+            functions: ['clsx', 'cn', 'cva'],
+            stylesheet: './packages/forms/app/global.css'
+          }
+        }
+      },
       {
         files: ['packages/react-ui/**'],
         options: {
@@ -32,7 +46,12 @@ export default defineConfig({
     env: {
       builtin: true
     },
-    ignorePatterns: ['**/dist', 'node_modules', 'coverage'],
+    ignorePatterns: [
+      '**/dist',
+      'node_modules',
+      'coverage',
+      'packages/forms/.storybook/mocks/@inertiajs/core.js'
+    ],
     jsPlugins: [
       {
         name: 'vite-plus',
@@ -45,7 +64,11 @@ export default defineConfig({
     },
     overrides: [
       {
-        files: ['packages/react-ui/**', 'packages/tsv-hookform/**'],
+        files: [
+          'packages/forms/**',
+          'packages/react-ui/**',
+          'packages/tsv-hookform/**'
+        ],
         plugins: ['react'],
         rules: {
           'exhaustive-deps': 'error',
