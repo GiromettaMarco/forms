@@ -3,34 +3,43 @@ packages:
   - packages/*
 
 allowBuilds:
-  '@gmcode/tsv-core': true
-  esbuild: true
+  esbuild: false
+  msw: false
 minimumReleaseAgeExclude:
+  - '@gmcode/tsv-advanced'
   - '@gmcode/tsv-core'
-  - '@voidzero-dev/vite-plus-core@0.2.1'
-  - '@voidzero-dev/vite-plus-darwin-arm64@0.2.1'
-  - '@voidzero-dev/vite-plus-darwin-x64@0.2.1'
-  - '@voidzero-dev/vite-plus-linux-arm64-gnu@0.2.1'
-  - '@voidzero-dev/vite-plus-linux-arm64-musl@0.2.1'
-  - '@voidzero-dev/vite-plus-linux-x64-gnu@0.2.1'
-  - '@voidzero-dev/vite-plus-linux-x64-musl@0.2.1'
-  - '@voidzero-dev/vite-plus-win32-arm64-msvc@0.2.1'
-  - '@voidzero-dev/vite-plus-win32-x64-msvc@0.2.1'
-  - vite-plus@0.2.1
+  - '@gmcode/tsv-hookform'
+  - '@gmcode/tsv-input'
 
 catalogMode: prefer
 catalog:
+  '@gmcode/tsv-advanced': '^0.1.2'
   '@gmcode/tsv-core': '^0.1.2'
+  '@gmcode/tsv-hookform': '^0.1.2'
+  '@gmcode/tsv-input': '^0.1.2'
   '@storybook/addon-a11y': '^10.4.6'
   '@storybook/addon-docs': '^10.4.6'
   '@storybook/addon-themes': '^10.4.6'
   '@storybook/addon-vitest': '^10.4.6'
   '@storybook/react-vite': '^10.4.6'
+  '@tailwindcss/vite': '^4.3.0'
+  '@types/react': '^19.2.17'
+  '@types/react-dom': '^19.2.3'
   '@vitest/browser-playwright': ^4.1.9
   '@vitest/coverage-istanbul': '^4.1.9'
   eslint-plugin-storybook: ^10.4.6
+  lucide-react: '^1.16.0'
+  msw: ^2.14.6
+  msw-storybook-addon: ^2.0.7
   playwright: ^1.60.0
+  radix-ui: '^1.4.3'
+  react: '^19.2.4'
+  react-day-picker: '^10.0.1'
+  react-dom: '^19.2.4'
+  react-hook-form: '^7.71.2'
   storybook: '^10.4.6'
+  tailwind-merge: '^3.6.0'
+  tailwindcss: '^4.3.0'
   typescript: '^6.0.3'
   vite: ^8.0.16
   vitest: ^4.1.9
@@ -41,12 +50,26 @@ overrides:
   '@storybook/addon-themes': 'catalog:'
   '@storybook/addon-vitest': 'catalog:'
   '@storybook/react-vite': 'catalog:'
+  '@tailwindcss/vite': 'catalog:'
+  '@types/react': 'catalog:'
+  '@types/react-dom': 'catalog:'
   '@vitest/browser-playwright': 'catalog:'
   '@vitest/coverage-istanbul': 'catalog:'
   eslint-plugin-storybook: 'catalog:'
+  lucide-react: 'catalog:'
+  msw: 'catalog:'
+  msw-storybook-addon: 'catalog:'
   playwright: 'catalog:'
+  radix-ui: 'catalog:'
+  react: 'catalog:'
+  react-day-picker: 'catalog:'
+  react-dom: 'catalog:'
+  react-hook-form: 'catalog:'
   storybook: 'catalog:'
+  tailwind-merge: 'catalog:'
+  tailwindcss: 'catalog:'
   typescript: 'catalog:'
   vite: 'catalog:'
   vitest: 'catalog:'
   vite-plus: 'catalog:'
+  '@gmcode/react-ui': link:packages/react-ui

@@ -1,5 +1,5 @@
 {
-  "name": "forms",
+  "name": "forms-monorepo",
   "private": true,
   "workspaces": [
     "packages/*",
@@ -9,6 +9,9 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "vp config"
+  },
+  "dependencies": {
+    "@gmcode/react-ui": "link:packages/react-ui"
   },
   "devDependencies": {
     "@storybook/addon-vitest": "catalog:",

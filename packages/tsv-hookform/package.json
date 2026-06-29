@@ -52,6 +52,6 @@
   },
   "peerDependencies": {
     "@gmcode/tsv-core": "catalog:",
-    "react-hook-form": "^7.71.0"
+    "react-hook-form": "catalog:"
   }
 }
