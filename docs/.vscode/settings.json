@@ -34,7 +34,8 @@
     "FIXME",
     "BUG",
     "[ ]",
-    "[x]"
+    "[x]",
+    "MOCK"
   ],
   "better-todo-tree.highlights.customHighlight": {
     "TODO": {
@@ -69,6 +70,11 @@
       "icon": "check",
       "background": "#008000",
       "iconColour": "#008000"
+    },
+    "MOCK": {
+      "icon": "issue-reopened",
+      "background": "#DC7F14",
+      "iconColour": "#DC7F14"
     }
   },
   "better-todo-tree.highlights.defaultHighlight": {
@@ -107,6 +113,9 @@
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
+  "[tailwindcss]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
   "oxc.fmt.configPath": "./vite.config.ts",
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
@@ -122,5 +131,8 @@
       "!**/node_modules/**",
       "**/node_modules/.vite-temp/**"
     ]
-  }
+  },
+
+  // Spelling
+  "cSpell.words": ["hookform", "inertiajs", "lucide"]
 }
