@@ -1,4 +1,5 @@
 export { InputRule } from '@/input-rule'
+export { InputCheckboxRule } from '@/rules/input-checkbox'
 export { InputColorRule } from '@/rules/input-color'
 export { InputEmailRule } from '@/rules/input-email'
 export { InputNumberRule } from '@/rules/input-number'
