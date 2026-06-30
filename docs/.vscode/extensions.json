@@ -1,10 +1,10 @@
 {
   "recommendations": [
     "antfu.file-nesting",
-    "vitest.explorer",
     "fanaticpythoner.better-todo-tree",
     "bradlc.vscode-tailwindcss",
     "unifiedjs.vscode-mdx",
-    "oxc.oxc-vscode"
+    "voidzero.vite-plus-extension-pack",
+    "streetsidesoftware.code-spell-checker"
   ]
 }
