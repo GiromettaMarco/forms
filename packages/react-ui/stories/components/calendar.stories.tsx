@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    className: 'w-60 rounded-md border',
+    className: 'w-72 rounded-md border',
     fixedWeeks: true,
     mode: 'single'
   }
@@ -23,7 +23,7 @@ export const Default: Story = {
 
 export const Italian: Story = {
   args: {
-    className: 'w-60 rounded-md border',
+    className: 'w-72 rounded-md border',
     fixedWeeks: true,
     locale: it,
     mode: 'single'

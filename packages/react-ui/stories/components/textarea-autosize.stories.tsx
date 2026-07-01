@@ -8,6 +8,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 const meta = {
   args: {
+    className: 'min-w-72',
     placeholder: 'Autoresize textarea...'
   },
   component: TextareaAutosize,
@@ -29,36 +30,15 @@ export const Invalid: Story = {
 }
 
 export const Group: Story = {
-  name: 'Input Group',
-  parameters: {
-    docs: {
-      source: {
-        code: `<InputGroup>
-  <TextareaAutosize
-    aria-label="textarea autosize"
-    className="border-none shadow-none focus-visible:border-none focus-visible:ring-0 dark:bg-transparent"
-    data-slot="input-group-control"
-  />
-  <InputGroupAddon align="block-end">
-    <InputGroupButton
-      className="ml-auto"
-      size="sm"
-      variant="default"
-    >
-      Submit
-    </InputGroupButton>
-  </InputGroupAddon>
-</InputGroup>`
-      }
-    }
+  args: {
+    className:
+      'min-w-72 border-none shadow-none focus-visible:border-none focus-visible:ring-0 dark:bg-transparent',
+    'data-slot': 'input-group-control'
   },
-  render: () => (
+  name: 'Input Group',
+  render: (props) => (
     <InputGroup>
-      <TextareaAutosize
-        aria-label="textarea autosize"
-        className="border-none shadow-none focus-visible:border-none focus-visible:ring-0 dark:bg-transparent"
-        data-slot="input-group-control"
-      />
+      <TextareaAutosize {...props} />
       <InputGroupAddon align="block-end">
         <InputGroupButton
           className="ml-auto"

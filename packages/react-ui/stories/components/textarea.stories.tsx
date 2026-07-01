@@ -15,17 +15,22 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    className: 'min-w-72'
+  }
+}
 
 export const Invalid: Story = {
   args: {
-    'aria-invalid': true
+    'aria-invalid': true,
+    className: 'min-w-72'
   }
 }
 
 export const Custom: Story = {
   args: {
-    className: 'text-lg font-bold',
+    className: 'min-w-72 text-lg font-bold',
     rows: 4
   }
 }
