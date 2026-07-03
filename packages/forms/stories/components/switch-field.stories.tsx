@@ -1,5 +1,5 @@
 import { Form, Submit, SwitchField } from '@/index'
-import { InputRule, Schema } from '@gmcode/tsv-input'
+import { InputCheckboxRule, Schema } from '@gmcode/tsv-input'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, waitFor } from 'storybook/test'
 import { formRoute, handler200 } from '../msw'
@@ -26,12 +26,7 @@ const meta = {
   render: ({ ...props }) => (
     <Form
       defaults={{ switch: '' }}
-      schema={
-        new Schema({
-          // @TODO switch: new InputCheckboxRule()
-          switch: new InputRule({ optional: true })
-        })
-      }
+      schema={new Schema({ switch: new InputCheckboxRule() })}
       route={formRoute}
     >
       {({ form, loading }) => (

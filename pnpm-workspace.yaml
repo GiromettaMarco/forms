@@ -16,7 +16,7 @@ catalog:
   '@gmcode/tsv-advanced': '^0.1.2'
   '@gmcode/tsv-core': '^0.1.2'
   '@gmcode/tsv-hookform': '^0.1.2'
-  '@gmcode/tsv-input': '^0.1.2'
+  '@gmcode/tsv-input': '^0.2.0'
   '@storybook/addon-a11y': '^10.4.6'
   '@storybook/addon-docs': '^10.4.6'
   '@storybook/addon-themes': '^10.4.6'

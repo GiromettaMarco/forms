@@ -16,6 +16,7 @@ import {
   TextareaField
 } from '@/index'
 import {
+  InputCheckboxRule,
   InputEmailRule,
   InputNumberRule,
   InputRule,
@@ -41,14 +42,12 @@ const schema = new Schema(
     password: new InputTextRule({ minChars: 8 }),
     password_confirm: new InputTextRule({ minChars: 8 }),
     policy: new InputRule(),
-    // @TODO remember: new InputCheckboxRule()
-    remember: new InputRule({ optional: true }),
+    remember: new InputCheckboxRule(),
     role: new InputSelectRule({
       optional: true,
       options: ['editor', 'reader']
     }),
-    // @TODO switch: new InputCheckboxRule()
-    switch: new InputRule({ optional: true }),
+    switch: new InputCheckboxRule(),
     title: new InputSelectRule({ optional: true, options: ['mr', 'mrs'] }),
     token: new InputRule()
   },

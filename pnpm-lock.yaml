@@ -13,8 +13,8 @@ catalogs:
       specifier: ^0.1.2
       version: 0.1.2
     '@gmcode/tsv-input':
-      specifier: ^0.1.2
-      version: 0.1.2
+      specifier: ^0.2.0
+      version: 0.2.0
     react-textarea-autosize:
       specifier: ^8.5.9
       version: 8.5.9
@@ -89,7 +89,7 @@ importers:
         version: 0.1.2(@gmcode/tsv-core@0.1.2)(react-hook-form@7.76.1(react@19.2.7))
       '@gmcode/tsv-input':
         specifier: 'catalog:'
-        version: 0.1.2
+        version: 0.2.0
       '@inertiajs/react':
         specifier: ^3.5.0
         version: 3.5.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -734,8 +734,8 @@ packages:
       '@gmcode/tsv-core': ^0.1.2
       react-hook-form: ^7.71.2
 
-  '@gmcode/tsv-input@0.1.2':
-    resolution: {integrity: sha512-RgMG91aMwMvIZLf/YIOBsoxvBsLuc5db6vJwHwdKsi7/No6DdDTdlyD5/2odFIs/9UcPSk7GtpKx7AZxdsSDVw==}
+  '@gmcode/tsv-input@0.2.0':
+    resolution: {integrity: sha512-YccbksdLyB3UJH15/NKTBJ/BOcEL9l6nb/Cz78MU3wpUPXiSpdT0aLb+eldviOd/hpvco2xcxNcriO+4hNwWKQ==}
 
   '@hookform/resolvers@5.4.0':
     resolution: {integrity: sha512-EIsqr/t/qbinPIhGjMdtvutIN1Kk4uwbROE9/UQ93CAVGR7GkA7Y92+fX80OzXi/OB67jVFYwKGO1WzkxmkFZw==}
@@ -4181,7 +4181,7 @@ snapshots:
       '@hookform/resolvers': 5.4.0(react-hook-form@7.76.1(react@19.2.7))
       react-hook-form: 7.76.1(react@19.2.7)
 
-  '@gmcode/tsv-input@0.1.2':
+  '@gmcode/tsv-input@0.2.0':
     dependencies:
       '@gmcode/tsv-core': 0.1.2
 
