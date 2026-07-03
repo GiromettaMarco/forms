@@ -15,7 +15,7 @@ export default defineConfig({
         options: {
           sortTailwindcss: {
             functions: ['clsx', 'cn', 'cva'],
-            stylesheet: './packages/forms/app/global.css'
+            stylesheet: './packages/forms/.storybook/theme.css'
           }
         }
       },
@@ -24,7 +24,7 @@ export default defineConfig({
         options: {
           sortTailwindcss: {
             functions: ['clsx', 'cn', 'cva'],
-            stylesheet: './packages/react-ui/app/global.css'
+            stylesheet: './tooling/themes/default.css'
           }
         }
       }

@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import '../app/global.css'
+import './theme.css'
 import type { Preview, ReactRenderer } from '@storybook/react-vite'
 import { initialize, mswLoader } from 'msw-storybook-addon'
 import DocsWithTheme from './decorators/docs-with-theme'

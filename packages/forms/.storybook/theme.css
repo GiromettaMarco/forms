@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@source '../node_modules/@gmcode/react-ui';
+
+@import '../../../tooling/themes/default.css';

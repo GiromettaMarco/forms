@@ -1,4 +1,4 @@
-import '../app/global.css'
+import '../../../tooling/themes/default.css'
 import type { Preview, ReactRenderer } from '@storybook/react-vite'
 import DocsWithTheme from './decorators/docs-with-theme'
 import { withThemeByClassName } from '@storybook/addon-themes'
