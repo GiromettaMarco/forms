@@ -4,6 +4,11 @@
 
 General purpose React UI components with Tailwind CSS and Radix UI compatible with shadcn projects.
 
+## Requirements
+
+- React and react-dom 19+
+- Tailwind CSS 4+
+
 ## Installation
 
 ```
@@ -23,3 +28,7 @@ function Page() {
   )
 }
 ```
+
+## CSS themes
+
+- [Default](https://github.com/GiromettaMarco/forms/blob/master/tooling/themes/default.css)
