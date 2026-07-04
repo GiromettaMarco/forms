@@ -37,7 +37,7 @@
     "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
   },
   "dependencies": {
-    "@gmcode/react-ui": "0.1.0",
+    "@gmcode/react-ui": "catalog:",
     "@gmcode/tsv-core": "catalog:",
     "@gmcode/tsv-hookform": "catalog:",
     "@gmcode/tsv-input": "catalog:",

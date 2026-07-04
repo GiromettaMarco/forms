@@ -6,6 +6,7 @@ allowBuilds:
   esbuild: false
   msw: false
 minimumReleaseAgeExclude:
+  - '@gmcode/react-ui'
   - '@gmcode/tsv-advanced'
   - '@gmcode/tsv-core'
   - '@gmcode/tsv-hookform'
@@ -13,6 +14,7 @@ minimumReleaseAgeExclude:
 
 catalogMode: prefer
 catalog:
+  '@gmcode/react-ui': ^0.3.0
   '@gmcode/tsv-advanced': ^0.1.2
   '@gmcode/tsv-core': ^0.1.2
   '@gmcode/tsv-hookform': ^0.1.2
@@ -61,4 +63,3 @@ catalog:
   react-textarea-autosize: ^8.5.9
 overrides:
   vite-plus: 'catalog:'
-  '@gmcode/react-ui': link:packages/react-ui

@@ -10,9 +10,6 @@
     "preinstall": "npx only-allow pnpm",
     "prepare": "vp config"
   },
-  "dependencies": {
-    "@gmcode/react-ui": "link:packages/react-ui"
-  },
   "devDependencies": {
     "@storybook/addon-vitest": "catalog:",
     "@types/node": "^24.12.4",
