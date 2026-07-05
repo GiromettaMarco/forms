@@ -4,6 +4,7 @@ import './theme.css'
 import type { Preview, ReactRenderer } from '@storybook/react-vite'
 import { initialize, mswLoader } from 'msw-storybook-addon'
 import DocsWithTheme from './decorators/docs-with-theme'
+import { WithI18next } from './decorators/with-i18next'
 import { withThemeByClassName } from '@storybook/addon-themes'
 
 // @see https://github.com/mswjs/msw-storybook-addon#configuring-msw
@@ -14,6 +15,7 @@ initialize({
 
 const preview: Preview = {
   decorators: [
+    WithI18next,
     withThemeByClassName<ReactRenderer>({
       defaultTheme: 'dark',
       themes: {
@@ -22,6 +24,21 @@ const preview: Preview = {
       }
     })
   ],
+
+  globalTypes: {
+    locale: {
+      description: 'Internationalization locale',
+      name: 'Locale',
+      toolbar: {
+        icon: 'globe',
+        items: [
+          { right: '🇬🇧', title: 'English', value: 'en' },
+          { right: '🇮🇹', title: 'Italiano', value: 'it' }
+        ],
+        title: 'locale'
+      }
+    }
+  },
 
   loaders: [mswLoader],
 

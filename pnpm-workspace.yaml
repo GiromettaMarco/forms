@@ -40,6 +40,7 @@ catalog:
   date-fns: ^4.4.0
   es-toolkit: ^1.33.0
   eslint-plugin-storybook: ^10.4.6
+  i18next: ^26.3.4
   jsdom: ^29.1.1
   laravel-precognition: ^2.0.0
   lucide-react: ^1.16.0
@@ -51,6 +52,8 @@ catalog:
   react-day-picker: ^10.0.1
   react-dom: ^19.2.7
   react-hook-form: ^7.71.2
+  react-i18next: ^17.0.8
+  react-textarea-autosize: ^8.5.9
   sonner: ^2.0.7
   storybook: ^10.4.6
   tailwind-merge: ^3.6.0
@@ -60,6 +63,5 @@ catalog:
   vite: ^8.0.16
   vitest: ^4.1.9
   vite-plus: ^0.2.1
-  react-textarea-autosize: ^8.5.9
 overrides:
   vite-plus: 'catalog:'
