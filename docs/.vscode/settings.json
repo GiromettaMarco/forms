@@ -23,7 +23,7 @@
     "*.json": "jsonc"
   },
 
-  // Allow to switch to the workspace version of TypeScript
+  // Allow switching to the workspace version of TypeScript
   "js/ts.tsdk.path": "node_modules/typescript/lib",
 
   // Better Todo Tree
@@ -134,5 +134,17 @@
   },
 
   // Spelling
-  "cSpell.words": ["hookform", "inertiajs", "lucide"]
+  "cSpell.words": [
+    "Autoresize",
+    "autosize",
+    "clsx",
+    "dismissable",
+    "hookform",
+    "inertiajs",
+    "jsdom",
+    "Lngs",
+    "lucide",
+    "sonner",
+    "vitejs"
+  ]
 }
