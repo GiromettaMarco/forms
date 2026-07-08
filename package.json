@@ -11,9 +11,15 @@
     "prepare": "vp config"
   },
   "devDependencies": {
+    "@babel/core": "catalog:",
+    "@rolldown/plugin-babel": "catalog:",
     "@storybook/addon-vitest": "catalog:",
-    "@types/node": "^24.12.4",
+    "@tailwindcss/vite": "catalog:",
+    "@types/babel__core": "catalog:",
+    "@types/node": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
     "@vitest/browser-playwright": "catalog:",
+    "babel-plugin-react-compiler": "catalog:",
     "playwright": "catalog:",
     "tailwindcss": "catalog:",
     "tw-animate-css": "catalog:",

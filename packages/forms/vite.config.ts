@@ -1,13 +1,11 @@
 import { alias } from './.storybook/alias'
-import defaultConfig from '../../tooling/vite/default'
 import { mergeConfig } from 'vite-plus'
 import { playwright } from 'vite-plus/test/browser-playwright'
-import react from '@vitejs/plugin-react'
+import reactConfig from '../../tooling/vite/react'
 import { resolve } from 'path'
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
-import tailwindcss from '@tailwindcss/vite'
 
-export default mergeConfig(defaultConfig, {
+export default mergeConfig(reactConfig, {
   pack: {
     entry: {
       index: './src/index.ts',
@@ -15,7 +13,6 @@ export default mergeConfig(defaultConfig, {
     },
     exports: true
   },
-  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')

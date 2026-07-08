@@ -14,6 +14,7 @@ minimumReleaseAgeExclude:
 
 catalogMode: prefer
 catalog:
+  '@babel/core': ^8.0.1
   '@gmcode/react-ui': ^0.3.0
   '@gmcode/tsv-advanced': ^0.1.2
   '@gmcode/tsv-core': ^0.1.2
@@ -21,20 +22,24 @@ catalog:
   '@gmcode/tsv-input': ^0.2.0
   '@inertiajs/core': ^3.5.0
   '@inertiajs/react': ^3.5.0
+  '@rolldown/plugin-babel': ^0.2.3
   '@storybook/addon-a11y': ^10.4.6
   '@storybook/addon-docs': ^10.4.6
   '@storybook/addon-themes': ^10.4.6
   '@storybook/addon-vitest': ^10.4.6
   '@storybook/react-vite': ^10.4.6
-  '@tailwindcss/vite': ^4.3.0
+  '@tailwindcss/vite': ^4.3.1
   '@testing-library/dom': ^10.4.1
   '@testing-library/react': ^16.3.2
   '@testing-library/user-event': ^14.6.1
+  '@types/babel__core': ^7.20.5
+  '@types/node': ^24.12.4
   '@types/react': ^19.2.17
   '@types/react-dom': ^19.2.3
   '@vitejs/plugin-react': ^6.0.2
   '@vitest/browser-playwright': ^4.1.9
   '@vitest/coverage-istanbul': ^4.1.9
+  babel-plugin-react-compiler: ^1.0.0
   class-variance-authority: ^0.7.1
   clsx: ^2.1.1
   date-fns: ^4.4.0
@@ -62,6 +67,6 @@ catalog:
   typescript: ^6.0.3
   vite: ^8.0.16
   vitest: ^4.1.9
-  vite-plus: ^0.2.1
+  vite-plus: ^0.2.2
 overrides:
   vite-plus: 'catalog:'
