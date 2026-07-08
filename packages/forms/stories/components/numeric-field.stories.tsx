@@ -2,7 +2,7 @@ import { Form, NumericField, Submit } from '@/index'
 import { InputNumberRule, Schema } from '@gmcode/tsv-input'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, waitFor } from 'storybook/test'
-import { formRoute, handler200 } from '../msw'
+import { formRoute, inertiaResponseSuccess } from '../msw'
 
 interface Props {
   disabled?: boolean
@@ -11,8 +11,6 @@ interface Props {
   label?: string
   placeholder?: string
   ui?: boolean
-  ui_labelMinus?: string
-  ui_labelPlus?: string
   ui_max?: number
   ui_min?: number
   ui_step?: number
@@ -26,25 +24,15 @@ const meta = {
     label: { control: 'text' },
     placeholder: { control: 'text' },
     ui: { control: 'boolean' },
-    ui_labelMinus: { control: 'text' },
-    ui_labelPlus: { control: 'text' },
     ui_max: { control: 'number' },
     ui_min: { control: 'number' },
     ui_step: { control: 'number' }
   },
   parameters: {
     layout: 'centered',
-    msw: { handlers: [handler200] }
+    msw: { handlers: [inertiaResponseSuccess] }
   },
-  render: ({
-    ui,
-    ui_labelMinus,
-    ui_labelPlus,
-    ui_max,
-    ui_min,
-    ui_step,
-    ...props
-  }) => (
+  render: ({ ui, ui_max, ui_min, ui_step, ...props }) => (
     <Form
       defaults={{ number: '' }}
       schema={
@@ -66,8 +54,6 @@ const meta = {
             ui={
               ui
                 ? {
-                    labelMinus: ui_labelMinus,
-                    labelPlus: ui_labelPlus,
                     max: ui_max,
                     min: ui_min,
                     setValue: form.setValue,
@@ -97,16 +83,14 @@ export const UI: Story = {
   args: {
     label: 'UI',
     ui: true,
-    ui_labelMinus: 'Minus 1',
-    ui_labelPlus: 'Plus 1',
     ui_max: 5,
     ui_min: 0,
     ui_step: 1
   },
   play: async ({ canvas, userEvent }) => {
     const input = canvas.getByLabelText('UI')
-    const minus = canvas.getByLabelText('Minus 1')
-    const plus = canvas.getByLabelText('Plus 1')
+    const minus = canvas.getByLabelText('Decrease')
+    const plus = canvas.getByLabelText('Increase')
 
     await userEvent.type(input, '4')
     await userEvent.click(plus)
@@ -123,13 +107,15 @@ export const UI: Story = {
     await userEvent.type(input, '10')
     await userEvent.click(canvas.getByText('Submit'))
     await waitFor(() =>
-      expect(canvas.getByText('maxValue')).toBeInTheDocument()
+      expect(
+        canvas.getByText('The field must not be greater than 5.')
+      ).toBeInTheDocument()
     )
 
     await userEvent.clear(input)
     await userEvent.type(input, 'a')
     await userEvent.click(plus)
     await expect(input).toHaveValue('')
-    await expect(canvas.getByText('required')).toBeInTheDocument()
+    await expect(canvas.getByText('The field is required.')).toBeInTheDocument()
   }
 }

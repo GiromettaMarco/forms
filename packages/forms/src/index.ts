@@ -1,3 +1,4 @@
+export type { ErrorData, Method, Option, RouteDefinition } from '@/types'
 export * from '@/components/calendar-field'
 export * from '@/components/checkbox-field'
 export * from '@/components/email-field'

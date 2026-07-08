@@ -28,7 +28,7 @@ import {
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Monitor, Moon, Sun } from 'lucide-react'
 import { expect, fn, waitFor } from 'storybook/test'
-import { formRoute, handler200 } from '../msw'
+import { formRoute, inertiaResponseSuccess } from '../msw'
 
 const schema = new Schema(
   {
@@ -76,6 +76,7 @@ const schema = new Schema(
 const meta = {
   args: {
     children: () => null,
+    className: 'md:w-160',
     onStart: fn(),
     onSuccess: fn(),
     route: formRoute,
@@ -83,47 +84,6 @@ const meta = {
   },
   component: Form,
   parameters: { layout: 'centered' },
-  tags: ['autodocs'],
-  title: 'Components/Showcase'
-} satisfies Meta<typeof Form>
-
-export default meta
-
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
-  args: {
-    className: 'md:w-160'
-  },
-  parameters: {
-    msw: { handlers: [handler200] }
-  },
-  play: async ({ args, canvas, userEvent }) => {
-    await userEvent.type(canvas.getByLabelText('Name'), 'John')
-    await userEvent.type(
-      canvas.getByLabelText('Email address'),
-      'test@example.com'
-    )
-    await userEvent.type(canvas.getByLabelText('Password'), 'admin1234')
-    await userEvent.type(canvas.getByLabelText('Confirm Password'), 'admin1234')
-
-    // @NOTE Currently broken in storybook
-    // import { screen, waitForElementToBeRemoved } from 'storybook/test'
-    // await userEvent.click(canvas.getByLabelText('Role'))
-    // const option1 = screen.getAllByText('Editor')[1]
-    // await userEvent.click(option1)
-    // await waitForElementToBeRemoved(option1)
-
-    await userEvent.type(canvas.getByLabelText('Number'), '5')
-    await userEvent.click(canvas.getByLabelText('Remember me'))
-    await userEvent.click(canvas.getByLabelText('ON/OFF'))
-    await userEvent.click(canvas.getByText('Dark'))
-    await userEvent.type(canvas.getByLabelText('Biography'), 'Lorem Ipsum')
-    await userEvent.click(canvas.getByText('Terms & Policy'))
-    await userEvent.click(canvas.getByText('Newsletter'))
-    await userEvent.click(canvas.getByText('Submit'))
-    await waitFor(() => expect(args.onSuccess).toHaveBeenCalled())
-  },
   render: ({ schema: _schema, ...props }) => (
     <Form
       defaults={{
@@ -139,7 +99,7 @@ export const Default: Story = {
         policy: '',
         remember: '',
         role: '',
-        title: '',
+        title: 'mrs',
         token: 'hidden-token'
       }}
       schema={schema}
@@ -315,5 +275,44 @@ export const Default: Story = {
         </>
       )}
     </Form>
-  )
+  ),
+  tags: ['autodocs'],
+  title: 'Components/Showcase'
+} satisfies Meta<typeof Form>
+
+export default meta
+
+type Story = StoryObj<typeof meta>
+
+export const Default: Story = {
+  parameters: {
+    msw: { handlers: [inertiaResponseSuccess] }
+  },
+  play: async ({ args, canvas, userEvent }) => {
+    await userEvent.type(canvas.getByLabelText('Name'), 'John')
+    await userEvent.type(
+      canvas.getByLabelText('Email address'),
+      'test@example.com'
+    )
+    await userEvent.type(canvas.getByLabelText('Password'), 'admin1234')
+    await userEvent.type(canvas.getByLabelText('Confirm Password'), 'admin1234')
+
+    // @NOTE Currently broken in storybook
+    // import { screen, waitForElementToBeRemoved } from 'storybook/test'
+    // await userEvent.click(canvas.getByLabelText('Role'))
+    // const option1 = screen.getAllByText('Editor')[1]
+    // await userEvent.click(option1)
+    // await waitForElementToBeRemoved(option1)
+
+    await userEvent.click(canvas.getByLabelText('Reset'))
+    await userEvent.type(canvas.getByLabelText('Number'), '5')
+    await userEvent.click(canvas.getByLabelText('Remember me'))
+    await userEvent.click(canvas.getByLabelText('ON/OFF'))
+    await userEvent.click(canvas.getByText('Dark'))
+    await userEvent.type(canvas.getByLabelText('Biography'), 'Lorem Ipsum')
+    await userEvent.click(canvas.getByText('Terms & Policy'))
+    await userEvent.click(canvas.getByText('Newsletter'))
+    await userEvent.click(canvas.getByText('Submit'))
+    await waitFor(() => expect(args.onSuccess).toHaveBeenCalled())
+  }
 }

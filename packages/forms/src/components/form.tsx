@@ -1,6 +1,7 @@
 import type {
   CancelTokenCallback,
   Errors,
+  FormDataErrors,
   GlobalEventCallback,
   Page,
   RequestPayload,
@@ -12,24 +13,24 @@ import type {
   Path,
   UseFormReturn
 } from 'react-hook-form'
+import type { ErrorData, Method, RouteDefinition } from '@/types'
 import { type InferSchema, useTsvResolver } from '@gmcode/tsv-hookform'
-import { type ReactNode, useEffect } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import { cn, flash } from '@gmcode/react-ui'
+import { ErrorMonitor } from '@/components/error-monitor'
+import { I18nextProvider } from 'react-i18next'
 import type { Ruleset } from '@gmcode/tsv-core'
 import type { Schema } from '@gmcode/tsv-input'
+import i18n from '@/i18n'
 import { useForm as useInertiaForm } from '@inertiajs/react'
 import { useForm as userReactForm } from 'react-hook-form'
 
-export type Method = 'get' | 'post' | 'put' | 'delete' | 'patch'
-
-export type RouteDefinition<TMethod extends Method | Method[]> = {
-  url: string
-} & (TMethod extends Method[] ? { methods: TMethod } : { method: TMethod })
-
 type RenderFN<TValues extends FieldValues> = ({
+  errors,
   form,
   loading
 }: {
+  errors: FormDataErrors<object>
   form: UseFormReturn<TValues>
   loading: boolean
 }) => ReactNode
@@ -42,7 +43,7 @@ export function Form<
   children,
   className,
   defaults = {},
-  flashRootErrors = true,
+  rootError: displayRootError = 'flash',
   onBefore,
   onBeforeUpdate,
   onCancel,
@@ -65,11 +66,15 @@ export function Form<
   className?: string
   defaults?: Partial<DefaultValues<TValues>>
   /**
-   * Display root errors using the Toast component.
+   * How to display the root error from inertia.
    *
-   * @defaultValue `true`
+   * - `flash` - use the Toast component
+   * - `monitor` - use the ErrorMonitor component
+   * - `none` - don't display the root error
+   *
+   * @defaultValue `flash`
    */
-  flashRootErrors?: boolean
+  rootError?: 'flash' | 'monitor' | 'none'
   onBefore?: GlobalEventCallback<'before', RequestPayload>
   onBeforeUpdate?: GlobalEventCallback<'beforeUpdate', RequestPayload>
   onCancel?: GlobalEventCallback<'cancel', RequestPayload>
@@ -88,6 +93,8 @@ export function Form<
   schema: Schema<TRuleset>
   setDefaultsOnSuccess?: boolean
 }) {
+  const [rootError, setRootError] = useState<ErrorData>()
+
   const defaultValues = Object.fromEntries(
     Object.keys(schema.ruleset).map((field) => [field, defaults[field] ?? ''])
   ) as DefaultValues<TValues>
@@ -102,8 +109,12 @@ export function Form<
   const inertiaForm = useInertiaForm<object>(defaultValues)
 
   function onErrorWithToast(errors: Errors) {
-    if (errors.root && flashRootErrors) {
-      flash({ level: 'error', title: errors.root })
+    if (errors.root) {
+      if (displayRootError === 'flash') {
+        flash({ level: 'error', title: errors.root })
+      } else if (displayRootError === 'monitor') {
+        setRootError({ message: errors.root })
+      }
     }
 
     if (onError) {
@@ -160,16 +171,23 @@ export function Form<
   }, [inertiaForm.errors, reactForm])
 
   return (
-    <form
-      action={route.url}
-      className={cn('grid gap-6', className)}
-      method={route.method}
-      onSubmit={reactForm.handleSubmit(onSubmit)}
-    >
-      {children({
-        form: reactForm,
-        loading: inertiaForm.processing
-      })}
-    </form>
+    <I18nextProvider i18n={i18n}>
+      <form
+        action={route.url}
+        className={cn('grid gap-6', className)}
+        method={route.method}
+        onSubmit={reactForm.handleSubmit(onSubmit)}
+      >
+        <>
+          {children({
+            errors: inertiaForm.errors,
+            form: reactForm,
+            loading: inertiaForm.processing
+          })}
+        </>
+
+        {displayRootError === 'monitor' && <ErrorMonitor error={rootError} />}
+      </form>
+    </I18nextProvider>
   )
 }

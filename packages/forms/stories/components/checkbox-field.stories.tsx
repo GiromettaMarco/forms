@@ -1,4 +1,4 @@
-import { Form, Submit, SwitchField } from '@/index'
+import { CheckboxField, Form, Submit } from '@/index'
 import { InputCheckboxRule, Schema } from '@gmcode/tsv-input'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, waitFor } from 'storybook/test'
@@ -25,15 +25,15 @@ const meta = {
   },
   render: ({ ...props }) => (
     <Form
-      defaults={{ switch: '' }}
-      schema={new Schema({ switch: new InputCheckboxRule() })}
+      defaults={{ checkbox: '' }}
+      schema={new Schema({ checkbox: new InputCheckboxRule() })}
       route={formRoute}
     >
       {({ form, loading }) => (
         <>
-          <SwitchField
+          <CheckboxField
             control={form.control}
-            inputName="switch"
+            inputName="checkbox"
             {...props}
           />
 
@@ -43,7 +43,7 @@ const meta = {
     </Form>
   ),
   tags: ['autodocs'],
-  title: 'Components/SwitchField'
+  title: 'Components/CheckboxField'
 } satisfies Meta<Props>
 
 export default meta
@@ -52,11 +52,11 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: 'Switch',
+    label: 'Checkbox',
     onCheckedChange: fn()
   },
   play: async ({ args, canvas, userEvent }) => {
-    await userEvent.click(canvas.getByLabelText('Switch'))
+    await userEvent.click(canvas.getByLabelText('Checkbox'))
     await waitFor(() => expect(args.onCheckedChange).toHaveBeenCalled())
   }
 }

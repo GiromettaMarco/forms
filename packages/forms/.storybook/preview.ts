@@ -5,6 +5,7 @@ import type { Preview, ReactRenderer } from '@storybook/react-vite'
 import { initialize, mswLoader } from 'msw-storybook-addon'
 import DocsWithTheme from './decorators/docs-with-theme'
 import { WithI18next } from './decorators/with-i18next'
+import { WithToast } from './decorators/with-toast'
 import { withThemeByClassName } from '@storybook/addon-themes'
 
 // @see https://github.com/mswjs/msw-storybook-addon#configuring-msw
@@ -22,7 +23,8 @@ const preview: Preview = {
         dark: 'dark',
         light: ''
       }
-    })
+    }),
+    WithToast
   ],
 
   globalTypes: {

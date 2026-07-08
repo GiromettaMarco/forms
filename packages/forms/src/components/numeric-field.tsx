@@ -19,6 +19,7 @@ import type {
 } from 'react-hook-form'
 import { Minus, Plus } from 'lucide-react'
 import { ErrorMonitor } from '@/components/error-monitor'
+import { useTranslation } from 'react-i18next'
 
 function stepInput(
   original: string,
@@ -73,14 +74,15 @@ export function NumericField<TFieldValues extends FieldValues = FieldValues>({
   placeholder?: string
   type?: HTMLInputTypeAttribute
   ui?: {
-    labelMinus?: string
-    labelPlus?: string
     max?: number
     min?: number
     setValue: UseFormSetValue<TFieldValues>
     step?: number
   }
 }) {
+  // i18n
+  const { t } = useTranslation()
+
   function stepValue(value: string, add: boolean) {
     if (ui?.setValue) {
       ui.setValue(
@@ -122,7 +124,7 @@ export function NumericField<TFieldValues extends FieldValues = FieldValues>({
             {ui && (
               <InputGroupAddon align="inline-end">
                 <InputGroupButton
-                  aria-label={ui.labelMinus ?? 'Decrease'}
+                  aria-label={t(($) => $.decrease)}
                   disabled={disabled}
                   onClick={() => stepValue(field.value, false)}
                   size="icon-xs"
@@ -131,7 +133,7 @@ export function NumericField<TFieldValues extends FieldValues = FieldValues>({
                 </InputGroupButton>
 
                 <InputGroupButton
-                  aria-label={ui.labelPlus ?? 'Increase'}
+                  aria-label={t(($) => $.increase)}
                   disabled={disabled}
                   onClick={() => stepValue(field.value, true)}
                   size="icon-xs"

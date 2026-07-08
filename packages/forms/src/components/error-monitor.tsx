@@ -1,25 +1,18 @@
+import type { ErrorData } from '@/types'
 import { FieldError } from '@gmcode/react-ui'
-import type { MessageParams } from '@gmcode/tsv-core'
-import type { FieldError as RHFFieldError } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
-interface ErrorData {
-  message?: string
-  params?: MessageParams
-}
+export function ErrorMonitor({ error }: { error?: ErrorData }) {
+  // i18n
+  const { t } = useTranslation()
 
-export function ErrorMonitor({
-  error,
-  translator
-}: {
-  error?: RHFFieldError
-  translator?: (error: ErrorData) => string
-}) {
-  if (!error) {
+  if (!error?.message) {
     return null
   }
 
-  if (error.type === 'tsv' && translator) {
-    return <FieldError errors={{ message: translator(error) }} />
+  if (t) {
+    // @ts-expect-error: assert error.message to be a translation key
+    return <FieldError errors={{ message: t(error.message, error.params) }} />
   }
 
   return <FieldError errors={error} />

@@ -1,13 +1,14 @@
 import { Calendar, Field, FieldLabel } from '@gmcode/react-ui'
 import { type Control, Controller, type FieldPath } from 'react-hook-form'
+import type { DayPickerLocale, Matcher } from 'react-day-picker'
 import type { ComponentProps } from 'react'
-import type { DayPickerLocale } from 'react-day-picker'
 import { ErrorMonitor } from '@/components/error-monitor'
 import type { FieldValues } from 'react-hook-form'
 import { defaultDateFormatter } from '@/lib/utils'
 
 export function CalendarField<TFieldValues extends FieldValues = FieldValues>({
   control,
+  disabled,
   formatter = defaultDateFormatter,
   inputId,
   inputName,
@@ -16,6 +17,7 @@ export function CalendarField<TFieldValues extends FieldValues = FieldValues>({
   ...props
 }: ComponentProps<typeof Field> & {
   control: Control<TFieldValues>
+  disabled?: Matcher | Matcher[]
   formatter?: (date: Date) => string
   inputId?: string
   inputName: FieldPath<TFieldValues>
@@ -38,6 +40,7 @@ export function CalendarField<TFieldValues extends FieldValues = FieldValues>({
           <Calendar
             aria-invalid={fieldState.invalid}
             className="w-full rounded-md border"
+            disabled={disabled}
             fixedWeeks={true}
             id={inputId ?? (label ? inputName : undefined)}
             locale={locale}

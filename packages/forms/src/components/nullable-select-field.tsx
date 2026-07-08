@@ -23,6 +23,7 @@ import type {
 import { ErrorMonitor } from '@/components/error-monitor'
 import type { Option } from '@/types'
 import { X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export function NullableSelectField<
   TFieldValues extends FieldValues = FieldValues
@@ -36,7 +37,6 @@ export function NullableSelectField<
   label,
   options,
   placeholder,
-  reset = 'Reset',
   setValue,
   ...props
 }: ComponentProps<typeof Field> & {
@@ -49,11 +49,12 @@ export function NullableSelectField<
   label?: string
   options: Option[]
   placeholder?: string
-  /** Reset button aria-label */
-  reset?: string
   setValue: UseFormSetValue<TFieldValues>
   type?: HTMLInputTypeAttribute
 }) {
+  // i18n
+  const { t } = useTranslation()
+
   return (
     <Controller
       control={control}
@@ -97,7 +98,7 @@ export function NullableSelectField<
             </Select>
 
             <Button
-              aria-label={reset}
+              aria-label={t(($) => $.reset)}
               className="flex-none"
               onClick={() =>
                 setValue(

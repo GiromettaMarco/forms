@@ -10,24 +10,39 @@ export const formRoute = {
   url: 'forms'
 }
 
-export const responseData: JsonBodyType = {
-  component: 'forms',
-  flash: {},
-  props: {},
-  sharedProps: [],
-  url: '/',
-  version: '0'
+function getResponseBody(props: object = {}): JsonBodyType {
+  return {
+    component: 'forms',
+    flash: {},
+    props,
+    sharedProps: [],
+    url: '/',
+    version: '0'
+  }
 }
 
-export const init: HttpResponseInit = {
-  headers: {
-    'Content-Type': 'application/json',
-    Vary: 'X-Inertia',
-    'X-Inertia': 'true'
-  },
-  status: 200
+function getResponseInit(status: number = 200): HttpResponseInit {
+  return {
+    headers: {
+      'Content-Type': 'application/json',
+      Vary: 'X-Inertia',
+      'X-Inertia': 'true'
+    },
+    status
+  }
 }
 
-export const handler200 = http.post('/forms', () => {
-  return HttpResponse.json(responseData, init)
+export const inertiaResponseSuccess = http.post('/forms', () => {
+  return HttpResponse.json(getResponseBody(), getResponseInit())
+})
+
+export const inertiaResponseError = http.post('/forms', () => {
+  return HttpResponse.json(
+    getResponseBody({
+      errors: {
+        root: 'These credentials do not match our records.'
+      }
+    }),
+    getResponseInit()
+  )
 })

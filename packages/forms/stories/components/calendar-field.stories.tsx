@@ -1,23 +1,21 @@
-import { Form, Submit, SwitchField } from '@/index'
-import { InputCheckboxRule, Schema } from '@gmcode/tsv-input'
+import { CalendarField, Form, Submit } from '@/index'
+import { InputRule, Schema } from '@gmcode/tsv-input'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, waitFor } from 'storybook/test'
 import { formRoute, inertiaResponseSuccess } from '../msw'
 
 interface Props {
   disabled?: boolean
+  formatter?: (date: Date) => string
   inputId?: string
   label?: string
-  onCheckedChange?: () => void
-  readOnly?: boolean
 }
 
 const meta = {
   argTypes: {
     disabled: { control: 'boolean' },
     inputId: { control: 'text' },
-    label: { control: 'text' },
-    readOnly: { control: 'boolean' }
+    label: { control: 'text' }
   },
   parameters: {
     layout: 'centered',
@@ -25,15 +23,15 @@ const meta = {
   },
   render: ({ ...props }) => (
     <Form
-      defaults={{ switch: '' }}
-      schema={new Schema({ switch: new InputCheckboxRule() })}
+      defaults={{ calendar: '' }}
+      schema={new Schema({ calendar: new InputRule() })}
       route={formRoute}
     >
       {({ form, loading }) => (
         <>
-          <SwitchField
+          <CalendarField
             control={form.control}
-            inputName="switch"
+            inputName="calendar"
             {...props}
           />
 
@@ -43,7 +41,7 @@ const meta = {
     </Form>
   ),
   tags: ['autodocs'],
-  title: 'Components/SwitchField'
+  title: 'Components/CalendarField'
 } satisfies Meta<Props>
 
 export default meta
@@ -52,11 +50,20 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: 'Switch',
-    onCheckedChange: fn()
+    formatter: fn()
   },
   play: async ({ args, canvas, userEvent }) => {
-    await userEvent.click(canvas.getByLabelText('Switch'))
-    await waitFor(() => expect(args.onCheckedChange).toHaveBeenCalled())
+    await userEvent.click(canvas.getAllByText('1')[0])
+    await waitFor(() => expect(args.formatter).toHaveBeenCalled())
+  }
+}
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+    formatter: fn()
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getAllByText('1')[0]).toBeDisabled()
   }
 }
