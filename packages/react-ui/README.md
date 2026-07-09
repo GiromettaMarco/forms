@@ -15,6 +15,8 @@ General purpose React UI components with Tailwind CSS and Radix UI compatible wi
 npm install @gmcode/react-ui
 ```
 
+## Tailwind setup
+
 ## Usage
 
 ```tsx
