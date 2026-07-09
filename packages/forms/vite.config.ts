@@ -9,7 +9,7 @@ export default mergeConfig(reactConfig, {
   pack: {
     entry: {
       index: './src/index.ts',
-      validation: './src/validation.ts'
+      locales: './src/locales/index.ts'
     },
     exports: true
   },

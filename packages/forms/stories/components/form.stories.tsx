@@ -1,5 +1,4 @@
-import { Form, Submit, TextField } from '@/index'
-import { InputTextRule, Schema } from '@gmcode/tsv-input'
+import { Form, InputTextRule, Schema, Submit, TextField } from '@/index'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, waitFor } from 'storybook/test'
 import { formRoute, inertiaResponseError, inertiaResponseSuccess } from '../msw'

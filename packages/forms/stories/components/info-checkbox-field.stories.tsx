@@ -1,5 +1,10 @@
-import { Form, InfoCheckboxField, Submit } from '@/index'
-import { InputCheckboxRule, Schema } from '@gmcode/tsv-input'
+import {
+  Form,
+  InfoCheckboxField,
+  InputCheckboxRule,
+  Schema,
+  Submit
+} from '@/index'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, waitFor } from 'storybook/test'
 import { formRoute, inertiaResponseSuccess } from '../msw'

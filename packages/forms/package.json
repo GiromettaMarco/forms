@@ -28,7 +28,7 @@
   "sideEffects": false,
   "exports": {
     ".": "./dist/index.mjs",
-    "./validation": "./dist/validation.mjs",
+    "./locales": "./dist/locales.mjs",
     "./package.json": "./package.json"
   },
   "scripts": {
