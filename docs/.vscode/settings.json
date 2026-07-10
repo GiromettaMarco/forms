@@ -11,9 +11,10 @@
   // Ensure VSCode uses pnpm instead of npm
   "npm.packageManager": "pnpm",
 
-  // Nest *.d.cts under *.cjs
+  // File nesting
   "explorer.fileNesting.patterns": {
-    "*.cjs": "$(capture).cjs.map, $(capture).*.cjs, $(capture)_*.cjs, $(capture).*.cts"
+    "*.cjs": "$(capture).cjs.map, $(capture).*.cjs, $(capture)_*.cjs, $(capture).*.cts",
+    "vite.config.*": "*.env, .env.*, env.d.ts, i18n.config.*, jsconfig.*, playwright.config.*, postcss.config.*, tailwind.config.*, tsconfig.*, tsdoc.*, vitest.config.*, vuetify.config.*, vitest.setup.ts"
   },
 
   "files.associations": {
