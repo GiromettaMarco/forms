@@ -93,6 +93,9 @@
 
   // Vite Plus
   "editor.defaultFormatter": "oxc.oxc-vscode",
+  "[html]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
   "[javascript]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
@@ -138,14 +141,19 @@
   "cSpell.words": [
     "Autoresize",
     "autosize",
+    "axios",
     "clsx",
     "dismissable",
+    "docgen",
     "hookform",
     "inertiajs",
+    "joshwooding",
     "jsdom",
     "Lngs",
     "lucide",
     "sonner",
+    "stefanzweifel",
+    "subcomponents",
     "vitejs"
   ]
 }
