@@ -11,7 +11,7 @@
     "prepare": "vp config"
   },
   "dependencies": {
-    "@gmcode/forms": "link:packages/forms"
+    "@gmcode/forms": "catalog:"
   },
   "devDependencies": {
     "@babel/core": "catalog:",

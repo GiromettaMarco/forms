@@ -6,6 +6,7 @@ allowBuilds:
   esbuild: false
   msw: false
 minimumReleaseAgeExclude:
+  - '@gmcode/forms'
   - '@gmcode/react-ui'
   - '@gmcode/tsv-advanced'
   - '@gmcode/tsv-core'
@@ -15,6 +16,7 @@ minimumReleaseAgeExclude:
 catalogMode: prefer
 catalog:
   '@babel/core': ^8.0.1
+  '@gmcode/forms': ^0.0.3
   '@gmcode/react-ui': ^0.3.1
   '@gmcode/tsv-advanced': ^0.1.2
   '@gmcode/tsv-core': ^0.1.2
@@ -71,5 +73,4 @@ catalog:
   vitest: ^4.1.10
   vitest-browser-react: ^2.2.0
 overrides:
-  '@gmcode/forms': link:packages/forms
   vite-plus: 'catalog:'
