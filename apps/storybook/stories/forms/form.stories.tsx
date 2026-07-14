@@ -6,6 +6,7 @@ import {
   inertiaResponseError,
   inertiaResponseSuccess
 } from '../utility'
+import type { ComponentProps } from 'react'
 import { Form } from '@/forms/form'
 import { Submit } from '@/forms/submit'
 import { TextField } from '@/forms/text-field'
@@ -48,16 +49,7 @@ const meta = {
     setDefaultsOnSuccess: { control: 'boolean' }
   },
   args: {
-    children: ({ form, loading }) => (
-      <>
-        <TextField
-          control={form.control}
-          inputName="username"
-          label="Username"
-        />
-        <Submit loading={loading} />
-      </>
-    ),
+    children: () => {},
     className: 'w-72',
     defaults: { username: '' },
     onSuccess: flashSuccessMessage,
@@ -69,6 +61,20 @@ const meta = {
   parameters: {
     layout: 'centered'
   },
+  render: (props: ComponentProps<typeof Form>) => (
+    <Form {...props}>
+      {({ form, loading }) => (
+        <>
+          <TextField
+            control={form.control}
+            inputName="username"
+            label="Username"
+          />
+          <Submit loading={loading} />
+        </>
+      )}
+    </Form>
+  ),
   title: 'Forms/Form'
 } satisfies Meta<typeof Form>
 
