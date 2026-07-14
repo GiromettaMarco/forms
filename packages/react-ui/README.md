@@ -17,6 +17,11 @@ npm install @gmcode/react-ui
 
 ## Tailwind setup
 
+```css
+/* app.css */
+@source '../path/to/node_modules/@gmcode/react-ui';
+```
+
 ## Usage
 
 ```tsx
