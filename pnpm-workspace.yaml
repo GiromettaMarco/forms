@@ -15,7 +15,7 @@ minimumReleaseAgeExclude:
 catalogMode: prefer
 catalog:
   '@babel/core': ^8.0.1
-  '@gmcode/react-ui': ^0.3.0
+  '@gmcode/react-ui': ^0.3.1
   '@gmcode/tsv-advanced': ^0.1.2
   '@gmcode/tsv-core': ^0.1.2
   '@gmcode/tsv-hookform': ^0.1.2

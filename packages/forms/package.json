@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/forms",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Fully functional inertia react forms with client side validations.",
   "keywords": [
     "i18next",
@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "@gmcode/react-ui": "catalog:",
-    "@gmcode/tsv-core": "catalog:",
     "@gmcode/tsv-hookform": "catalog:",
     "@gmcode/tsv-input": "catalog:",
     "i18next": "catalog:",
@@ -51,6 +50,7 @@
   },
   "devDependencies": {
     "@babel/core": "catalog:",
+    "@gmcode/tsv-core": "catalog:",
     "@rolldown/plugin-babel": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "@types/babel__core": "catalog:",
@@ -73,6 +73,9 @@
     "@inertiajs/react": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
+  },
+  "inlinedDependencies": {
+    "@gmcode/tsv-core": "0.1.2"
   },
   "msw": {
     "workerDirectory": [

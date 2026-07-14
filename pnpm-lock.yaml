@@ -10,8 +10,8 @@ catalogs:
       specifier: ^8.0.1
       version: 8.0.1
     '@gmcode/react-ui':
-      specifier: ^0.3.0
-      version: 0.3.0
+      specifier: ^0.3.1
+      version: 0.3.1
     '@gmcode/tsv-core':
       specifier: ^0.1.2
       version: 0.1.2
@@ -237,7 +237,7 @@ importers:
         version: link:../../packages/forms
       '@gmcode/react-ui':
         specifier: 'catalog:'
-        version: 0.3.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 0.3.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@inertiajs/core':
         specifier: 'catalog:'
         version: 3.5.0(axios@1.18.1)
@@ -328,10 +328,7 @@ importers:
     dependencies:
       '@gmcode/react-ui':
         specifier: 'catalog:'
-        version: 0.3.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      '@gmcode/tsv-core':
-        specifier: 'catalog:'
-        version: 0.1.2
+        version: 0.3.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@gmcode/tsv-hookform':
         specifier: 'catalog:'
         version: 0.1.2(@gmcode/tsv-core@0.1.2)(react-hook-form@7.76.1(react@19.2.7))
@@ -378,6 +375,9 @@ importers:
       '@babel/core':
         specifier: 'catalog:'
         version: 8.0.1
+      '@gmcode/tsv-core':
+        specifier: 'catalog:'
+        version: 0.1.2
       '@rolldown/plugin-babel':
         specifier: 'catalog:'
         version: 0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.4(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0))
@@ -1021,8 +1021,8 @@ packages:
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
 
-  '@gmcode/react-ui@0.3.0':
-    resolution: {integrity: sha512-XzFybhR/biupxHjJ8hRRrbuIvltruN3NRb+UebbGbfx3xW5uw4b/ZEdCboQuUT5dSiHgCtF1QEwltPJNqU0kdg==}
+  '@gmcode/react-ui@0.3.1':
+    resolution: {integrity: sha512-JVT5Ln9Fy9eFJjARjQAFlhJXUwgf6JZ1fY9oYzJM7gvZgIjjAuODBWfUJatDT5Zdi9Ze8228zGzFrFKqH+DpoA==}
     peerDependencies:
       react: ^19.2.7
       react-dom: ^19.2.7
@@ -4724,7 +4724,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.11': {}
 
-  '@gmcode/react-ui@0.3.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@gmcode/react-ui@0.3.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       class-variance-authority: 0.7.1
       clsx: 2.1.1
