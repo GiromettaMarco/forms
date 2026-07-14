@@ -33,7 +33,7 @@
     "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
   },
   "devDependencies": {
-    "@typescript/native-preview": "7.0.0-dev.20260509.2",
+    "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "@vitest/coverage-istanbul": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
