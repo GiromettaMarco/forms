@@ -12,23 +12,24 @@ import {
 } from 'react-day-picker'
 import { cn } from '@/lib/utils'
 
+type Props = React.ComponentProps<typeof DayPicker> & {
+  buttonVariant?: React.ComponentProps<typeof Button>['variant']
+}
+
 function Calendar({
+  buttonVariant = 'ghost',
+  captionLayout = 'label',
   className,
   classNames,
-  showOutsideDays = true,
-  captionLayout = 'label',
-  buttonVariant = 'ghost',
-  formatters,
   components,
+  formatters,
+  showOutsideDays = true,
   ...props
-}: React.ComponentProps<typeof DayPicker> & {
-  buttonVariant?: React.ComponentProps<typeof Button>['variant']
-}) {
+}: Props) {
   const defaultClassNames = getDefaultClassNames()
 
   return (
     <DayPicker
-      showOutsideDays={showOutsideDays}
       className={cn(
         'group/calendar bg-background p-3 [--cell-size:--spacing(8)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent',
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
@@ -36,11 +37,6 @@ function Calendar({
         className
       )}
       captionLayout={captionLayout}
-      formatters={{
-        formatMonthDropdown: (date) =>
-          date.toLocaleString('default', { month: 'short' }),
-        ...formatters
-      }}
       classNames={{
         button_next: cn(
           buttonVariants({ variant: buttonVariant }),
@@ -177,6 +173,12 @@ function Calendar({
         },
         ...components
       }}
+      formatters={{
+        formatMonthDropdown: (date) =>
+          date.toLocaleString('default', { month: 'short' }),
+        ...formatters
+      }}
+      showOutsideDays={showOutsideDays}
       {...props}
     />
   )

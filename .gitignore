@@ -18,3 +18,5 @@ dist
 coverage
 debug-storybook.log
 storybook-static
+__screenshots__
+.vitest-attachments

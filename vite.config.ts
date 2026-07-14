@@ -7,7 +7,8 @@ export default defineConfig({
       'composer.lock',
       'pnpm-lock.yaml',
       '**/dist',
-      'packages/forms/.storybook/mocks/@inertiajs/core.js'
+      'tooling/mocks/@inertiajs/core.js',
+      '**/mockServiceWorker.js'
     ],
     overrides: [
       {
@@ -50,7 +51,8 @@ export default defineConfig({
       '**/dist',
       'node_modules',
       'coverage',
-      'packages/forms/.storybook/mocks/@inertiajs/core.js'
+      'tooling/mocks/@inertiajs/core.js',
+      '**/mockServiceWorker.js'
     ],
     jsPlugins: [
       {
@@ -118,11 +120,21 @@ export default defineConfig({
         command: ['vp check', 'vp run test', 'vp run build']
       },
       test: {
-        command: 'vp run -r test'
+        command: 'vp run -r test',
+        input: [{ auto: true }, '!**/coverage/.tmp/**']
       }
     }
   },
   staged: {
     '*': ['vp check --fix']
+  },
+  test: {
+    coverage: {
+      enabled: false,
+      include: ['packages/*/src/**'],
+      provider: 'istanbul',
+      reporter: ['text', 'json-summary']
+    },
+    projects: ['packages/*']
   }
 })

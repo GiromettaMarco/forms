@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 
 export default mergeConfig(defaultConfig, {
-  plugins: [react()],
+  plugins: react(),
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')
@@ -12,6 +12,6 @@ export default mergeConfig(defaultConfig, {
   },
   test: {
     environment: 'jsdom',
-    setupFiles: './tests/setup.ts'
+    setupFiles: ['./vitest.setup.ts']
   }
 })

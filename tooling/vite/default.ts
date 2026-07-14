@@ -1,9 +1,12 @@
 import type { UserConfig } from 'vite-plus'
 
 export default {
+  pack: {
+    minify: true
+  },
   test: {
     coverage: {
-      enabled: true,
+      enabled: false,
       include: ['src/**'],
       provider: 'istanbul',
       reporter: ['text', 'json-summary']

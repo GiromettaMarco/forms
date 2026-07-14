@@ -1,24 +1,22 @@
-import { mergeConfig } from 'vite-plus'
+import { defineConfig } from 'vite-plus'
 import { playwright } from 'vite-plus/test/browser-playwright'
-import reactConfig from './react'
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
+import tailwindcss from '@tailwindcss/vite'
 
-export default mergeConfig(reactConfig, {
+export default defineConfig({
+  plugins: [storybookTest(), tailwindcss()],
   test: {
-    projects: [
-      {
-        extends: true,
-        plugins: [storybookTest()],
-        test: {
-          browser: {
-            enabled: true,
-            headless: true,
-            instances: [{ browser: 'chromium' }],
-            provider: playwright()
-          },
-          name: 'storybook'
-        }
-      }
-    ]
+    browser: {
+      enabled: true,
+      headless: true,
+      instances: [{ browser: 'chromium' }],
+      provider: playwright()
+    },
+    coverage: {
+      enabled: false,
+      include: ['src/**'],
+      provider: 'istanbul',
+      reporter: ['text', 'json-summary']
+    }
   }
 })

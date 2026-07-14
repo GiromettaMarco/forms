@@ -1,28 +1,33 @@
 import { Calendar, Field, FieldLabel } from '@gmcode/react-ui'
 import { type Control, Controller, type FieldPath } from 'react-hook-form'
 import type { DayPickerLocale, Matcher } from 'react-day-picker'
+import {
+  dateToString as defaultDateToString,
+  stringToDate as defaultStringToDate
+} from '@/lib/utils'
 import type { ComponentProps } from 'react'
 import { ErrorMonitor } from '@/components/error-monitor'
 import type { FieldValues } from 'react-hook-form'
-import { defaultDateFormatter } from '@/lib/utils'
 
 export function CalendarField<TFieldValues extends FieldValues = FieldValues>({
   control,
+  dateToString = defaultDateToString,
   disabled,
-  formatter = defaultDateFormatter,
   inputId,
   inputName,
   label,
   locale,
+  stringToDate = defaultStringToDate,
   ...props
 }: ComponentProps<typeof Field> & {
   control: Control<TFieldValues>
+  dateToString?: (date: Date) => string
   disabled?: Matcher | Matcher[]
-  formatter?: (date: Date) => string
   inputId?: string
   inputName: FieldPath<TFieldValues>
   label?: string
   locale?: Partial<DayPickerLocale>
+  stringToDate?: (string: string | undefined) => Date | undefined
 }) {
   return (
     <Controller
@@ -45,8 +50,8 @@ export function CalendarField<TFieldValues extends FieldValues = FieldValues>({
             id={inputId ?? (label ? inputName : undefined)}
             locale={locale}
             mode="single"
-            onSelect={(date) => field.onChange(date ? formatter(date) : '')}
-            selected={field.value}
+            onSelect={(date) => field.onChange(date ? dateToString(date) : '')}
+            selected={stringToDate(field.value)}
           />
 
           <ErrorMonitor error={fieldState.error} />

@@ -33,8 +33,6 @@
   },
   "scripts": {
     "build": "vp pack",
-    "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build",
     "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
   },
   "dependencies": {
@@ -54,11 +52,6 @@
   "devDependencies": {
     "@babel/core": "catalog:",
     "@rolldown/plugin-babel": "catalog:",
-    "@storybook/addon-a11y": "catalog:",
-    "@storybook/addon-docs": "catalog:",
-    "@storybook/addon-themes": "catalog:",
-    "@storybook/addon-vitest": "catalog:",
-    "@storybook/react-vite": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "@types/babel__core": "catalog:",
     "@types/react": "catalog:",
@@ -66,17 +59,14 @@
     "@vitejs/plugin-react": "catalog:",
     "@vitest/coverage-istanbul": "catalog:",
     "babel-plugin-react-compiler": "catalog:",
-    "es-toolkit": "catalog:",
-    "laravel-precognition": "catalog:",
     "msw": "catalog:",
-    "msw-storybook-addon": "catalog:",
     "playwright": "catalog:",
-    "storybook": "catalog:",
     "tw-animate-css": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "vitest-browser-react": "catalog:"
   },
   "peerDependencies": {
     "@inertiajs/core": "catalog:",

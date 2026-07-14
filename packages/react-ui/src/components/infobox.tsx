@@ -38,7 +38,7 @@ function Infobox({
   children,
   className,
   iconClassName,
-  variant,
+  variant = 'info',
   ...props
 }: VariantProps<typeof boxVariants> &
   ComponentProps<'div'> & {

@@ -13,16 +13,6 @@ Monorepo containing form validation tools with i18n interpolation support, schem
 | [`@gmcode/react-ui`](packages/react-ui)         | General purpose React UI       | [![coverage](packages/react-ui/docs/coverage.svg)](https://github.com/GiromettaMarco/forms/actions)     | [![npm](https://img.shields.io/npm/v/@gmcode/react-ui)](https://npm.im/@gmcode/react-ui)         |
 | [`@gmcode/forms`](packages/forms)               | Forms for `@inertiajs/react`   | [![coverage](packages/forms/docs/coverage.svg)](https://github.com/GiromettaMarco/forms/actions)        |                                                                                                  |
 
-## Vitest vscode extension
-
-Currently, the Visual Studio Code Vitest extension doesn't work properly in a Vite+ monorepo.
-
-![Vitest screenshot](./docs/vitest-screen-01.png)
-
-Run tests by selecting the test profile from the extension toolbar on top rather than clicking on tree menu items.
-
-![Vitest screenshot](./docs/vitest-screen-02.png)
-
 ## License
 
 [MIT license](https://github.com/GiromettaMarco/forms/blob/master/LICENSE)

@@ -10,6 +10,9 @@
     "preinstall": "npx only-allow pnpm",
     "prepare": "vp config"
   },
+  "dependencies": {
+    "@gmcode/forms": "link:packages/forms"
+  },
   "devDependencies": {
     "@babel/core": "catalog:",
     "@rolldown/plugin-babel": "catalog:",
@@ -19,7 +22,10 @@
     "@types/node": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "@vitest/browser-playwright": "catalog:",
+    "axios": "catalog:",
     "babel-plugin-react-compiler": "catalog:",
+    "es-toolkit": "catalog:",
+    "laravel-precognition": "catalog:",
     "playwright": "catalog:",
     "tailwindcss": "catalog:",
     "tw-animate-css": "catalog:",

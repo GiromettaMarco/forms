@@ -68,7 +68,7 @@ export function Form<
   /**
    * How to display the root error from inertia.
    *
-   * - `flash` - use the Toast component
+   * - `flash` - use the Toaster component
    * - `monitor` - use the ErrorMonitor component
    * - `none` - don't display the root error
    *

@@ -2,8 +2,7 @@
   "extends": "../../tooling/typescript/react.json",
 
   // Files
-  // @see https://github.com/microsoft/TypeScript/issues/49555
-  "include": [".storybook/**/*", "src", "stories", "tests"],
+  "include": ["src", "tests", "vitest.setup.ts"],
   "exclude": ["dist", "node_modules"],
 
   "compilerOptions": {
