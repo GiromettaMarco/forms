@@ -377,9 +377,6 @@ importers:
       '@babel/core':
         specifier: 'catalog:'
         version: 8.0.1
-      '@gmcode/tsv-core':
-        specifier: 'catalog:'
-        version: 0.1.2
       '@rolldown/plugin-babel':
         specifier: 'catalog:'
         version: 0.2.3(@babel/core@8.0.1)(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.4(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0))

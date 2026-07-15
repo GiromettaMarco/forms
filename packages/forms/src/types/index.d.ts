@@ -1,4 +1,4 @@
-import type { MessageParams } from '@gmcode/tsv-core'
+import type { MessageParams } from '@gmcode/tsv-input'
 import type { ReactNode } from 'react'
 
 export type Method = 'get' | 'post' | 'put' | 'delete' | 'patch'

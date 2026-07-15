@@ -50,7 +50,6 @@
   },
   "devDependencies": {
     "@babel/core": "catalog:",
-    "@gmcode/tsv-core": "catalog:",
     "@rolldown/plugin-babel": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "@types/babel__core": "catalog:",
@@ -73,9 +72,6 @@
     "@inertiajs/react": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
-  },
-  "inlinedDependencies": {
-    "@gmcode/tsv-core": "0.1.2"
   },
   "msw": {
     "workerDirectory": [
