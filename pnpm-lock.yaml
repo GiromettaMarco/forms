@@ -10,8 +10,8 @@ catalogs:
       specifier: ^8.0.1
       version: 8.0.1
     '@gmcode/forms':
-      specifier: ^0.0.5
-      version: 0.0.5
+      specifier: ^0.0.6
+      version: 0.0.6
     '@gmcode/react-ui':
       specifier: ^0.3.3
       version: 0.3.3
@@ -232,7 +232,7 @@ importers:
     dependencies:
       '@gmcode/forms':
         specifier: 'catalog:'
-        version: 0.0.5(@gmcode/tsv-core@0.1.2)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)
+        version: 0.0.6(@gmcode/tsv-core@0.1.2)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)
       '@gmcode/react-ui':
         specifier: 'catalog:'
         version: 0.3.3(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -1016,8 +1016,8 @@ packages:
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
 
-  '@gmcode/forms@0.0.5':
-    resolution: {integrity: sha512-EC28jw6ujEHCdQAil3TEPTrtfhnn7eR1/8S41G/BZVEUKFA7U8Vy9jBgJ7TOyIupWZN5/2PTfKoIyoIeTlCQhg==}
+  '@gmcode/forms@0.0.6':
+    resolution: {integrity: sha512-nVTCJrsFKk9+4NchYIt0EGcO96D5d5MAVtzNk0f5x8ffUB5y7LJIUroDaZY8/QChy8uwlGNL6RrNjndbwhEo1A==}
     peerDependencies:
       '@inertiajs/core': ^3.5.0
       '@inertiajs/react': ^3.5.0
@@ -4728,7 +4728,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.11': {}
 
-  '@gmcode/forms@0.0.5(@gmcode/tsv-core@0.1.2)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)':
+  '@gmcode/forms@0.0.6(@gmcode/tsv-core@0.1.2)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)':
     dependencies:
       '@gmcode/react-ui': 0.3.3(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@gmcode/tsv-hookform': 0.1.2(@gmcode/tsv-core@0.1.2)(react-hook-form@7.76.1(react@19.2.7))
