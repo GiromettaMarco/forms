@@ -61,8 +61,10 @@ const meta = {
       {({ form, loading }) => (
         <>
           <InfoCheckboxField
-            control={form.control}
             {...props}
+            control={form.control}
+            inputName="infoCheckbox"
+            onCheckedChange={undefined}
           />
           <Submit loading={loading} />
         </>

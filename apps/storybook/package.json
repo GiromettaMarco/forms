@@ -33,6 +33,7 @@
     "msw": "catalog:",
     "msw-storybook-addon": "catalog:",
     "playwright": "catalog:",
+    "react-hook-form": "catalog:",
     "storybook": "catalog:",
     "tailwindcss": "catalog:",
     "tw-animate-css": "catalog:",

@@ -11,18 +11,6 @@ import { Form } from '@/forms/form'
 import { Submit } from '@/forms/submit'
 import { TextField } from '@/forms/text-field'
 
-const schema = new Schema({
-  username: new InputTextRule({
-    maxChars: 20,
-    messages: {
-      maxChars: 'username.maxChars',
-      minChars: 'username.minChars',
-      required: 'username.required'
-    },
-    minChars: 4
-  })
-})
-
 const meta = {
   argTypes: {
     className: { control: 'text' },
@@ -54,7 +42,7 @@ const meta = {
     defaults: { username: '' },
     onSuccess: flashSuccessMessage,
     route: formRoute,
-    schema: schema,
+    schema: new Schema({}),
     setDefaultsOnSuccess: true
   },
   component: Form,
@@ -62,7 +50,22 @@ const meta = {
     layout: 'centered'
   },
   render: (props: ComponentProps<typeof Form>) => (
-    <Form {...props}>
+    <Form
+      {...props}
+      schema={
+        new Schema({
+          username: new InputTextRule({
+            maxChars: 20,
+            messages: {
+              maxChars: 'username.maxChars',
+              minChars: 'username.minChars',
+              required: 'username.required'
+            },
+            minChars: 4
+          })
+        })
+      }
+    >
       {({ form, loading }) => (
         <>
           <TextField

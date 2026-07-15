@@ -80,7 +80,9 @@ const meta = {
       {({ form, loading }) => (
         <>
           <NumericField
+            {...props}
             control={form.control}
+            inputName="number"
             ui={
               ui
                 ? {
@@ -89,7 +91,6 @@ const meta = {
                   }
                 : undefined
             }
-            {...props}
           />
           <Submit loading={loading} />
         </>

@@ -55,8 +55,9 @@ const meta = {
       {({ form, loading }) => (
         <>
           <CalendarField
-            control={form.control}
             {...props}
+            control={form.control}
+            inputName="calendar"
           />
           <Submit loading={loading} />
         </>
