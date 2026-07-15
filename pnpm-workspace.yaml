@@ -17,7 +17,7 @@ catalogMode: prefer
 catalog:
   '@babel/core': ^8.0.1
   '@gmcode/forms': ^0.0.3
-  '@gmcode/react-ui': ^0.3.1
+  '@gmcode/react-ui': ^0.3.2
   '@gmcode/tsv-advanced': ^0.1.2
   '@gmcode/tsv-core': ^0.1.2
   '@gmcode/tsv-hookform': ^0.1.2

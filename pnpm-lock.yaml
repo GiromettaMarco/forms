@@ -13,8 +13,8 @@ catalogs:
       specifier: ^0.0.3
       version: 0.0.3
     '@gmcode/react-ui':
-      specifier: ^0.3.1
-      version: 0.3.1
+      specifier: ^0.3.2
+      version: 0.3.2
     '@gmcode/tsv-core':
       specifier: ^0.1.2
       version: 0.1.2
@@ -239,7 +239,7 @@ importers:
         version: 0.0.3(@gmcode/tsv-core@0.1.2)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)
       '@gmcode/react-ui':
         specifier: 'catalog:'
-        version: 0.3.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 0.3.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@inertiajs/core':
         specifier: 'catalog:'
         version: 3.5.0(axios@1.18.1)
@@ -330,7 +330,7 @@ importers:
     dependencies:
       '@gmcode/react-ui':
         specifier: 'catalog:'
-        version: 0.3.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 0.3.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@gmcode/tsv-hookform':
         specifier: 'catalog:'
         version: 0.1.2(@gmcode/tsv-core@0.1.2)(react-hook-form@7.76.1(react@19.2.7))
@@ -1033,6 +1033,12 @@ packages:
 
   '@gmcode/react-ui@0.3.1':
     resolution: {integrity: sha512-JVT5Ln9Fy9eFJjARjQAFlhJXUwgf6JZ1fY9oYzJM7gvZgIjjAuODBWfUJatDT5Zdi9Ze8228zGzFrFKqH+DpoA==}
+    peerDependencies:
+      react: ^19.2.7
+      react-dom: ^19.2.7
+
+  '@gmcode/react-ui@0.3.2':
+    resolution: {integrity: sha512-W4XkApziQ8NWBKbqHfiJ3XKEpVn+pv7MuWx9lMFiVxrxsASnSMyHE+AYHcKpvnMPEzBkfDqxSeHFwUarQzQIOA==}
     peerDependencies:
       react: ^19.2.7
       react-dom: ^19.2.7
@@ -4760,6 +4766,23 @@ snapshots:
       - typescript
 
   '@gmcode/react-ui@0.3.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      class-variance-authority: 0.7.1
+      clsx: 2.1.1
+      lucide-react: 1.17.0(react@19.2.7)
+      radix-ui: 1.5.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      react: 19.2.7
+      react-day-picker: 10.0.1(@types/react@19.2.17)(react@19.2.7)
+      react-dom: 19.2.7(react@19.2.7)
+      react-textarea-autosize: 8.5.9(@types/react@19.2.17)(react@19.2.7)
+      sonner: 2.0.7(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      tailwind-merge: 3.6.0
+      tailwindcss: 4.3.1
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+
+  '@gmcode/react-ui@0.3.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       class-variance-authority: 0.7.1
       clsx: 2.1.1
