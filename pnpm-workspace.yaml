@@ -21,7 +21,7 @@ catalog:
   '@gmcode/tsv-advanced': ^0.1.2
   '@gmcode/tsv-core': ^0.1.2
   '@gmcode/tsv-hookform': ^0.1.2
-  '@gmcode/tsv-input': ^0.2.0
+  '@gmcode/tsv-input': ^0.2.1
   '@inertiajs/core': ^3.5.0
   '@inertiajs/react': ^3.5.0
   '@rolldown/plugin-babel': ^0.2.3

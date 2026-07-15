@@ -22,8 +22,8 @@ catalogs:
       specifier: ^0.1.2
       version: 0.1.2
     '@gmcode/tsv-input':
-      specifier: ^0.2.0
-      version: 0.2.0
+      specifier: ^0.2.1
+      version: 0.2.1
     '@inertiajs/core':
       specifier: ^3.5.0
       version: 3.5.0
@@ -336,7 +336,7 @@ importers:
         version: 0.1.2(@gmcode/tsv-core@0.1.2)(react-hook-form@7.76.1(react@19.2.7))
       '@gmcode/tsv-input':
         specifier: 'catalog:'
-        version: 0.2.0
+        version: 0.2.1
       '@inertiajs/core':
         specifier: 'catalog:'
         version: 3.5.0(axios@1.18.1)
@@ -1054,6 +1054,9 @@ packages:
 
   '@gmcode/tsv-input@0.2.0':
     resolution: {integrity: sha512-YccbksdLyB3UJH15/NKTBJ/BOcEL9l6nb/Cz78MU3wpUPXiSpdT0aLb+eldviOd/hpvco2xcxNcriO+4hNwWKQ==}
+
+  '@gmcode/tsv-input@0.2.1':
+    resolution: {integrity: sha512-VP8yL+Azj10tlYjJgwdVgJ+RHgCko+nHgDYWBjbLf343FQ33KdYIzEElgx2YJNVsjDYqVM1iD+t7mQCRfgpHLA==}
 
   '@hookform/resolvers@5.4.0':
     resolution: {integrity: sha512-EIsqr/t/qbinPIhGjMdtvutIN1Kk4uwbROE9/UQ93CAVGR7GkA7Y92+fX80OzXi/OB67jVFYwKGO1WzkxmkFZw==}
@@ -4808,6 +4811,10 @@ snapshots:
       react-hook-form: 7.76.1(react@19.2.7)
 
   '@gmcode/tsv-input@0.2.0':
+    dependencies:
+      '@gmcode/tsv-core': 0.1.2
+
+  '@gmcode/tsv-input@0.2.1':
     dependencies:
       '@gmcode/tsv-core': 0.1.2
 
