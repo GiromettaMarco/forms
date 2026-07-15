@@ -10,11 +10,11 @@ catalogs:
       specifier: ^8.0.1
       version: 8.0.1
     '@gmcode/forms':
-      specifier: ^0.0.3
-      version: 0.0.3
+      specifier: ^0.0.5
+      version: 0.0.5
     '@gmcode/react-ui':
-      specifier: ^0.3.2
-      version: 0.3.2
+      specifier: ^0.3.3
+      version: 0.3.3
     '@gmcode/tsv-core':
       specifier: ^0.1.2
       version: 0.1.2
@@ -22,8 +22,8 @@ catalogs:
       specifier: ^0.1.2
       version: 0.1.2
     '@gmcode/tsv-input':
-      specifier: ^0.2.1
-      version: 0.2.1
+      specifier: ^0.2.2
+      version: 0.2.2
     '@inertiajs/core':
       specifier: ^3.5.0
       version: 3.5.0
@@ -175,10 +175,6 @@ overrides:
 importers:
 
   .:
-    dependencies:
-      '@gmcode/forms':
-        specifier: 'catalog:'
-        version: 0.0.3(@gmcode/tsv-core@0.1.2)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)
     devDependencies:
       '@babel/core':
         specifier: 'catalog:'
@@ -236,10 +232,10 @@ importers:
     dependencies:
       '@gmcode/forms':
         specifier: 'catalog:'
-        version: 0.0.3(@gmcode/tsv-core@0.1.2)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)
+        version: 0.0.5(@gmcode/tsv-core@0.1.2)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)
       '@gmcode/react-ui':
         specifier: 'catalog:'
-        version: 0.3.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 0.3.3(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@inertiajs/core':
         specifier: 'catalog:'
         version: 3.5.0(axios@1.18.1)
@@ -330,13 +326,13 @@ importers:
     dependencies:
       '@gmcode/react-ui':
         specifier: 'catalog:'
-        version: 0.3.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 0.3.3(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@gmcode/tsv-hookform':
         specifier: 'catalog:'
         version: 0.1.2(@gmcode/tsv-core@0.1.2)(react-hook-form@7.76.1(react@19.2.7))
       '@gmcode/tsv-input':
         specifier: 'catalog:'
-        version: 0.2.1
+        version: 0.2.2
       '@inertiajs/core':
         specifier: 'catalog:'
         version: 3.5.0(axios@1.18.1)
@@ -1020,22 +1016,16 @@ packages:
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
 
-  '@gmcode/forms@0.0.3':
-    resolution: {integrity: sha512-VG531wnE5+hnkdY5E1lqWRmylsKhf/WfOdE2f7AY7zPNhk2/mC/R/UzH05/xXExeLBacFxQvQOkwCkXTFSIPPA==}
+  '@gmcode/forms@0.0.5':
+    resolution: {integrity: sha512-EC28jw6ujEHCdQAil3TEPTrtfhnn7eR1/8S41G/BZVEUKFA7U8Vy9jBgJ7TOyIupWZN5/2PTfKoIyoIeTlCQhg==}
     peerDependencies:
       '@inertiajs/core': ^3.5.0
       '@inertiajs/react': ^3.5.0
       react: ^19.2.7
       react-dom: ^19.2.7
 
-  '@gmcode/react-ui@0.3.1':
-    resolution: {integrity: sha512-JVT5Ln9Fy9eFJjARjQAFlhJXUwgf6JZ1fY9oYzJM7gvZgIjjAuODBWfUJatDT5Zdi9Ze8228zGzFrFKqH+DpoA==}
-    peerDependencies:
-      react: ^19.2.7
-      react-dom: ^19.2.7
-
-  '@gmcode/react-ui@0.3.2':
-    resolution: {integrity: sha512-W4XkApziQ8NWBKbqHfiJ3XKEpVn+pv7MuWx9lMFiVxrxsASnSMyHE+AYHcKpvnMPEzBkfDqxSeHFwUarQzQIOA==}
+  '@gmcode/react-ui@0.3.3':
+    resolution: {integrity: sha512-BltrfONcBQIANoc3dm88NdZwZVrWWyvT/F/ImNkbSYpVs4PfCLFOuCwULTVsTegUikcZoSO7/0CuP8+UvAmCZw==}
     peerDependencies:
       react: ^19.2.7
       react-dom: ^19.2.7
@@ -1049,11 +1039,8 @@ packages:
       '@gmcode/tsv-core': ^0.1.2
       react-hook-form: ^7.71.0
 
-  '@gmcode/tsv-input@0.2.0':
-    resolution: {integrity: sha512-YccbksdLyB3UJH15/NKTBJ/BOcEL9l6nb/Cz78MU3wpUPXiSpdT0aLb+eldviOd/hpvco2xcxNcriO+4hNwWKQ==}
-
-  '@gmcode/tsv-input@0.2.1':
-    resolution: {integrity: sha512-VP8yL+Azj10tlYjJgwdVgJ+RHgCko+nHgDYWBjbLf343FQ33KdYIzEElgx2YJNVsjDYqVM1iD+t7mQCRfgpHLA==}
+  '@gmcode/tsv-input@0.2.2':
+    resolution: {integrity: sha512-AnOWtK6KA9IyaZDghKk31HjR6BytP/BugEa84iCb92xjfk3jCaZaI9DM8d3C878gd3x5gtPhwOMNMYOigyZ7gw==}
 
   '@hookform/resolvers@5.4.0':
     resolution: {integrity: sha512-EIsqr/t/qbinPIhGjMdtvutIN1Kk4uwbROE9/UQ93CAVGR7GkA7Y92+fX80OzXi/OB67jVFYwKGO1WzkxmkFZw==}
@@ -4741,11 +4728,11 @@ snapshots:
 
   '@floating-ui/utils@0.2.11': {}
 
-  '@gmcode/forms@0.0.3(@gmcode/tsv-core@0.1.2)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)':
+  '@gmcode/forms@0.0.5(@gmcode/tsv-core@0.1.2)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)':
     dependencies:
-      '@gmcode/react-ui': 0.3.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@gmcode/react-ui': 0.3.3(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@gmcode/tsv-hookform': 0.1.2(@gmcode/tsv-core@0.1.2)(react-hook-form@7.76.1(react@19.2.7))
-      '@gmcode/tsv-input': 0.2.0
+      '@gmcode/tsv-input': 0.2.2
       '@inertiajs/core': 3.5.0(axios@1.18.1)
       '@inertiajs/react': 3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       i18next: 26.3.4(typescript@6.0.3)
@@ -4765,24 +4752,7 @@ snapshots:
       - react-native
       - typescript
 
-  '@gmcode/react-ui@0.3.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      class-variance-authority: 0.7.1
-      clsx: 2.1.1
-      lucide-react: 1.17.0(react@19.2.7)
-      radix-ui: 1.5.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      react: 19.2.7
-      react-day-picker: 10.0.1(@types/react@19.2.17)(react@19.2.7)
-      react-dom: 19.2.7(react@19.2.7)
-      react-textarea-autosize: 8.5.9(@types/react@19.2.17)(react@19.2.7)
-      sonner: 2.0.7(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      tailwind-merge: 3.6.0
-      tailwindcss: 4.3.1
-    transitivePeerDependencies:
-      - '@types/react'
-      - '@types/react-dom'
-
-  '@gmcode/react-ui@0.3.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@gmcode/react-ui@0.3.3(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       class-variance-authority: 0.7.1
       clsx: 2.1.1
@@ -4807,11 +4777,7 @@ snapshots:
       '@hookform/resolvers': 5.4.0(react-hook-form@7.76.1(react@19.2.7))
       react-hook-form: 7.76.1(react@19.2.7)
 
-  '@gmcode/tsv-input@0.2.0':
-    dependencies:
-      '@gmcode/tsv-core': 0.1.2
-
-  '@gmcode/tsv-input@0.2.1':
+  '@gmcode/tsv-input@0.2.2':
     dependencies:
       '@gmcode/tsv-core': 0.1.2
 

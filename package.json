@@ -10,9 +10,6 @@
     "preinstall": "npx only-allow pnpm",
     "prepare": "vp config"
   },
-  "dependencies": {
-    "@gmcode/forms": "catalog:"
-  },
   "devDependencies": {
     "@babel/core": "catalog:",
     "@rolldown/plugin-babel": "catalog:",
