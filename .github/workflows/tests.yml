@@ -30,7 +30,7 @@ jobs:
 
       - name: Get installed Playwright version
         id: playwright-version
-        run: echo "VERSION=node -e \"console.log(require('playwright/package.json').version)\"" >> "$GITHUB_OUTPUT"
+        run: echo "VERSION=$(node -e "console.log(require('playwright/package.json').version)")" >> "$GITHUB_OUTPUT"
 
       - name: Restore Playwright cache
         uses: actions/cache@v6
