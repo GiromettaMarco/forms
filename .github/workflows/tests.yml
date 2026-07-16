@@ -58,6 +58,5 @@ jobs:
         with:
           name: artifacts
           path: |
-            **/coverage
             **/__screenshots__
           retention-days: 7
