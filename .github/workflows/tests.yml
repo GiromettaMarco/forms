@@ -2,12 +2,18 @@ name: Tests
 
 on:
   pull_request:
+    branches:
+      - master
   push:
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    timeout-minutes: 5
 
     permissions:
       contents: write
@@ -22,8 +28,21 @@ jobs:
           node-version: '24'
           cache: true
 
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "VERSION=$(node -e "console.log(require('playwright/package.json').version)")" >> "$GITHUB_OUTPUT"
+
+      - name: Restore Playwright cache
+        uses: actions/cache@v6
+        id: playwright-cache
+        with:
+          path: '~/.cache/ms-playwright'
+          key: '${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.VERSION }}'
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
       - name: Install Playwright Browsers
-        run: vpx playwright install --with-deps chromium
+        run: vpx playwright install --with-deps chromium --only-shell
 
       - name: Run Tests
         run: vp run test
@@ -33,3 +52,11 @@ jobs:
         with:
           commit_message: 'docs: update coverage badges'
           commit_options: '--no-verify'
+
+      - name: Store Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: artifacts
+          path: |
+            **/__screenshots__
+          retention-days: 7
