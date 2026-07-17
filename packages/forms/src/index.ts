@@ -37,3 +37,5 @@ export {
   type SchemaRule,
   type SchemaValues
 } from '@gmcode/tsv-input'
+export { type InferSchema, useTsvResolver } from '@gmcode/tsv-hookform'
+export type { FieldValues } from 'react-hook-form'
