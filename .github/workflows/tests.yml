@@ -54,6 +54,7 @@ jobs:
           commit_options: '--no-verify'
 
       - name: Store Artifacts
+        if: failure()
         uses: actions/upload-artifact@v7
         with:
           name: artifacts
