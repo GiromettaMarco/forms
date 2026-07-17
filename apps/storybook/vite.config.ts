@@ -1,6 +1,6 @@
 import { mergeConfig } from 'vite-plus'
 import { resolve } from 'path'
-import storybookConfig from '../../tooling/vite/storybook'
+import storybookConfig from '../../vite-config/storybook'
 
 export default mergeConfig(storybookConfig, {
   resolve: {
@@ -10,8 +10,7 @@ export default mergeConfig(storybookConfig, {
   },
   test: {
     alias: {
-      '@inertiajs/core': import.meta
-        .resolve('../../tooling/mocks/@inertiajs/core.js')
+      '@inertiajs/core': import.meta.resolve('@repo/mock-inertia/core.js')
     },
     name: 'storybook'
   }

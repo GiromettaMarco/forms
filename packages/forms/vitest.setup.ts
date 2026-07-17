@@ -1,4 +1,4 @@
-import './tests/theme.css'
+import './theme.css'
 
 import 'vitest-browser-react'
 import i18n from '@/i18n'

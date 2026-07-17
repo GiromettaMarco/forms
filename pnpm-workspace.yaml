@@ -1,5 +1,6 @@
 packages:
   - apps/*
+  - internal/*
   - packages/*
 
 allowBuilds:
@@ -54,6 +55,7 @@ catalog:
   lucide-react: ^1.16.0
   msw: ^2.15.0
   msw-storybook-addon: ^2.0.7
+  package-json-from-dist: ^1.0.1
   playwright: ^1.60.0
   radix-ui: ^1.4.3
   react: ^19.2.7

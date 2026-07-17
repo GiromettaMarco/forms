@@ -1,5 +1,5 @@
 {
-  "extends": "../../tooling/typescript/bundler.json",
+  "extends": "@repo/typescript/bundler.json",
 
   // Files
   "include": ["src", "tests"],

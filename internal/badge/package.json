@@ -1,0 +1,10 @@
+{
+  "name": "@repo/badge",
+  "version": "0.0.1",
+  "private": true,
+  "bin": "./bin/cli.js",
+  "type": "module",
+  "dependencies": {
+    "package-json-from-dist": "catalog:"
+  }
+}

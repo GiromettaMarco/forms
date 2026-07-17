@@ -1,3 +1,3 @@
-import '../../tooling/themes/default.css'
+import './theme.css'
 
 import 'vitest-browser-react'

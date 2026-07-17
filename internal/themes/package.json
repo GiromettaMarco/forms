@@ -1,0 +1,10 @@
+{
+  "name": "@repo/themes",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "tailwindcss": "catalog:",
+    "tw-animate-css": "catalog:"
+  }
+}

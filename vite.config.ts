@@ -7,7 +7,7 @@ export default defineConfig({
       'composer.lock',
       'pnpm-lock.yaml',
       '**/dist',
-      'tooling/mocks/@inertiajs/core.js',
+      'internal/mock-inertia/core.js',
       '**/mockServiceWorker.js'
     ],
     overrides: [
@@ -16,7 +16,7 @@ export default defineConfig({
         options: {
           sortTailwindcss: {
             functions: ['clsx', 'cn', 'cva'],
-            stylesheet: './packages/forms/.storybook/theme.css'
+            stylesheet: './packages/forms/theme.css'
           }
         }
       },
@@ -25,7 +25,7 @@ export default defineConfig({
         options: {
           sortTailwindcss: {
             functions: ['clsx', 'cn', 'cva'],
-            stylesheet: './tooling/themes/default.css'
+            stylesheet: './packages/react-ui/theme.css'
           }
         }
       }
@@ -51,7 +51,7 @@ export default defineConfig({
       '**/dist',
       'node_modules',
       'coverage',
-      'tooling/mocks/@inertiajs/core.js',
+      'internal/mock-inertia/core.js',
       '**/mockServiceWorker.js'
     ],
     jsPlugins: [

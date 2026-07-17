@@ -30,7 +30,7 @@
   },
   "scripts": {
     "build": "vp pack",
-    "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
+    "test": "vp test run --coverage && badge"
   },
   "dependencies": {
     "class-variance-authority": "catalog:",
@@ -40,25 +40,16 @@
     "react-day-picker": "catalog:",
     "react-textarea-autosize": "catalog:",
     "sonner": "catalog:",
-    "tailwind-merge": "catalog:",
-    "tailwindcss": "catalog:"
+    "tailwind-merge": "catalog:"
   },
   "devDependencies": {
-    "@babel/core": "catalog:",
-    "@rolldown/plugin-babel": "catalog:",
-    "@tailwindcss/vite": "catalog:",
-    "@types/babel__core": "catalog:",
+    "@repo/badge": "workspace:*",
+    "@repo/themes": "workspace:*",
+    "@repo/typescript": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vitejs/plugin-react": "catalog:",
-    "@vitest/coverage-istanbul": "catalog:",
-    "babel-plugin-react-compiler": "catalog:",
-    "playwright": "catalog:",
-    "tw-animate-css": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:",
     "vite-plus": "catalog:",
-    "vitest": "catalog:",
     "vitest-browser-react": "catalog:"
   },
   "peerDependencies": {

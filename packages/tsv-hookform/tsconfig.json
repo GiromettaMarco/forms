@@ -1,5 +1,5 @@
 {
-  "extends": "../../tooling/typescript/react.json",
+  "extends": "@repo/typescript/react.json",
 
   // Files
   "include": ["src", "tests"],

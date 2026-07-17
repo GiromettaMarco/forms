@@ -30,23 +30,23 @@
   },
   "scripts": {
     "build": "vp pack",
-    "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
+    "test": "vp test run --coverage && badge"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0"
   },
   "devDependencies": {
+    "@repo/badge": "workspace:*",
+    "@repo/typescript": "workspace:*",
     "@testing-library/dom": "catalog:",
     "@testing-library/react": "catalog:",
     "@testing-library/user-event": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
-    "@vitest/coverage-istanbul": "catalog:",
     "jsdom": "catalog:",
     "react": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:",
     "vite-plus": "catalog:",
     "vitest": "catalog:"
   },

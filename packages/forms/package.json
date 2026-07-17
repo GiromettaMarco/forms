@@ -33,7 +33,7 @@
   },
   "scripts": {
     "build": "vp pack",
-    "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
+    "test": "vp test run --coverage && badge"
   },
   "dependencies": {
     "@gmcode/react-ui": "catalog:",
@@ -45,26 +45,18 @@
     "react-day-picker": "catalog:",
     "react-hook-form": "catalog:",
     "react-i18next": "catalog:",
-    "react-textarea-autosize": "catalog:",
-    "tailwindcss": "catalog:"
+    "react-textarea-autosize": "catalog:"
   },
   "devDependencies": {
-    "@babel/core": "catalog:",
-    "@rolldown/plugin-babel": "catalog:",
-    "@tailwindcss/vite": "catalog:",
-    "@types/babel__core": "catalog:",
+    "@repo/badge": "workspace:*",
+    "@repo/mock-inertia": "workspace:*",
+    "@repo/themes": "workspace:*",
+    "@repo/typescript": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vitejs/plugin-react": "catalog:",
-    "@vitest/coverage-istanbul": "catalog:",
-    "babel-plugin-react-compiler": "catalog:",
     "msw": "catalog:",
-    "playwright": "catalog:",
-    "tw-animate-css": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:",
     "vite-plus": "catalog:",
-    "vitest": "catalog:",
     "vitest-browser-react": "catalog:"
   },
   "peerDependencies": {

@@ -1,4 +1,4 @@
-import defaultConfig from '../../tooling/vite/default'
+import defaultConfig from '../../vite-config/default'
 import { mergeConfig } from 'vite-plus'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'

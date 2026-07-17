@@ -1,8 +1,7 @@
 import type { StorybookConfig } from '@storybook/react-vite'
 
 const alias = {
-  '@inertiajs/core': import.meta
-    .resolve('../../../tooling/mocks/@inertiajs/core.js')
+  '@inertiajs/core': import.meta.resolve('@repo/mock-inertia/core.js')
 }
 
 const config: StorybookConfig = {

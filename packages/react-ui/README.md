@@ -38,4 +38,4 @@ function Page() {
 
 ## CSS themes
 
-- [Default](https://github.com/GiromettaMarco/forms/blob/master/tooling/themes/default.css)
+- [Default](https://github.com/GiromettaMarco/forms/blob/master/internal/themes/default.css)

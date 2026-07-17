@@ -1,0 +1,14 @@
+{
+  "name": "@repo/mock-inertia",
+  "version": "3.5.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "axios": "catalog:",
+    "es-toolkit": "catalog:",
+    "laravel-precognition": "catalog:"
+  },
+  "peerDependencies": {
+    "@inertiajs/core": "3.5.0"
+  }
+}

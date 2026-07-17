@@ -1,5 +1,5 @@
 import { mergeConfig } from 'vite-plus'
-import reactConfig from '../../tooling/vite/react'
+import reactConfig from '../../vite-config/react'
 import { resolve } from 'path'
 
 export default mergeConfig(reactConfig, {
@@ -17,8 +17,7 @@ export default mergeConfig(reactConfig, {
   },
   test: {
     alias: {
-      '@inertiajs/core': import.meta
-        .resolve('../../tooling/mocks/@inertiajs/core.js')
+      '@inertiajs/core': import.meta.resolve('@repo/mock-inertia/core.js')
     },
     name: 'forms',
     setupFiles: ['./vitest.setup.ts']

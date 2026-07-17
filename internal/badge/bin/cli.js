@@ -1,6 +1,19 @@
+#!/usr/bin/env node
 import fs from 'node:fs'
+import { loadPackageJson } from 'package-json-from-dist'
 
-function getBadgeColors(pct: number) {
+const { version } = loadPackageJson(import.meta.url, '../package.json')
+
+const help = `Version ${version}
+Usage: badge [flags]
+Make a coverage badge from a coverage summary.
+
+Options:
+  -h --help            Display this usage info
+  --report=<path>      Path to the coverage report summary file
+  --output=<path>      Output directory for coverage badge`
+
+function getBadgeColors(pct) {
   if (pct < 60) {
     return ['#D73A49', '#CB2431']
   } else if (pct < 90) {
@@ -10,7 +23,7 @@ function getBadgeColors(pct: number) {
   }
 }
 
-function getBadgeSVG(pct: number) {
+function getBadgeSVG(pct) {
   const colors = getBadgeColors(pct)
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="114" height="20">
@@ -45,20 +58,37 @@ function getBadgeSVG(pct: number) {
 `
 }
 
-try {
-  const data = fs.readFileSync('./coverage/coverage-summary.json', 'utf8')
+const main = async (...args) => {
+  let report = './coverage/coverage-summary.json'
+  let output = './docs'
+
+  for (const arg of args) {
+    if (arg === '-h' || arg === '--help') {
+      console.log(help)
+      return 0
+    } else if (arg.startsWith('--report=')) {
+      report = arg.substring('--report='.length)
+      continue
+    } else if (arg.startsWith('--output=')) {
+      output = arg.substring('--output='.length)
+      continue
+    }
+  }
+
+  const data = fs.readFileSync(report, 'utf8')
   const pct = Math.round(JSON.parse(data).total.lines.pct)
-  const docsPath = `./docs`
 
-  if (!fs.existsSync(docsPath)) {
-    fs.mkdirSync(docsPath)
+  if (!fs.existsSync(output)) {
+    fs.mkdirSync(output)
   }
 
-  try {
-    fs.writeFileSync(`${docsPath}/coverage.svg`, getBadgeSVG(pct))
-  } catch (err) {
-    console.error(err)
-  }
-} catch (err) {
-  console.error(err)
+  fs.writeFileSync(`${output}/coverage.svg`, getBadgeSVG(pct))
 }
+
+main(...process.argv.slice(2)).then(
+  (code) => process.exit(code),
+  (er) => {
+    console.error(er)
+    process.exit(1)
+  }
+)

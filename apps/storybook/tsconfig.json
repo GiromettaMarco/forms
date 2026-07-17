@@ -1,5 +1,5 @@
 {
-  "extends": "../../tooling/typescript/react.json",
+  "extends": "@repo/typescript/react.json",
 
   // Files
   // @see https://github.com/microsoft/TypeScript/issues/49555

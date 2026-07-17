@@ -30,16 +30,15 @@
   },
   "scripts": {
     "build": "vp pack",
-    "test": "vp test run --coverage && node ../../tooling/scripts/badge.ts"
+    "test": "vp test run --coverage && badge"
   },
   "dependencies": {
     "@gmcode/tsv-core": "catalog:"
   },
   "devDependencies": {
-    "@vitest/coverage-istanbul": "catalog:",
+    "@repo/badge": "workspace:*",
+    "@repo/typescript": "workspace:*",
     "typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-plus": "catalog:",
-    "vitest": "catalog:"
+    "vite-plus": "catalog:"
   }
 }
