@@ -68,11 +68,11 @@ export function Form<
   /**
    * How to display the root error from inertia.
    *
-   * - `flash` - use the Toaster component
-   * - `monitor` - use the ErrorMonitor component
-   * - `none` - don't display the root error
+   * - `"flash"` - use the Toaster component
+   * - `"monitor"` - use the ErrorMonitor component
+   * - `"none"` - don't display the root error
    *
-   * @defaultValue `flash`
+   * @defaultValue `"flash"`
    */
   rootError?: 'flash' | 'monitor' | 'none'
   onBefore?: GlobalEventCallback<'before', RequestPayload>
@@ -88,9 +88,19 @@ export function Form<
   onStart?: GlobalEventCallback<'start', RequestPayload>
   onSuccess?: GlobalEventCallback<'success', RequestPayload>
   preserveScroll?: boolean
+  /**
+   * Reset input values to their defaults on success.
+   *
+   * @defaultValue `true`
+   */
   resetOnSuccess?: boolean
   route: RouteDefinition<Method>
   schema: Schema<TRuleset>
+  /**
+   * Set the submitted values as default values on success.
+   *
+   * @defaultValue `false`
+   */
   setDefaultsOnSuccess?: boolean
 }) {
   const [rootError, setRootError] = useState<ErrorData>()
