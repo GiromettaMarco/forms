@@ -1,30 +1,30 @@
-import { Form, InputCheckboxRule, Schema, Submit, SwitchField } from '@/index'
+import { EmailField, Form, InputEmailRule, Schema, Submit } from '@/index'
 import { expect, vi } from 'vite-plus/test'
 import { formRoute, inertiaResponseSuccess, test } from './utility'
 import { WithToaster } from './with-toaster'
 import { render } from 'vitest-browser-react'
 
-const onCheckedChange = vi.fn()
 const onSuccess = vi.fn()
 
 function FormAndSchema() {
-  const schema = new Schema({ switch: new InputCheckboxRule() })
+  const schema = new Schema({
+    email: new InputEmailRule()
+  })
 
   return (
     <Form
       className="w-72"
-      defaults={{ switch: '' }}
+      defaults={{ email: '' }}
       onSuccess={onSuccess}
       schema={schema}
       route={formRoute}
     >
       {({ form, loading }) => (
         <>
-          <SwitchField
+          <EmailField
             control={form.control}
-            inputName="switch"
-            label="Switch"
-            onCheckedChange={onCheckedChange}
+            inputName="email"
+            label="Email"
           />
 
           <Submit loading={loading} />
@@ -34,15 +34,14 @@ function FormAndSchema() {
   )
 }
 
-test('SwitchField component', async ({ worker }) => {
+test('EmailField component', async ({ worker }) => {
   // Rest handler
   worker.use(inertiaResponseSuccess)
 
   // Render
   const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
 
-  await screen.getByLabelText('Switch').click()
-  expect(onCheckedChange).toHaveBeenCalledOnce()
+  await screen.getByLabelText('Email').fill('test@example.com')
 
   // Submit
   await screen.getByText('Submit').click()

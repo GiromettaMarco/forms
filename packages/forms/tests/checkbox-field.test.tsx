@@ -1,10 +1,11 @@
 import { CheckboxField, Form, InputCheckboxRule, Schema, Submit } from '@/index'
 import { expect, vi } from 'vite-plus/test'
-import { formRoute, test } from './utility'
+import { formRoute, inertiaResponseSuccess, test } from './utility'
 import { WithToaster } from './with-toaster'
 import { render } from 'vitest-browser-react'
 
 const onCheckedChange = vi.fn()
+const onSuccess = vi.fn()
 
 function FormAndSchema() {
   const schema = new Schema({ checkbox: new InputCheckboxRule() })
@@ -13,6 +14,7 @@ function FormAndSchema() {
     <Form
       className="w-72"
       defaults={{ checkbox: '' }}
+      onSuccess={onSuccess}
       schema={schema}
       route={formRoute}
     >
@@ -32,9 +34,19 @@ function FormAndSchema() {
   )
 }
 
-test('CheckboxField component', async () => {
+test('CheckboxField component', async ({ worker }) => {
+  // Rest handler
+  worker.use(inertiaResponseSuccess)
+
+  // Render
   const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
 
   await screen.getByLabelText('Checkbox').click()
-  expect(onCheckedChange).toHaveBeenCalled()
+  expect(onCheckedChange).toHaveBeenCalledOnce()
+
+  // Submit
+  await screen.getByText('Submit').click()
+  await vi.waitFor(async () => {
+    expect(onSuccess).toHaveBeenCalledOnce()
+  })
 })

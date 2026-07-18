@@ -1,40 +1,48 @@
 import { Form, InputTextRule, Schema, Submit, TextField } from '@/index'
 import { expect, vi } from 'vite-plus/test'
-import { formRoute, inertiaResponseError, test } from './utility'
+import {
+  formRoute,
+  inertiaResponseError,
+  inertiaResponseSuccess,
+  test
+} from './utility'
 import { WithToaster } from './with-toaster'
 import { render } from 'vitest-browser-react'
 
+const onError = vi.fn()
+const onSuccess = vi.fn()
+
 function FormAndSchema({
-  rootError
+  resetOnSuccess,
+  rootError,
+  setDefaultsOnSuccess
 }: {
+  resetOnSuccess?: boolean
   rootError?: 'flash' | 'monitor' | 'none'
+  setDefaultsOnSuccess?: boolean
 }) {
   const schema = new Schema({
-    username: new InputTextRule({
-      maxChars: 20,
-      messages: {
-        maxChars: 'username.maxChars',
-        minChars: 'username.minChars',
-        required: 'username.required'
-      },
-      minChars: 4
-    })
+    name: new InputTextRule({ maxChars: 20, minChars: 4 })
   })
 
   return (
     <Form
       className="w-72"
-      defaults={{ username: '' }}
+      defaults={{ name: '' }}
+      onError={onError}
+      onSuccess={onSuccess}
       schema={schema}
+      resetOnSuccess={resetOnSuccess}
       rootError={rootError}
       route={formRoute}
+      setDefaultsOnSuccess={setDefaultsOnSuccess}
     >
       {({ form, loading }) => (
         <>
           <TextField
             control={form.control}
-            inputName="username"
-            label="Username"
+            inputName="name"
+            label="Name"
           />
 
           <Submit loading={loading} />
@@ -51,17 +59,17 @@ test('Form component', async ({ worker }) => {
   // Wrap with Toaster component
   const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
 
+  const input = screen.getByLabelText('Name')
+
   // Test client side validation
-  await screen.getByLabelText('Username').fill('Jim')
+  await input.fill('Jim')
   await screen.getByText('Submit').click()
   expect(
-    screen.getByText(
-      'Your username must be at least 4 characters. The chosen name is 3 characters long.'
-    )
+    screen.getByText('The field must be at least 4 characters.')
   ).toBeInTheDocument()
 
   // Submit the form
-  await screen.getByLabelText('Username').fill('John')
+  await input.fill('John')
   await screen.getByText('Submit').click()
 
   // Test server output
@@ -73,6 +81,7 @@ test('Form component', async ({ worker }) => {
     return element
   })
   expect(toast).toBeInstanceOf(HTMLElement)
+  expect(onError).toHaveBeenCalledOnce()
 })
 
 test('Form component with inline root errors', async ({ worker }) => {
@@ -85,7 +94,7 @@ test('Form component with inline root errors', async ({ worker }) => {
   })
 
   // Submit the form
-  await screen.getByLabelText('Username').fill('John')
+  await screen.getByLabelText('Name').fill('John')
   await screen.getByText('Submit').click()
 
   // Test server output
@@ -97,4 +106,49 @@ test('Form component with inline root errors', async ({ worker }) => {
     return element
   })
   expect(toast).toBeInstanceOf(HTMLElement)
+  expect(onError).toHaveBeenCalledOnce()
+})
+
+test('Form component without reset on success', async ({ worker }) => {
+  // Add rest handler
+  worker.use(inertiaResponseSuccess)
+
+  // Wrap with Toaster component
+  const screen = await render(<FormAndSchema resetOnSuccess={false} />, {
+    wrapper: WithToaster
+  })
+
+  const input = screen.getByLabelText('Name')
+
+  // Submit the form
+  await input.fill('John')
+  await screen.getByText('Submit').click()
+
+  // Test new defaults
+  await vi.waitFor(async () => {
+    expect(onSuccess).toHaveBeenCalledOnce()
+  })
+  expect(input).toHaveValue('John')
+})
+
+test('Form component with set defaults on success', async ({ worker }) => {
+  // Add rest handler
+  worker.use(inertiaResponseSuccess)
+
+  // Wrap with Toaster component
+  const screen = await render(<FormAndSchema setDefaultsOnSuccess />, {
+    wrapper: WithToaster
+  })
+
+  const input = screen.getByLabelText('Name')
+
+  // Submit the form
+  await input.fill('John')
+  await screen.getByText('Submit').click()
+
+  // Test new defaults
+  await vi.waitFor(async () => {
+    expect(onSuccess).toHaveBeenCalledOnce()
+  })
+  expect(input).toHaveValue('John')
 })

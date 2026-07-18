@@ -1,30 +1,32 @@
-import { Form, InputCheckboxRule, Schema, Submit, SwitchField } from '@/index'
+import { Form, InputTextRule, Schema, Submit, TextareaField } from '@/index'
 import { expect, vi } from 'vite-plus/test'
 import { formRoute, inertiaResponseSuccess, test } from './utility'
 import { WithToaster } from './with-toaster'
 import { render } from 'vitest-browser-react'
 
-const onCheckedChange = vi.fn()
 const onSuccess = vi.fn()
 
 function FormAndSchema() {
-  const schema = new Schema({ switch: new InputCheckboxRule() })
+  const schema = new Schema({
+    textarea: new InputTextRule({ maxChars: 255, optional: true })
+  })
 
   return (
     <Form
       className="w-72"
-      defaults={{ switch: '' }}
+      defaults={{ textarea: '' }}
       onSuccess={onSuccess}
       schema={schema}
       route={formRoute}
     >
       {({ form, loading }) => (
         <>
-          <SwitchField
+          <TextareaField
             control={form.control}
-            inputName="switch"
-            label="Switch"
-            onCheckedChange={onCheckedChange}
+            inputName="textarea"
+            label="Textarea"
+            maxRows={7}
+            minRows={3}
           />
 
           <Submit loading={loading} />
@@ -34,15 +36,14 @@ function FormAndSchema() {
   )
 }
 
-test('SwitchField component', async ({ worker }) => {
+test('TextareaField component', async ({ worker }) => {
   // Rest handler
   worker.use(inertiaResponseSuccess)
 
   // Render
   const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
 
-  await screen.getByLabelText('Switch').click()
-  expect(onCheckedChange).toHaveBeenCalledOnce()
+  await screen.getByLabelText('Textarea').fill('Lorem Ipsum')
 
   // Submit
   await screen.getByText('Submit').click()

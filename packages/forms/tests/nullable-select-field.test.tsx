@@ -1,30 +1,44 @@
-import { Form, InputCheckboxRule, Schema, Submit, SwitchField } from '@/index'
+import {
+  Form,
+  InputSelectRule,
+  NullableSelectField,
+  Schema,
+  Submit
+} from '@/index'
 import { expect, vi } from 'vite-plus/test'
 import { formRoute, inertiaResponseSuccess, test } from './utility'
 import { WithToaster } from './with-toaster'
 import { render } from 'vitest-browser-react'
 
-const onCheckedChange = vi.fn()
 const onSuccess = vi.fn()
 
 function FormAndSchema() {
-  const schema = new Schema({ switch: new InputCheckboxRule() })
+  const schema = new Schema({
+    nullableSelect: new InputSelectRule({
+      optional: true,
+      options: ['option1', 'option2']
+    })
+  })
 
   return (
     <Form
       className="w-72"
-      defaults={{ switch: '' }}
+      defaults={{ nullableSelect: '' }}
       onSuccess={onSuccess}
       schema={schema}
       route={formRoute}
     >
       {({ form, loading }) => (
         <>
-          <SwitchField
+          <NullableSelectField
             control={form.control}
-            inputName="switch"
-            label="Switch"
-            onCheckedChange={onCheckedChange}
+            inputName="nullableSelect"
+            label="Select"
+            options={[
+              { label: 'Option 1', value: 'option1' },
+              { label: 'Option 2', value: 'option2' }
+            ]}
+            setValue={form.setValue}
           />
 
           <Submit loading={loading} />
@@ -34,15 +48,17 @@ function FormAndSchema() {
   )
 }
 
-test('SwitchField component', async ({ worker }) => {
+test('NullableSelectField component', async ({ worker }) => {
   // Rest handler
   worker.use(inertiaResponseSuccess)
 
   // Render
   const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
 
-  await screen.getByLabelText('Switch').click()
-  expect(onCheckedChange).toHaveBeenCalledOnce()
+  await screen.getByLabelText('Select').click()
+  const option1 = screen.getByText('Option 1').last()
+  await option1.click()
+  await screen.getByLabelText('Reset').click()
 
   // Submit
   await screen.getByText('Submit').click()

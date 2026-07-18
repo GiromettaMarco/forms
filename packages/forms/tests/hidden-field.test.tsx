@@ -1,30 +1,29 @@
-import { Form, InputCheckboxRule, Schema, Submit, SwitchField } from '@/index'
+import { Form, HiddenField, InputRule, Schema, Submit } from '@/index'
 import { expect, vi } from 'vite-plus/test'
 import { formRoute, inertiaResponseSuccess, test } from './utility'
 import { WithToaster } from './with-toaster'
 import { render } from 'vitest-browser-react'
 
-const onCheckedChange = vi.fn()
 const onSuccess = vi.fn()
 
 function FormAndSchema() {
-  const schema = new Schema({ switch: new InputCheckboxRule() })
+  const schema = new Schema({
+    hidden: new InputRule()
+  })
 
   return (
     <Form
       className="w-72"
-      defaults={{ switch: '' }}
+      defaults={{ hidden: 'token' }}
       onSuccess={onSuccess}
       schema={schema}
       route={formRoute}
     >
       {({ form, loading }) => (
         <>
-          <SwitchField
+          <HiddenField
             control={form.control}
-            inputName="switch"
-            label="Switch"
-            onCheckedChange={onCheckedChange}
+            inputName="hidden"
           />
 
           <Submit loading={loading} />
@@ -34,15 +33,12 @@ function FormAndSchema() {
   )
 }
 
-test('SwitchField component', async ({ worker }) => {
+test('HiddenField component', async ({ worker }) => {
   // Rest handler
   worker.use(inertiaResponseSuccess)
 
   // Render
   const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
-
-  await screen.getByLabelText('Switch').click()
-  expect(onCheckedChange).toHaveBeenCalledOnce()
 
   // Submit
   await screen.getByText('Submit').click()

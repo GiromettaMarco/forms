@@ -1,8 +1,10 @@
 import { Form, InputNumberRule, NumericField, Schema, Submit } from '@/index'
-import { formRoute, test } from './utility'
+import { expect, vi } from 'vite-plus/test'
+import { formRoute, inertiaResponseSuccess, test } from './utility'
 import { WithToaster } from './with-toaster'
-import { expect } from 'vite-plus/test'
 import { render } from 'vitest-browser-react'
+
+const onSuccess = vi.fn()
 
 function FormAndSchema({
   ui_max,
@@ -25,6 +27,7 @@ function FormAndSchema({
     <Form
       className="w-72"
       defaults={{ number: '' }}
+      onSuccess={onSuccess}
       schema={schema}
       route={formRoute}
     >
@@ -49,7 +52,11 @@ function FormAndSchema({
   )
 }
 
-test('NumericField component with UI', async () => {
+test('NumericField component with UI', async ({ worker }) => {
+  // Rest handler
+  worker.use(inertiaResponseSuccess)
+
+  // Render
   const screen = await render(
     <FormAndSchema
       ui_max={5}
@@ -62,6 +69,18 @@ test('NumericField component with UI', async () => {
   const input = screen.getByLabelText('Numeric field with UI')
   const minus = screen.getByLabelText('Decrease')
   const plus = screen.getByLabelText('Increase')
+  const submit = screen.getByText('Submit')
+
+  await input.fill('10')
+  await submit.click()
+  expect(
+    screen.getByText('The field must not be greater than 5.')
+  ).toBeInTheDocument()
+
+  await input.fill('a')
+  await plus.click(plus)
+  expect(input).toHaveValue('')
+  expect(screen.getByText('The field is required.')).toBeInTheDocument()
 
   await input.fill('4')
   await plus.click(plus)
@@ -73,14 +92,9 @@ test('NumericField component with UI', async () => {
   await minus.click(minus)
   expect(input).toHaveValue('0')
 
-  await input.fill('10')
-  await screen.getByText('Submit').click()
-  expect(
-    screen.getByText('The field must not be greater than 5.')
-  ).toBeInTheDocument()
-
-  await input.fill('a')
-  await plus.click(plus)
-  expect(input).toHaveValue('')
-  expect(screen.getByText('The field is required.')).toBeInTheDocument()
+  // Submit
+  await submit.click()
+  await vi.waitFor(async () => {
+    expect(onSuccess).toHaveBeenCalledOnce()
+  })
 })
