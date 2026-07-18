@@ -10,10 +10,10 @@ export function ErrorMonitor({ error }: { error?: ErrorData }) {
     return null
   }
 
-  if (t) {
-    // @ts-expect-error: assert error.message to be a translation key
-    return <FieldError errors={{ message: t(error.message, error.params) }} />
+  if (t.name === 'notReadyT') {
+    return <FieldError errors={error} />
   }
 
-  return <FieldError errors={error} />
+  // @ts-expect-error: assert error.message to be a translation key
+  return <FieldError errors={{ message: t(error.message, error.params) }} />
 }
