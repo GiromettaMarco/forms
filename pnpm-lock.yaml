@@ -10,8 +10,8 @@ catalogs:
       specifier: ^8.0.1
       version: 8.0.1
     '@gmcode/forms':
-      specifier: ^0.0.7
-      version: 0.0.7
+      specifier: ^0.0.8
+      version: 0.0.8
     '@gmcode/react-ui':
       specifier: ^0.3.4
       version: 0.3.4
@@ -232,7 +232,7 @@ importers:
     dependencies:
       '@gmcode/forms':
         specifier: 'catalog:'
-        version: 0.0.7(@gmcode/tsv-core@0.1.3)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)
+        version: 0.0.8(@gmcode/tsv-core@0.1.3)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)
       '@gmcode/react-ui':
         specifier: 'catalog:'
         version: 0.3.4(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -973,8 +973,8 @@ packages:
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
 
-  '@gmcode/forms@0.0.7':
-    resolution: {integrity: sha512-064rRk4725h90a6+VD2obtMor19sXvsbfcPIJzHpjw5BTEGZty/6XfgFO8IBMLiuLiQDkSyFR7uU/pPepvIceg==}
+  '@gmcode/forms@0.0.8':
+    resolution: {integrity: sha512-fOdXaQ23HtqzNigE1eFPfJpTXyzTgKllJgnxjkaZM6wHI72wLdaQUpNJQ5VFnIt1wg5K7h3RBqgRHUcsvQMcbA==}
     peerDependencies:
       '@inertiajs/core': ^3.5.0
       '@inertiajs/react': ^3.5.0
@@ -995,9 +995,6 @@ packages:
     peerDependencies:
       '@gmcode/tsv-core': ^0.1.3
       react-hook-form: ^7.71.2
-
-  '@gmcode/tsv-input@0.2.3':
-    resolution: {integrity: sha512-qXGmKgWH2puojfw+XCjGgXPMpoeSitKnour3lFPmxdtg7++wxT3xgaf0JEaaKBqtoRkdRiXskY5qWA6lrTAjdw==}
 
   '@gmcode/tsv-input@0.2.4':
     resolution: {integrity: sha512-r8TSaPwY1D/vTAs+02KM+h+l29aXlIj/SD1YH/GrIkuzqTGB96iOuLQvlctSMubcw4uWznXiind4mcZpGrHSpQ==}
@@ -4644,11 +4641,11 @@ snapshots:
 
   '@floating-ui/utils@0.2.11': {}
 
-  '@gmcode/forms@0.0.7(@gmcode/tsv-core@0.1.3)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)':
+  '@gmcode/forms@0.0.8(@gmcode/tsv-core@0.1.3)(@inertiajs/core@3.5.0(axios@1.18.1))(@inertiajs/react@3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)':
     dependencies:
       '@gmcode/react-ui': 0.3.4(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@gmcode/tsv-hookform': 0.1.3(@gmcode/tsv-core@0.1.3)(react-hook-form@7.76.1(react@19.2.7))
-      '@gmcode/tsv-input': 0.2.3
+      '@gmcode/tsv-input': 0.2.4
       '@inertiajs/core': 3.5.0(axios@1.18.1)
       '@inertiajs/react': 3.5.0(axios@1.18.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       i18next: 26.3.4(typescript@6.0.3)
@@ -4690,10 +4687,6 @@ snapshots:
       '@gmcode/tsv-core': 0.1.3
       '@hookform/resolvers': 5.4.0(react-hook-form@7.76.1(react@19.2.7))
       react-hook-form: 7.76.1(react@19.2.7)
-
-  '@gmcode/tsv-input@0.2.3':
-    dependencies:
-      '@gmcode/tsv-core': 0.1.3
 
   '@gmcode/tsv-input@0.2.4':
     dependencies:
