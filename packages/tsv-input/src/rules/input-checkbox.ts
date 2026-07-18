@@ -1,9 +1,9 @@
-import { InputRule, type inputRuleMessages } from '@/input-rule'
+import { InputRule, type inputRuleMessages } from '@/rules/input-rule'
 
 type OptionalDefaultTrue<TOptional extends boolean | undefined> =
   TOptional extends false ? false : true | undefined
 
-interface RuleOptions<
+interface InputCheckboxOptions<
   TOptional extends boolean | undefined,
   TMessages extends typeof inputRuleMessages = typeof inputRuleMessages
 > {
@@ -35,7 +35,10 @@ export class InputCheckboxRule<
    */
   optional: boolean
 
-  constructor({ messages, optional = true }: RuleOptions<TOptional> = {}) {
+  constructor({
+    messages,
+    optional = true
+  }: InputCheckboxOptions<TOptional> = {}) {
     super({ messages })
 
     this.optional = optional

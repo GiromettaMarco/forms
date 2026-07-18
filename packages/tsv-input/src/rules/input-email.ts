@@ -2,7 +2,7 @@ import {
   InputRule,
   type InputRuleOptions,
   inputRuleMessages
-} from '@/input-rule'
+} from '@/rules/input-rule'
 import { Message, emailRegex } from '@gmcode/tsv-core'
 
 const defaultMessages = {
@@ -11,7 +11,7 @@ const defaultMessages = {
   maxChars: 'maxChars'
 }
 
-interface RuleOptions<
+interface InputEmailOptions<
   TOptional extends boolean | undefined
 > extends InputRuleOptions<TOptional, typeof defaultMessages> {
   /**
@@ -44,7 +44,7 @@ export class InputEmailRule<
     maxChars = 255,
     messages,
     optional
-  }: RuleOptions<TOptional> = {}) {
+  }: InputEmailOptions<TOptional> = {}) {
     super({ optional })
 
     this.messages = { ...defaultMessages, ...messages }

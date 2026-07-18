@@ -2,7 +2,7 @@ import {
   InputRule,
   type InputRuleOptions,
   inputRuleMessages
-} from '@/input-rule'
+} from '@/rules/input-rule'
 import { Message } from '@gmcode/tsv-core'
 
 const defaultMessages = {
@@ -10,7 +10,7 @@ const defaultMessages = {
   missing: 'missing'
 }
 
-interface RuleOptions<
+interface InputSelectOptions<
   TValue extends string,
   TOptional extends boolean | undefined
 > extends InputRuleOptions<TOptional, typeof defaultMessages> {
@@ -41,7 +41,7 @@ export class InputSelectRule<
     messages,
     optional,
     options
-  }: RuleOptions<TOptions, TOptional>) {
+  }: InputSelectOptions<TOptions, TOptional>) {
     super({ optional })
 
     this.messages = { ...defaultMessages, ...messages }
