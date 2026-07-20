@@ -5,6 +5,9 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [storybookTest(), tailwindcss()],
+  resolve: {
+    tsconfigPaths: true
+  },
   test: {
     browser: {
       enabled: true,

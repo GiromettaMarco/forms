@@ -1,6 +1,5 @@
 import { mergeConfig } from 'vite-plus'
 import reactConfig from '../../vite-config/react'
-import { resolve } from 'path'
 
 export default mergeConfig(reactConfig, {
   pack: {
@@ -9,11 +8,6 @@ export default mergeConfig(reactConfig, {
       locales: './src/locales/index.ts'
     },
     exports: true
-  },
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, 'src')
-    }
   },
   test: {
     alias: {

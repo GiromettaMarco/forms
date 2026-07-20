@@ -4,6 +4,9 @@ export default {
   pack: {
     minify: true
   },
+  resolve: {
+    tsconfigPaths: true
+  },
   test: {
     coverage: {
       enabled: false,
