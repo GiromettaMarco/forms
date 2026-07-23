@@ -22,6 +22,8 @@
     "@vitest/browser-playwright": "catalog:",
     "@vitest/coverage-istanbul": "catalog:",
     "babel-plugin-react-compiler": "catalog:",
+    "eslint-plugin-perfectionist": "catalog:",
+    "eslint-plugin-storybook": "catalog:",
     "playwright": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
