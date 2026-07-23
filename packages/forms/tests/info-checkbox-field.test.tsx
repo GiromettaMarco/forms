@@ -1,3 +1,6 @@
+import type { PropsWithChildren } from 'react'
+import { expect, vi } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
 import {
   Form,
   InfoCheckboxField,
@@ -5,11 +8,8 @@ import {
   Schema,
   Submit
 } from '@/index'
-import { expect, vi } from 'vite-plus/test'
 import { formRoute, inertiaResponseSuccess, test } from './utility'
-import type { PropsWithChildren } from 'react'
 import { WithToaster } from './with-toaster'
-import { render } from 'vitest-browser-react'
 
 const onCheckedChange = vi.fn()
 const onSuccess = vi.fn()
@@ -25,8 +25,8 @@ function FormAndSchema({
       className="w-72"
       defaults={{ infoCheckbox: '' }}
       onSuccess={onSuccess}
-      schema={schema}
       route={formRoute}
+      schema={schema}
     >
       {({ form, loading }) => (
         <>

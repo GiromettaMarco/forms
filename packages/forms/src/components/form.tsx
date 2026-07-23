@@ -1,3 +1,6 @@
+import { cn, flash } from '@gmcode/react-ui'
+import { type InferSchema, useTsvResolver } from '@gmcode/tsv-hookform'
+import type { Ruleset } from '@gmcode/tsv-input'
 import type {
   CancelTokenCallback,
   Errors,
@@ -7,23 +10,20 @@ import type {
   RequestPayload,
   SharedPageProps
 } from '@inertiajs/core'
+import { useForm as useInertiaForm } from '@inertiajs/react'
+import { type ReactNode, useEffect, useState } from 'react'
 import type {
   DefaultValues,
   FieldValues,
   Path,
   UseFormReturn
 } from 'react-hook-form'
-import type { ErrorData, Method, RouteDefinition } from '@/types'
-import { type InferSchema, useTsvResolver } from '@gmcode/tsv-hookform'
-import { type ReactNode, useEffect, useState } from 'react'
-import { cn, flash } from '@gmcode/react-ui'
-import { ErrorMonitor } from '@/components/error-monitor'
-import { I18nextProvider } from 'react-i18next'
-import type { Ruleset } from '@gmcode/tsv-input'
-import type { Schema } from '@/index'
-import i18n from '@/i18n'
-import { useForm as useInertiaForm } from '@inertiajs/react'
 import { useForm as userReactForm } from 'react-hook-form'
+import { I18nextProvider } from 'react-i18next'
+import { ErrorMonitor } from '@/components/error-monitor'
+import i18n from '@/i18n'
+import type { Schema } from '@/index'
+import type { ErrorData, Method, RouteDefinition } from '@/types'
 
 type RenderFN<TValues extends FieldValues> = ({
   errors,
@@ -43,7 +43,6 @@ export function Form<
   children,
   className,
   defaults = {},
-  rootError: displayRootError = 'flash',
   onBefore,
   onBeforeUpdate,
   onCancel,
@@ -58,6 +57,7 @@ export function Form<
   onSuccess,
   preserveScroll = true,
   resetOnSuccess = true,
+  rootError: displayRootError = 'flash',
   route,
   schema,
   setDefaultsOnSuccess = false
@@ -65,16 +65,6 @@ export function Form<
   children: RenderFN<TValues>
   className?: string
   defaults?: Partial<DefaultValues<TValues>>
-  /**
-   * How to display the root error from inertia.
-   *
-   * - `"flash"` - use the Toaster component
-   * - `"monitor"` - use the ErrorMonitor component
-   * - `"none"` - don't display the root error
-   *
-   * @defaultValue `"flash"`
-   */
-  rootError?: 'flash' | 'monitor' | 'none'
   onBefore?: GlobalEventCallback<'before', RequestPayload>
   onBeforeUpdate?: GlobalEventCallback<'beforeUpdate', RequestPayload>
   onCancel?: GlobalEventCallback<'cancel', RequestPayload>
@@ -94,6 +84,16 @@ export function Form<
    * @defaultValue `true`
    */
   resetOnSuccess?: boolean
+  /**
+   * How to display the root error from inertia.
+   *
+   * - `"flash"` - use the Toaster component
+   * - `"monitor"` - use the ErrorMonitor component
+   * - `"none"` - don't display the root error
+   *
+   * @defaultValue `"flash"`
+   */
+  rootError?: 'flash' | 'monitor' | 'none'
   route: RouteDefinition<Method>
   schema: Schema<TRuleset>
   /**

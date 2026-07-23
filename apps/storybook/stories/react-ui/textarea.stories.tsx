@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Textarea } from '@/react-ui/textarea'
 
 const meta = {
-  argTypes: {
-    'aria-invalid': { control: 'boolean' }
-  },
   args: {
     placeholder: 'Say something about yourself...'
+  },
+  argTypes: {
+    'aria-invalid': { control: 'boolean' }
   },
   component: Textarea,
   parameters: { layout: 'centered' },

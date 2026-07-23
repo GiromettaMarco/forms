@@ -1,9 +1,9 @@
-import { FancyRadioField, Form, InputSelectRule, Schema, Submit } from '@/index'
 import { Monitor, Moon, Sun } from 'lucide-react'
 import { expect, vi } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
+import { FancyRadioField, Form, InputSelectRule, Schema, Submit } from '@/index'
 import { formRoute, inertiaResponseSuccess, test } from './utility'
 import { WithToaster } from './with-toaster'
-import { render } from 'vitest-browser-react'
 
 const onSuccess = vi.fn()
 
@@ -17,8 +17,8 @@ function FormAndSchema() {
       className="w-72"
       defaults={{ appearance: 'system' }}
       onSuccess={onSuccess}
-      schema={schema}
       route={formRoute}
+      schema={schema}
     >
       {({ form, loading }) => (
         <>

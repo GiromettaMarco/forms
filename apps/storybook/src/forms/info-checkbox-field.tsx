@@ -1,6 +1,6 @@
+import { InfoCheckboxField as InfoCheckboxFieldOriginal } from '@gmcode/forms'
 import type { ComponentProps } from 'react'
 import type { FieldValues } from 'react-hook-form'
-import { InfoCheckboxField as InfoCheckboxFieldOriginal } from '@gmcode/forms'
 
 export function InfoCheckboxField<
   TFieldValues extends FieldValues = FieldValues

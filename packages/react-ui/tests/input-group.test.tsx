@@ -7,6 +7,8 @@ import {
   RefreshCcw,
   Search
 } from 'lucide-react'
+import { expect, test } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
 import {
   InputGroup,
   InputGroupAddon,
@@ -15,8 +17,6 @@ import {
   InputGroupText,
   InputGroupTextarea
 } from '@/index'
-import { expect, test } from 'vite-plus/test'
-import { render } from 'vitest-browser-react'
 
 test('InputGroup components', async () => {
   await render(

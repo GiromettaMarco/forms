@@ -1,6 +1,6 @@
 import { expect, test, vi } from 'vite-plus/test'
-import { Button } from '@/index'
 import { render } from 'vitest-browser-react'
+import { Button } from '@/index'
 
 test('Button component', async () => {
   const onClick = vi.fn()

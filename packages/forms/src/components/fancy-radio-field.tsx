@@ -1,5 +1,3 @@
-import type { ComponentProps, FC, SVGProps } from 'react'
-import { type Control, Controller, type FieldPath } from 'react-hook-form'
 import {
   FieldDescription,
   FieldLabel,
@@ -8,8 +6,10 @@ import {
   RadioGroup,
   RadioGroupItem
 } from '@gmcode/react-ui'
-import { ErrorMonitor } from '@/components/error-monitor'
+import type { ComponentProps, FC, SVGProps } from 'react'
+import { type Control, Controller, type FieldPath } from 'react-hook-form'
 import type { FieldValues } from 'react-hook-form'
+import { ErrorMonitor } from '@/components/error-monitor'
 import type { Option } from '@/types'
 
 export function FancyRadioField<

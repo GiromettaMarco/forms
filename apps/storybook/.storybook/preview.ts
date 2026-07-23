@@ -1,12 +1,13 @@
 /// <reference types="vite/client" />
 
-import '../theme.css'
+import { withThemeByClassName } from '@storybook/addon-themes'
 import type { Preview, ReactRenderer } from '@storybook/react-vite'
 import { initialize, mswLoader } from 'msw-storybook-addon'
 import DocsWithTheme from '../decorators/docs-with-theme'
 import { WithI18next } from '../decorators/with-i18next'
 import { WithToaster } from '../decorators/with-toaster'
-import { withThemeByClassName } from '@storybook/addon-themes'
+
+import '../theme.css'
 
 // @see https://github.com/mswjs/msw-storybook-addon#configuring-msw
 initialize({

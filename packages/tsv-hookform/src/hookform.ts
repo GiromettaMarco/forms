@@ -1,16 +1,16 @@
 import type {
-  Resolver,
-  ResolverError,
-  ResolverOptions,
-  ResolverSuccess
-} from 'react-hook-form'
-import type {
   Ruleset,
   SanitizedValues,
   Schema,
   SchemaValues
 } from '@gmcode/tsv-core'
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers'
+import type {
+  Resolver,
+  ResolverError,
+  ResolverOptions,
+  ResolverSuccess
+} from 'react-hook-form'
 
 /**
  * Custom hook to generate a validation resolver for React Hook Form.

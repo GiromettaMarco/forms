@@ -1,9 +1,13 @@
+import { flash } from '@gmcode/react-ui'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Button } from '@/react-ui/button'
 import { Toaster } from '@/react-ui/toaster'
-import { flash } from '@gmcode/react-ui'
 
 const meta = {
+  args: {
+    closeButton: true,
+    position: 'bottom-center'
+  },
   argTypes: {
     closeButton: {
       control: 'boolean'
@@ -28,10 +32,6 @@ const meta = {
       type: 'boolean'
     }
   },
-  args: {
-    closeButton: true,
-    position: 'bottom-center'
-  },
   component: Toaster,
   parameters: {
     disableToaster: true,
@@ -53,13 +53,12 @@ export const Default: Story = {
       />
       <div className="flex flex-wrap gap-2">
         <Button
-          variant="outline"
           onClick={() => flash({ title: 'Default toaster' })}
+          variant="outline"
         >
           Default
         </Button>
         <Button
-          variant="outline"
           onClick={() =>
             flash({
               description: 'Your submission was successful.',
@@ -67,11 +66,11 @@ export const Default: Story = {
               title: 'Success'
             })
           }
+          variant="outline"
         >
           Success
         </Button>
         <Button
-          variant="outline"
           onClick={() =>
             flash({
               description: 'You have a new message.',
@@ -79,11 +78,11 @@ export const Default: Story = {
               title: 'Notification'
             })
           }
+          variant="outline"
         >
           Info
         </Button>
         <Button
-          variant="outline"
           onClick={() =>
             flash({
               description: 'Autosave is disabled.',
@@ -91,11 +90,11 @@ export const Default: Story = {
               title: 'Warning'
             })
           }
+          variant="outline"
         >
           Warning
         </Button>
         <Button
-          variant="outline"
           onClick={() =>
             flash({
               description: 'Please try again later.',
@@ -103,6 +102,7 @@ export const Default: Story = {
               title: 'Network Error'
             })
           }
+          variant="outline"
         >
           Error
         </Button>
@@ -120,13 +120,12 @@ export const Array: Story = {
       />
       <div className="flex flex-wrap gap-2">
         <Button
-          variant="outline"
           onClick={() => flash([])}
+          variant="outline"
         >
           Empty
         </Button>
         <Button
-          variant="outline"
           onClick={() =>
             flash([
               { level: 'info', title: 'Message 1' },
@@ -134,6 +133,7 @@ export const Array: Story = {
               { level: 'info', title: 'Message 3' }
             ])
           }
+          variant="outline"
         >
           Multiple
         </Button>

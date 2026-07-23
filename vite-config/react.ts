@@ -1,9 +1,9 @@
-import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import babel from '@rolldown/plugin-babel'
-import defaultConfig from './default'
+import tailwindcss from '@tailwindcss/vite'
+import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { mergeConfig } from 'vite-plus'
 import { playwright } from 'vite-plus/test/browser-playwright'
-import tailwindcss from '@tailwindcss/vite'
+import defaultConfig from './default'
 
 export default mergeConfig(defaultConfig, {
   pack: {

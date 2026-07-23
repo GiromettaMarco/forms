@@ -1,8 +1,8 @@
-import { Form, InputNumberRule, NumericField, Schema, Submit } from '@/index'
 import { expect, vi } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
+import { Form, InputNumberRule, NumericField, Schema, Submit } from '@/index'
 import { formRoute, inertiaResponseSuccess, test } from './utility'
 import { WithToaster } from './with-toaster'
-import { render } from 'vitest-browser-react'
 
 const onSuccess = vi.fn()
 
@@ -28,8 +28,8 @@ function FormAndSchema({
       className="w-72"
       defaults={{ number: '' }}
       onSuccess={onSuccess}
-      schema={schema}
       route={formRoute}
+      schema={schema}
     >
       {({ form, loading }) => (
         <>

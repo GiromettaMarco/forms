@@ -1,6 +1,6 @@
-import { Button, Toaster, flash } from '@/index'
 import { expect, test } from 'vite-plus/test'
 import { render } from 'vitest-browser-react'
+import { Button, Toaster, flash } from '@/index'
 
 test('Toaster component', async () => {
   const screen = await render(
@@ -11,13 +11,12 @@ test('Toaster component', async () => {
       />
       <div className="flex flex-wrap gap-2">
         <Button
-          variant="outline"
           onClick={() => flash({ title: 'Default toaster' })}
+          variant="outline"
         >
           Default
         </Button>
         <Button
-          variant="outline"
           onClick={() =>
             flash({
               description: 'Your submission was successful.',
@@ -25,11 +24,11 @@ test('Toaster component', async () => {
               title: 'Success'
             })
           }
+          variant="outline"
         >
           Success
         </Button>
         <Button
-          variant="outline"
           onClick={() =>
             flash({
               description: 'You have a new message.',
@@ -37,11 +36,11 @@ test('Toaster component', async () => {
               title: 'Notification'
             })
           }
+          variant="outline"
         >
           Info
         </Button>
         <Button
-          variant="outline"
           onClick={() =>
             flash({
               description: 'Autosave is disabled.',
@@ -49,11 +48,11 @@ test('Toaster component', async () => {
               title: 'Warning'
             })
           }
+          variant="outline"
         >
           Warning
         </Button>
         <Button
-          variant="outline"
           onClick={() =>
             flash({
               description: 'Please try again later.',
@@ -61,6 +60,7 @@ test('Toaster component', async () => {
               title: 'Network Error'
             })
           }
+          variant="outline"
         >
           Error
         </Button>
@@ -95,13 +95,12 @@ test('Toaster component with an array of flash messages', async () => {
       />
       <div className="flex flex-wrap gap-2">
         <Button
-          variant="outline"
           onClick={() => flash([])}
+          variant="outline"
         >
           Empty
         </Button>
         <Button
-          variant="outline"
           onClick={() =>
             flash([
               { level: 'info', title: 'Message 1' },
@@ -109,6 +108,7 @@ test('Toaster component with an array of flash messages', async () => {
               { level: 'info', title: 'Message 3' }
             ])
           }
+          variant="outline"
         >
           Multiple
         </Button>

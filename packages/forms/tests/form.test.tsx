@@ -1,5 +1,6 @@
-import { Form, InputTextRule, Schema, Submit, TextField } from '@/index'
 import { expect, vi } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
+import { Form, InputTextRule, Schema, Submit, TextField } from '@/index'
 import {
   formRoute,
   inertiaResponseError,
@@ -7,7 +8,6 @@ import {
   test
 } from './utility'
 import { WithToaster } from './with-toaster'
-import { render } from 'vitest-browser-react'
 
 const onError = vi.fn()
 const onSuccess = vi.fn()
@@ -31,10 +31,10 @@ function FormAndSchema({
       defaults={{ name: '' }}
       onError={onError}
       onSuccess={onSuccess}
-      schema={schema}
       resetOnSuccess={resetOnSuccess}
       rootError={rootError}
       route={formRoute}
+      schema={schema}
       setDefaultsOnSuccess={setDefaultsOnSuccess}
     >
       {({ form, loading }) => (

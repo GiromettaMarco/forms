@@ -1,9 +1,3 @@
-import type {
-  ComponentProps,
-  HTMLInputAutoCompleteAttribute,
-  HTMLInputTypeAttribute
-} from 'react'
-import { type Control, Controller, type FieldPath } from 'react-hook-form'
 import {
   Field,
   FieldDescription,
@@ -14,8 +8,14 @@ import {
   SelectTrigger,
   SelectValue
 } from '@gmcode/react-ui'
-import { ErrorMonitor } from '@/components/error-monitor'
+import type {
+  ComponentProps,
+  HTMLInputAutoCompleteAttribute,
+  HTMLInputTypeAttribute
+} from 'react'
+import { type Control, Controller, type FieldPath } from 'react-hook-form'
 import type { FieldValues } from 'react-hook-form'
+import { ErrorMonitor } from '@/components/error-monitor'
 import type { Option } from '@/types'
 
 export function SelectField<TFieldValues extends FieldValues = FieldValues>({

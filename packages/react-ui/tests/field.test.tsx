@@ -1,3 +1,5 @@
+import { test } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
 import {
   Checkbox,
   Field,
@@ -13,8 +15,6 @@ import {
   Input,
   Switch
 } from '@/index'
-import { render } from 'vitest-browser-react'
-import { test } from 'vite-plus/test'
 
 test('Field components', async () => {
   await render(

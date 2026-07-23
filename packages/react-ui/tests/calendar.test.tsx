@@ -1,6 +1,6 @@
-import { Calendar } from '@/index'
-import { render } from 'vitest-browser-react'
 import { test } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
+import { Calendar } from '@/index'
 
 test('Calendar component', async () => {
   await render(

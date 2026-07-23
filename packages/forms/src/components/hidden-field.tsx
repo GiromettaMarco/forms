@@ -1,7 +1,7 @@
+import { cn } from '@gmcode/react-ui'
 import type { ComponentProps } from 'react'
 import type { FieldValues } from 'react-hook-form'
 import { InputField } from '@/components/input-field'
-import { cn } from '@gmcode/react-ui'
 
 export function HiddenField<TFieldValues extends FieldValues = FieldValues>({
   autoComplete = 'off',

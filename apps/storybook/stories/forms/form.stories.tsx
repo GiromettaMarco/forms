@@ -1,17 +1,26 @@
 import { InputTextRule, Schema } from '@gmcode/forms'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { ComponentProps } from 'react'
+import { Form } from '@/forms/form'
+import { Submit } from '@/forms/submit'
+import { TextField } from '@/forms/text-field'
 import {
   flashSuccessMessage,
   formRoute,
   inertiaResponseError,
   inertiaResponseSuccess
 } from '../utility'
-import type { ComponentProps } from 'react'
-import { Form } from '@/forms/form'
-import { Submit } from '@/forms/submit'
-import { TextField } from '@/forms/text-field'
 
 const meta = {
+  args: {
+    children: () => {},
+    className: 'w-72',
+    defaults: { username: '' },
+    onSuccess: flashSuccessMessage,
+    route: formRoute,
+    schema: new Schema({}),
+    setDefaultsOnSuccess: true
+  },
   argTypes: {
     className: { control: 'text' },
     defaults: { control: false },
@@ -35,15 +44,6 @@ const meta = {
     },
     route: { control: false },
     setDefaultsOnSuccess: { control: 'boolean' }
-  },
-  args: {
-    children: () => {},
-    className: 'w-72',
-    defaults: { username: '' },
-    onSuccess: flashSuccessMessage,
-    route: formRoute,
-    schema: new Schema({}),
-    setDefaultsOnSuccess: true
   },
   component: Form,
   parameters: {

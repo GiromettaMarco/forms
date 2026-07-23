@@ -1,8 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Button } from '@/react-ui/button'
 import { MenuIcon } from 'lucide-react'
+import { Button } from '@/react-ui/button'
 
 const meta = {
+  args: {
+    size: 'default',
+    variant: 'default'
+  },
   argTypes: {
     asChild: {
       control: false
@@ -25,10 +29,6 @@ const meta = {
         'destructive'
       ]
     }
-  },
-  args: {
-    size: 'default',
-    variant: 'default'
   },
   component: Button,
   parameters: { layout: 'centered' },

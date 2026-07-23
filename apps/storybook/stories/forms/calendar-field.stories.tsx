@@ -1,16 +1,21 @@
 import { InputRule, Schema } from '@gmcode/forms'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { ComponentProps } from 'react'
+import { CalendarField } from '@/forms/calendar-field'
+import { Form } from '@/forms/form'
+import { Submit } from '@/forms/submit'
 import {
   flashSuccessMessage,
   formRoute,
   inertiaResponseSuccess
 } from '../utility'
-import { CalendarField } from '@/forms/calendar-field'
-import type { ComponentProps } from 'react'
-import { Form } from '@/forms/form'
-import { Submit } from '@/forms/submit'
 
 const meta = {
+  args: {
+    control: undefined,
+    inputName: 'calendar',
+    label: 'Calendar'
+  },
   argTypes: {
     control: { control: false },
     inputId: { control: 'text' },
@@ -21,11 +26,6 @@ const meta = {
       options: ['vertical', 'horizontal', 'responsive']
     },
     stringToDate: { control: false }
-  },
-  args: {
-    control: undefined,
-    inputName: 'calendar',
-    label: 'Calendar'
   },
   component: CalendarField,
   parameters: {
@@ -48,9 +48,9 @@ const meta = {
     <Form
       defaults={{ calendar: '' }}
       onSuccess={flashSuccessMessage}
+      route={formRoute}
       schema={new Schema({ calendar: new InputRule() })}
       setDefaultsOnSuccess
-      route={formRoute}
     >
       {({ form, loading }) => (
         <>

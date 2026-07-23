@@ -1,5 +1,5 @@
-import { OneOfRule, Schema } from '@/index'
 import { expect, test } from 'vite-plus/test'
+import { OneOfRule, Schema } from '@/index'
 
 test('one of rule', () => {
   const schema = new Schema({

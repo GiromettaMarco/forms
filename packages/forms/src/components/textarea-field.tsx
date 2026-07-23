@@ -1,9 +1,9 @@
-import { type Control, Controller, type FieldPath } from 'react-hook-form'
 import { Field, FieldLabel, TextareaAutosize, cn } from '@gmcode/react-ui'
 import type { ComponentProps } from 'react'
-import { ErrorMonitor } from '@/components/error-monitor'
+import { type Control, Controller, type FieldPath } from 'react-hook-form'
 import type { FieldValues } from 'react-hook-form'
 import type { TextareaHeightChangeMeta } from 'react-textarea-autosize'
+import { ErrorMonitor } from '@/components/error-monitor'
 
 export function TextareaField<TFieldValues extends FieldValues = FieldValues>({
   cacheMeasurements,
@@ -31,8 +31,8 @@ export function TextareaField<TFieldValues extends FieldValues = FieldValues>({
 }) {
   return (
     <Controller
-      name={inputName}
       control={control}
+      name={inputName}
       render={({ field, fieldState }) => (
         <Field
           data-invalid={fieldState.invalid}

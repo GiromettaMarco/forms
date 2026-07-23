@@ -1,8 +1,8 @@
-import { Form, InputTextRule, Schema, Submit, TextField } from '@/index'
 import { expect, vi } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
+import { Form, InputTextRule, Schema, Submit, TextField } from '@/index'
 import { formRoute, inertiaResponseSuccess, test } from './utility'
 import { WithToaster } from './with-toaster'
-import { render } from 'vitest-browser-react'
 
 const onSuccess = vi.fn()
 
@@ -15,8 +15,8 @@ function FormAndSchema() {
     <Form
       className="w-72"
       onSuccess={onSuccess}
-      schema={schema}
       route={formRoute}
+      schema={schema}
     >
       {({ form, loading }) => (
         <>

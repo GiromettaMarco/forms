@@ -1,16 +1,27 @@
 import { InputNumberRule, Schema } from '@gmcode/forms'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { ComponentProps } from 'react'
+import { Form } from '@/forms/form'
+import { NumericField } from '@/forms/numeric-field'
+import { Submit } from '@/forms/submit'
 import {
   flashSuccessMessage,
   formRoute,
   inertiaResponseSuccess
 } from '../utility'
-import type { ComponentProps } from 'react'
-import { Form } from '@/forms/form'
-import { NumericField } from '@/forms/numeric-field'
-import { Submit } from '@/forms/submit'
 
 const meta = {
+  args: {
+    control: undefined,
+    inputName: 'number',
+    label: 'Numeric',
+    ui: {
+      max: 5,
+      min: 0,
+      setValue: () => {},
+      step: 1
+    }
+  },
   argTypes: {
     autoComplete: { control: 'text' },
     control: { control: false },
@@ -24,17 +35,6 @@ const meta = {
     },
     placeholder: { control: 'text' },
     type: { control: 'text' }
-  },
-  args: {
-    control: undefined,
-    inputName: 'number',
-    label: 'Numeric',
-    ui: {
-      max: 5,
-      min: 0,
-      setValue: () => {},
-      step: 1
-    }
   },
   component: NumericField,
   parameters: {
@@ -65,6 +65,7 @@ const meta = {
       className="w-72"
       defaults={{ number: '' }}
       onSuccess={flashSuccessMessage}
+      route={formRoute}
       schema={
         new Schema({
           number: new InputNumberRule({
@@ -75,7 +76,6 @@ const meta = {
         })
       }
       setDefaultsOnSuccess
-      route={formRoute}
     >
       {({ form, loading }) => (
         <>

@@ -1,19 +1,26 @@
-import type { AdvancedRuleOptions, ParseEmpty } from '@/types'
-import { AdvancedRule } from '@/advanced-rule'
 import { Message } from '@gmcode/tsv-core'
+import { AdvancedRule } from '@/advanced-rule'
+import type { AdvancedRuleOptions, ParseEmpty } from '@/types'
 
 interface Messages {
+  integer: string
   maxValue: string
   minValue: string
   number: string
   required: string
-  integer: string
 }
 
 interface RuleOptions<
   O extends boolean | undefined,
   PE extends ParseEmpty | undefined
 > extends AdvancedRuleOptions<Messages, O, PE> {
+  /**
+   * Whether the number must be an integer.
+   *
+   * @defaultValue `false`
+   */
+  integer?: boolean
+
   /**
    * Maximum value. `null` for no check.
    *
@@ -27,13 +34,6 @@ interface RuleOptions<
    * @defaultValue `0`
    */
   minValue?: number | null
-
-  /**
-   * Whether the number must be an integer.
-   *
-   * @defaultValue `false`
-   */
-  integer?: boolean
 
   /**
    * If true, value will be parsed as an integer (rounded down).
@@ -100,10 +100,10 @@ export class NumberRule<
   parseNumber: boolean
 
   constructor({
+    integer = false,
     maxValue = null,
     messages,
     minValue = 0,
-    integer = false,
     optional,
     parseEmpty,
     parseInt = false,

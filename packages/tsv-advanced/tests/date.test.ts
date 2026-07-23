@@ -1,5 +1,5 @@
-import { DateRule, Schema } from '@/index'
 import { expect, test } from 'vite-plus/test'
+import { DateRule, Schema } from '@/index'
 
 test('date rule', () => {
   const schema = new Schema({

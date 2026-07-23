@@ -1,5 +1,5 @@
-import { BasicRule, Message, Schema } from '@/index'
 import { expect, test } from 'vite-plus/test'
+import { BasicRule, Message, Schema } from '@/index'
 
 class FooRule extends BasicRule {
   test(value: unknown): true | Message {
@@ -47,7 +47,7 @@ test('basic rule', () => {
       postValidation: [
         {
           addTo: 'foo',
-          callback({ foo, bar }) {
+          callback({ bar, foo }) {
             if (foo === bar) {
               return true
             }

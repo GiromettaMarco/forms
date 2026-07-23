@@ -1,9 +1,3 @@
-import type {
-  ComponentProps,
-  HTMLInputAutoCompleteAttribute,
-  HTMLInputTypeAttribute
-} from 'react'
-import { type Control, Controller, type FieldPath } from 'react-hook-form'
 import {
   Field,
   FieldLabel,
@@ -12,14 +6,20 @@ import {
   InputGroupButton,
   InputGroupInput
 } from '@gmcode/react-ui'
+import { Minus, Plus } from 'lucide-react'
+import type {
+  ComponentProps,
+  HTMLInputAutoCompleteAttribute,
+  HTMLInputTypeAttribute
+} from 'react'
+import { type Control, Controller, type FieldPath } from 'react-hook-form'
 import type {
   FieldPathValue,
   FieldValues,
   UseFormSetValue
 } from 'react-hook-form'
-import { Minus, Plus } from 'lucide-react'
-import { ErrorMonitor } from '@/components/error-monitor'
 import { useTranslation } from 'react-i18next'
+import { ErrorMonitor } from '@/components/error-monitor'
 
 function stepInput(
   original: string,

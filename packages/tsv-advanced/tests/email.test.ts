@@ -1,5 +1,5 @@
-import { EmailRule, Schema } from '@/index'
 import { expect, test } from 'vite-plus/test'
+import { EmailRule, Schema } from '@/index'
 
 test('email rule', () => {
   const schema = new Schema({

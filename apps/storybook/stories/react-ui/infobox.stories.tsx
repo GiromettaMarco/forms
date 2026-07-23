@@ -2,6 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Infobox } from '@/react-ui/infobox'
 
 const meta = {
+  args: {
+    className: 'w-120',
+    variant: 'info'
+  },
   argTypes: {
     children: { control: false },
     iconClassName: { control: 'text' },
@@ -9,10 +13,6 @@ const meta = {
       control: 'select',
       options: ['success', 'info', 'warning', 'error']
     }
-  },
-  args: {
-    className: 'w-120',
-    variant: 'info'
   },
   component: Infobox,
   parameters: {

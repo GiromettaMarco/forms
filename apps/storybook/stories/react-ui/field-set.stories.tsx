@@ -1,3 +1,5 @@
+import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Checkbox } from '@/react-ui/checkbox'
 import {
   Field,
   FieldContent,
@@ -10,8 +12,6 @@ import {
   FieldSet,
   FieldTitle
 } from '@/react-ui/field'
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Checkbox } from '@/react-ui/checkbox'
 import { Input } from '@/react-ui/input'
 import { Switch } from '@/react-ui/switch'
 

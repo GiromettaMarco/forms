@@ -1,8 +1,8 @@
 import { type VariantProps, cva } from 'class-variance-authority'
+import { useMemo } from 'react'
 import { Label } from '@/components/label'
 import { Separator } from '@/components/separator'
 import { cn } from '@/lib/utils'
-import { useMemo } from 'react'
 
 function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
   return (
@@ -185,8 +185,8 @@ interface ErrorData {
 }
 
 function FieldError({
-  className,
   children,
+  className,
   errors,
   ...props
 }: React.ComponentProps<'div'> & {

@@ -1,6 +1,6 @@
-import { Textarea } from '@/index'
-import { render } from 'vitest-browser-react'
 import { test } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
+import { Textarea } from '@/index'
 
 test('Textarea component', async () => {
   await render(

@@ -1,6 +1,6 @@
-import type { AdvancedRuleOptions, ParseEmpty } from '@/types'
 import { Message, emailRegex } from '@gmcode/tsv-core'
 import { AdvancedRule } from '@/advanced-rule'
+import type { AdvancedRuleOptions, ParseEmpty } from '@/types'
 
 interface Messages {
   email: string

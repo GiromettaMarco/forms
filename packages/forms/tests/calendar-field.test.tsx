@@ -1,8 +1,8 @@
-import { CalendarField, Form, InputRule, Schema, Submit } from '@/index'
 import { expect, vi } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
+import { CalendarField, Form, InputRule, Schema, Submit } from '@/index'
 import { formRoute, inertiaResponseSuccess, test } from './utility'
 import { WithToaster } from './with-toaster'
-import { render } from 'vitest-browser-react'
 
 const onSuccess = vi.fn()
 
@@ -22,15 +22,15 @@ function FormAndSchema({
       className="w-72"
       defaults={{ calendar: defaultValue }}
       onSuccess={onSuccess}
-      schema={schema}
       route={formRoute}
+      schema={schema}
     >
       {({ form, loading }) => (
         <>
           <CalendarField
             control={form.control}
-            disabled={disabled}
             dateToString={formatter}
+            disabled={disabled}
             inputName="calendar"
             label="Calendar"
           />

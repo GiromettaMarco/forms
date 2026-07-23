@@ -1,8 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Calendar } from '@/react-ui/calendar'
 import { it } from 'date-fns/locale'
+import { Calendar } from '@/react-ui/calendar'
 
 const meta = {
+  args: {
+    className: 'w-72 rounded-md border',
+    fixedWeeks: true,
+    mode: 'single'
+  },
   argTypes: {
     buttonVariant: {
       control: 'select',
@@ -19,18 +24,13 @@ const meta = {
       control: 'select',
       options: ['label', 'dropdown', 'dropdown-months', 'dropdown-years']
     },
-    disableNavigation: { control: 'boolean' },
     disabled: { control: 'object' },
+    disableNavigation: { control: 'boolean' },
     mode: {
       control: 'select',
       options: ['single', 'multiple', 'range']
     },
     showOutsideDays: { control: 'boolean' }
-  },
-  args: {
-    className: 'w-72 rounded-md border',
-    fixedWeeks: true,
-    mode: 'single'
   },
   component: Calendar,
   parameters: { layout: 'centered' },

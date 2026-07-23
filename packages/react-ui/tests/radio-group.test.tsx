@@ -1,6 +1,6 @@
-import { Label, RadioGroup, RadioGroupItem } from '@/index'
-import { render } from 'vitest-browser-react'
 import { test } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
+import { Label, RadioGroup, RadioGroupItem } from '@/index'
 
 test('RadioGroup component', async () => {
   await render(

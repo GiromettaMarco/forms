@@ -1,16 +1,22 @@
 import { InputCheckboxRule, Schema } from '@gmcode/forms'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { ComponentProps } from 'react'
+import { Form } from '@/forms/form'
+import { InfoCheckboxField } from '@/forms/info-checkbox-field'
+import { Submit } from '@/forms/submit'
 import {
   flashSuccessMessage,
   formRoute,
   inertiaResponseSuccess
 } from '../utility'
-import type { ComponentProps } from 'react'
-import { Form } from '@/forms/form'
-import { InfoCheckboxField } from '@/forms/info-checkbox-field'
-import { Submit } from '@/forms/submit'
 
 const meta = {
+  args: {
+    control: undefined,
+    inputName: 'infoCheckbox',
+    label: 'Info Checkbox',
+    text: 'Yes, I would like to receive commercial emails and offers from ...'
+  },
   argTypes: {
     control: { control: false },
     disabled: { control: 'boolean' },
@@ -25,12 +31,6 @@ const meta = {
     text: { control: 'text' },
     uncheckedValue: { control: 'text' },
     value: { control: 'text' }
-  },
-  args: {
-    control: undefined,
-    inputName: 'infoCheckbox',
-    label: 'Info Checkbox',
-    text: 'Yes, I would like to receive commercial emails and offers from ...'
   },
   component: InfoCheckboxField,
   parameters: {
@@ -54,9 +54,9 @@ const meta = {
       className="max-w-96"
       defaults={{ infoCheckbox: '' }}
       onSuccess={flashSuccessMessage}
+      route={formRoute}
       schema={new Schema({ infoCheckbox: new InputCheckboxRule() })}
       setDefaultsOnSuccess
-      route={formRoute}
     >
       {({ form, loading }) => (
         <>

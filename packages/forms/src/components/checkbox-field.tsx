@@ -1,8 +1,8 @@
 import { Checkbox, Field, FieldLabel } from '@gmcode/react-ui'
-import { type Control, Controller, type FieldPath } from 'react-hook-form'
-import type { ControllerRenderProps, FieldValues } from 'react-hook-form'
 import type { Checkbox as CheckboxPrimitive } from 'radix-ui'
 import type { ComponentProps } from 'react'
+import { type Control, Controller, type FieldPath } from 'react-hook-form'
+import type { ControllerRenderProps, FieldValues } from 'react-hook-form'
 import { ErrorMonitor } from '@/components/error-monitor'
 
 export function CheckboxField<TFieldValues extends FieldValues = FieldValues>({

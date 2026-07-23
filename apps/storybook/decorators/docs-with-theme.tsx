@@ -2,8 +2,8 @@ import {
   DocsContainer,
   type DocsContainerProps
 } from '@storybook/addon-docs/blocks'
-import type { PropsWithChildren } from 'react'
 import type { ReactRenderer } from '@storybook/react-vite'
+import type { PropsWithChildren } from 'react'
 import { themes } from 'storybook/theming'
 
 export default function DocsWithTheme({

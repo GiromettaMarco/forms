@@ -4,11 +4,11 @@ import {
   type JsonBodyType,
   http
 } from 'msw'
-import { type RenderOptions, render } from 'vitest-browser-react'
 import { type SetupWorker, setupWorker } from 'msw/browser'
 import type { ReactNode } from 'react'
-import { WithToaster } from './with-toaster'
 import { test as testBase } from 'vite-plus/test'
+import { type RenderOptions, render } from 'vitest-browser-react'
+import { WithToaster } from './with-toaster'
 
 //#region Rest Handlers
 export const formRoute = {

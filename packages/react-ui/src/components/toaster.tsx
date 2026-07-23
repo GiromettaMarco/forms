@@ -8,10 +8,9 @@ import {
 import { Toaster as Sonner, type ToasterProps } from 'sonner'
 import { cn } from '@/lib/utils'
 
-export function Toaster({ className, theme, ...props }: ToasterProps) {
+export function Toaster({ className, ...props }: ToasterProps) {
   return (
     <Sonner
-      theme={theme}
       className={cn('toaster group pointer-events-auto', className)}
       icons={{
         error: <OctagonXIcon className="size-4" />,

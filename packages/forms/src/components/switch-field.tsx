@@ -1,8 +1,8 @@
-import { type Control, Controller, type FieldPath } from 'react-hook-form'
-import type { ControllerRenderProps, FieldValues } from 'react-hook-form'
 import { Field, FieldLabel, Switch } from '@gmcode/react-ui'
 import type { Checkbox as CheckboxPrimitive } from 'radix-ui'
 import type { ComponentProps } from 'react'
+import { type Control, Controller, type FieldPath } from 'react-hook-form'
+import type { ControllerRenderProps, FieldValues } from 'react-hook-form'
 import { ErrorMonitor } from '@/components/error-monitor'
 
 export function SwitchField<TFieldValues extends FieldValues = FieldValues>({

@@ -1,6 +1,6 @@
-import type { ErrorData } from '@/types'
 import { FieldError } from '@gmcode/react-ui'
 import { useTranslation } from 'react-i18next'
+import type { ErrorData } from '@/types'
 
 export function ErrorMonitor({ error }: { error?: ErrorData }) {
   // i18n

@@ -1,9 +1,9 @@
+import { BasicRule } from '@gmcode/tsv-core'
 import type {
   AdvancedRuleOptions,
   AdvancedSanitized,
   ParseEmpty
 } from '@/types'
-import { BasicRule } from '@gmcode/tsv-core'
 
 /**
  * Preset class for advanced validation rules.

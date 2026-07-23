@@ -1,9 +1,9 @@
+import { Message } from '@gmcode/tsv-core'
 import {
   InputRule,
   type InputRuleOptions,
   inputRuleMessages
 } from '@/rules/input-rule'
-import { Message } from '@gmcode/tsv-core'
 
 const defaultMessages = {
   ...inputRuleMessages,

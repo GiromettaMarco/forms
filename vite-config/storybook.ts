@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite-plus'
-import { playwright } from 'vite-plus/test/browser-playwright'
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vite-plus'
+import { playwright } from 'vite-plus/test/browser-playwright'
 
 export default defineConfig({
   plugins: [storybookTest(), tailwindcss()],

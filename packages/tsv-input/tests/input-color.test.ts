@@ -1,5 +1,5 @@
-import { InputColorRule, Schema } from '@/index'
 import { expect, test } from 'vite-plus/test'
+import { InputColorRule, Schema } from '@/index'
 
 test('input color rule', () => {
   const schema = new Schema({

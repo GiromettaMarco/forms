@@ -1,3 +1,5 @@
+import { expect, vi } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
 import {
   ErrorMonitor,
   Form,
@@ -7,10 +9,8 @@ import {
   TextField,
   i18n
 } from '@/index'
-import { expect, vi } from 'vite-plus/test'
 import { formRoute, inertiaResponseSuccess, test } from './utility'
 import { WithToaster } from './with-toaster'
-import { render } from 'vitest-browser-react'
 
 function Default() {
   const schema = new Schema({
@@ -21,8 +21,8 @@ function Default() {
     <Form
       className="w-72"
       defaults={{ name: '' }}
-      schema={schema}
       route={formRoute}
+      schema={schema}
     >
       {({ form, loading }) => (
         <>
@@ -74,8 +74,8 @@ function Custom() {
     <Form
       className="w-72"
       defaults={{ name: '' }}
-      schema={schema}
       route={formRoute}
+      schema={schema}
     >
       {({ form, loading }) => (
         <>

@@ -1,6 +1,6 @@
-import { Infobox } from '@/index'
-import { render } from 'vitest-browser-react'
 import { test } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
+import { Infobox } from '@/index'
 
 test('Infobox component', async () => {
   await render(

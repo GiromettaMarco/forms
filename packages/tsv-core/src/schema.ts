@@ -1,3 +1,4 @@
+import type { Message } from '@/message'
 import type {
   ResultError,
   ResultSuccess,
@@ -8,7 +9,6 @@ import type {
   SchemaValues,
   ValidationResult
 } from '@/types'
-import type { Message } from '@/message'
 
 /**
  * Validation schema

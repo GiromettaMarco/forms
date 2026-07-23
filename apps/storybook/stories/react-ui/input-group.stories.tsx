@@ -1,3 +1,4 @@
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Copy, CornerDownLeft, Mail, RefreshCcw, Search } from 'lucide-react'
 import {
   InputGroup,
@@ -7,7 +8,6 @@ import {
   InputGroupText,
   InputGroupTextarea
 } from '@/react-ui/input-group'
-import type { Meta, StoryObj } from '@storybook/react-vite'
 
 const meta = {
   component: InputGroup,

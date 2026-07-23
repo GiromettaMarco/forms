@@ -1,11 +1,11 @@
+import { test } from 'vite-plus/test'
+import { render } from 'vitest-browser-react'
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   TextareaAutosize
 } from '@/index'
-import { render } from 'vitest-browser-react'
-import { test } from 'vite-plus/test'
 
 test('TextareaAutosize component', async () => {
   await render(

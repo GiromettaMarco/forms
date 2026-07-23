@@ -1,5 +1,5 @@
-import { InputSelectRule, Schema } from '@/index'
 import { expect, test } from 'vite-plus/test'
+import { InputSelectRule, Schema } from '@/index'
 
 test('input select rule', () => {
   const schema = new Schema({

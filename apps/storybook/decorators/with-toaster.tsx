@@ -1,6 +1,6 @@
-import type { PartialStoryFn } from 'storybook/internal/csf'
-import type { StoryContext } from '@storybook/react-vite'
 import { Toaster } from '@gmcode/react-ui'
+import type { StoryContext } from '@storybook/react-vite'
+import type { PartialStoryFn } from 'storybook/internal/csf'
 
 /**
  * Add a Toaster component to display flash messages.

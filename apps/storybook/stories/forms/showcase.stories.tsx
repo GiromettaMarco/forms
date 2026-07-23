@@ -24,38 +24,14 @@ import {
 } from '@gmcode/forms'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Monitor, Moon, Sun } from 'lucide-react'
+import { Form } from '@/forms/form'
 import {
   flashSuccessMessage,
   formRoute,
   inertiaResponseSuccess
 } from '../utility'
-import { Form } from '@/forms/form'
 
 const meta = {
-  argTypes: {
-    className: { control: 'text' },
-    defaults: { control: false },
-    onBefore: { control: false },
-    onBeforeUpdate: { control: false },
-    onCancel: { control: false },
-    onCancelToken: { control: false },
-    onError: { control: false },
-    onFinish: { control: false },
-    onFlash: { control: false },
-    onPrefetched: { control: false },
-    onPrefetching: { control: false },
-    onProgress: { control: false },
-    onStart: { control: false },
-    onSuccess: { control: false },
-    preserveScroll: { control: 'boolean' },
-    resetOnSuccess: { control: 'boolean' },
-    rootError: {
-      control: 'select',
-      options: ['flash', 'monitor', 'none']
-    },
-    route: { control: false },
-    setDefaultsOnSuccess: { control: 'boolean' }
-  },
   args: {
     children: () => {},
     className: 'md:w-160',
@@ -79,6 +55,30 @@ const meta = {
     route: formRoute,
     schema: new Schema({}),
     setDefaultsOnSuccess: true
+  },
+  argTypes: {
+    className: { control: 'text' },
+    defaults: { control: false },
+    onBefore: { control: false },
+    onBeforeUpdate: { control: false },
+    onCancel: { control: false },
+    onCancelToken: { control: false },
+    onError: { control: false },
+    onFinish: { control: false },
+    onFlash: { control: false },
+    onPrefetched: { control: false },
+    onPrefetching: { control: false },
+    onProgress: { control: false },
+    onStart: { control: false },
+    onSuccess: { control: false },
+    preserveScroll: { control: 'boolean' },
+    resetOnSuccess: { control: 'boolean' },
+    rootError: {
+      control: 'select',
+      options: ['flash', 'monitor', 'none']
+    },
+    route: { control: false },
+    setDefaultsOnSuccess: { control: 'boolean' }
   },
   component: Form,
   parameters: {
@@ -257,9 +257,9 @@ const meta = {
                 control={form.control}
                 inputName="bio"
                 label="Biography"
-                placeholder="Write something about yourself"
                 maxRows={7}
                 minRows={3}
+                placeholder="Write something about yourself"
               />
             </div>
 

@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { type VariantProps, cva } from 'class-variance-authority'
+import * as React from 'react'
 import { Button } from '@/components/button'
 import { Input } from '@/components/input'
 import { Textarea } from '@/components/textarea'
@@ -55,8 +55,8 @@ const inputGroupAddonVariants = cva(
 )
 
 function InputGroupAddon({
-  className,
   align = 'inline-start',
+  className,
   ...props
 }: React.ComponentProps<'div'> & VariantProps<typeof inputGroupAddonVariants>) {
   return (
@@ -96,9 +96,9 @@ const inputGroupButtonVariants = cva(
 
 function InputGroupButton({
   className,
+  size = 'xs',
   type = 'button',
   variant = 'ghost',
-  size = 'xs',
   ...props
 }: Omit<React.ComponentProps<typeof Button>, 'size'> &
   VariantProps<typeof inputGroupButtonVariants>) {

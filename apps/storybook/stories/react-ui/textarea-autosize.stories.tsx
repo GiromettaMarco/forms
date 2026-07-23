@@ -1,18 +1,18 @@
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton
 } from '@/react-ui/input-group'
-import type { Meta, StoryObj } from '@storybook/react-vite'
 import { TextareaAutosize } from '@/react-ui/textarea-autosize'
 
 const meta = {
-  argTypes: {
-    'aria-invalid': { control: 'boolean' }
-  },
   args: {
     className: 'min-w-72',
     placeholder: 'Try typing multiple lines...'
+  },
+  argTypes: {
+    'aria-invalid': { control: 'boolean' }
   },
   component: TextareaAutosize,
   parameters: { layout: 'centered' },

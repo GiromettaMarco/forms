@@ -1,8 +1,7 @@
 import './theme.css'
-
 import 'vitest-browser-react'
-import { en } from '@/locales'
 import { i18n } from '@/index'
+import { en } from '@/locales'
 import { it } from '@/locales'
 
 i18n.addResourceBundle(

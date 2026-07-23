@@ -1,3 +1,4 @@
+import { type VariantProps, cva } from 'class-variance-authority'
 import {
   CircleCheckIcon,
   InfoIcon,
@@ -5,7 +6,6 @@ import {
   TriangleAlertIcon
 } from 'lucide-react'
 import type { ComponentProps, FC, SVGProps } from 'react'
-import { type VariantProps, cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const Icons = {

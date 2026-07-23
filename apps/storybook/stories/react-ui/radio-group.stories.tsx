@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { RadioGroup, RadioGroupItem } from '@/react-ui/radio-group'
 import { Label } from '@/react-ui/label'
+import { RadioGroup, RadioGroupItem } from '@/react-ui/radio-group'
 
 const meta = {
   argTypes: {

@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@gmcode/react-ui'
+import { X } from 'lucide-react'
 import type {
   ComponentProps,
   HTMLInputAutoCompleteAttribute,
@@ -20,10 +21,9 @@ import type {
   FieldValues,
   UseFormSetValue
 } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { ErrorMonitor } from '@/components/error-monitor'
 import type { Option } from '@/types'
-import { X } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
 
 export function NullableSelectField<
   TFieldValues extends FieldValues = FieldValues

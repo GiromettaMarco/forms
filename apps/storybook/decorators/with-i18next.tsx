@@ -1,8 +1,8 @@
-import type { PartialStoryFn } from 'storybook/internal/csf'
-import type { StoryContext } from '@storybook/react-vite'
 import { i18n } from '@gmcode/forms'
 import { it } from '@gmcode/forms/locales'
+import type { StoryContext } from '@storybook/react-vite'
 import { useEffect } from 'react'
+import type { PartialStoryFn } from 'storybook/internal/csf'
 
 i18n.addResourceBundle(
   'en',

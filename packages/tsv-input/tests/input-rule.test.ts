@@ -1,5 +1,5 @@
-import { InputRule, Schema } from '@/index'
 import { expect, test } from 'vite-plus/test'
+import { InputRule, Schema } from '@/index'
 
 test('input rule', () => {
   const schema1 = new Schema({
