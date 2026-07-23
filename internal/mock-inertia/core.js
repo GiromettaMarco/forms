@@ -1,4 +1,4 @@
-// '@inertiajs/core': '^3.5.0',
+// '@inertiajs/core': '3.5.0'
 
 // src/router.ts
 import { cloneDeep as cloneDeep4, isEqual as isEqual3 } from "es-toolkit";
@@ -5244,4 +5244,3 @@ export {
 };
 /* NProgress, (c) 2013, 2014 Rico Sta. Cruz - http://ricostacruz.com/nprogress
  * @license MIT */
-//# sourceMappingURL=index.js.map
