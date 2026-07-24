@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/tsv-advanced",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Fully typed Typescript schema validations with i18n support.",
   "keywords": [
     "i18n",
@@ -33,7 +33,7 @@
     "test": "vp test run --coverage && badge"
   },
   "dependencies": {
-    "@gmcode/tsv-core": "catalog:"
+    "@gmcode/tsv-core": "workspace:*"
   },
   "devDependencies": {
     "@repo/badge": "workspace:*",

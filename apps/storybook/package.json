@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/storybook",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,8 +8,8 @@
     "dev": "storybook dev -p 6006"
   },
   "dependencies": {
-    "@gmcode/forms": "catalog:",
-    "@gmcode/react-ui": "catalog:",
+    "@gmcode/forms": "workspace:*",
+    "@gmcode/react-ui": "workspace:*",
     "@inertiajs/core": "catalog:",
     "@inertiajs/react": "catalog:",
     "@repo/mock-inertia": "workspace:*",
