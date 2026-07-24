@@ -11,7 +11,7 @@ Monorepo containing form validation tools with i18n interpolation support, schem
 | [`@gmcode/tsv-advanced`](packages/tsv-advanced) | Fully typed validations        | [![coverage](packages/tsv-advanced/docs/coverage.svg)](https://github.com/GiromettaMarco/forms/actions) | [![npm](https://img.shields.io/npm/v/@gmcode/tsv-advanced)](https://npm.im/@gmcode/tsv-advanced) |
 | [`@gmcode/tsv-hookform`](packages/tsv-hookform) | Resolver for `react-hook-form` | [![coverage](packages/tsv-hookform/docs/coverage.svg)](https://github.com/GiromettaMarco/forms/actions) | [![npm](https://img.shields.io/npm/v/@gmcode/tsv-hookform)](https://npm.im/@gmcode/tsv-hookform) |
 | [`@gmcode/react-ui`](packages/react-ui)         | General purpose React UI       | [![coverage](packages/react-ui/docs/coverage.svg)](https://github.com/GiromettaMarco/forms/actions)     | [![npm](https://img.shields.io/npm/v/@gmcode/react-ui)](https://npm.im/@gmcode/react-ui)         |
-| [`@gmcode/forms`](packages/forms)               | Forms for `@inertiajs/react`   | [![coverage](packages/forms/docs/coverage.svg)](https://github.com/GiromettaMarco/forms/actions)        |                                                                                                  |
+| [`@gmcode/forms`](packages/forms)               | Forms for `@inertiajs/react`   | [![coverage](packages/forms/docs/coverage.svg)](https://github.com/GiromettaMarco/forms/actions)        | [![npm](https://img.shields.io/npm/v/@gmcode/forms)](https://npm.im/@gmcode/forms)               |
 
 ## License
 
