@@ -2,7 +2,7 @@ import type { UserConfig } from 'vite-plus'
 
 export default {
   pack: {
-    minify: true
+    minify: false
   },
   resolve: {
     tsconfigPaths: true
