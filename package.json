@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@babel/core": "catalog:",
+    "@changesets/cli": "catalog:",
     "@repo/typescript": "workspace:*",
     "@rolldown/plugin-babel": "catalog:",
     "@storybook/addon-vitest": "catalog:",
