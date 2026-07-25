@@ -151,13 +151,17 @@ export default defineConfig({
     cache: true,
     tasks: {
       build: {
-        command: 'vp run -r build'
+        command: [
+          'vp run -t @gmcode/forms#build',
+          'vp run --filter=tsv-advanced build'
+        ]
       },
       ready: {
-        command: ['vp check', 'vp run test', 'vp run build']
+        command: ['vp check', 'vp run test']
       },
       test: {
         command: 'vp run -r test',
+        dependsOn: ['build'],
         input: [{ auto: true }, '!**/coverage/.tmp/**']
       }
     }
