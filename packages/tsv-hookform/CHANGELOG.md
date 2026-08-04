@@ -1,5 +1,12 @@
 # @gmcode/tsv-hookform
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @gmcode/tsv-core@0.2.0
+
 ## 0.1.4
 
 ### Patch Changes
