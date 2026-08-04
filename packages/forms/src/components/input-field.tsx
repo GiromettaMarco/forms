@@ -1,5 +1,6 @@
 import { Field, FieldLabel, Input } from '@gmcode/react-ui'
 import type {
+  ChangeEventHandler,
   ComponentProps,
   HTMLInputAutoCompleteAttribute,
   HTMLInputTypeAttribute
@@ -19,13 +20,14 @@ export function InputField<TFieldValues extends FieldValues = FieldValues>({
   readOnly,
   type,
   ...props
-}: ComponentProps<typeof Field> & {
+}: Omit<ComponentProps<typeof Field>, 'onChange'> & {
   autoComplete?: HTMLInputAutoCompleteAttribute
   control: Control<TFieldValues>
   disabled?: boolean
   inputId?: string
   inputName: FieldPath<TFieldValues>
   label?: string
+  onChange?: ChangeEventHandler<HTMLDivElement, HTMLInputElement>
   placeholder?: string
   readOnly?: boolean
   type?: HTMLInputTypeAttribute

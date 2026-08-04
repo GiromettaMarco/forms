@@ -1,5 +1,18 @@
 # @gmcode/forms
 
+## 0.1.0
+
+### Minor Changes
+
+- Add InputPasswordRule
+
+### Patch Changes
+
+- Fix InputField onChange prop type
+- Updated dependencies
+  - @gmcode/tsv-input@0.3.0
+  - @gmcode/tsv-hookform@0.1.5
+
 ## 0.0.9
 
 ### Patch Changes

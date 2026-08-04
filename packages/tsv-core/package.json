@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/tsv-core",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Typescript schema validations with i18n support. Core package for tsv-advanced and tsv-input.",
   "keywords": [
     "core",
@@ -26,6 +26,7 @@
   "sideEffects": false,
   "exports": {
     ".": "./dist/index.mjs",
+    "./regex": "./dist/regex.mjs",
     "./package.json": "./package.json"
   },
   "scripts": {

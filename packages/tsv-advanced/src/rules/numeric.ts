@@ -1,4 +1,5 @@
-import { Message, floatRegex, integerRegex } from '@gmcode/tsv-core'
+import { Message } from '@gmcode/tsv-core'
+import { isFloat, isInteger } from '@gmcode/tsv-core/regex'
 import { AdvancedRule } from '@/advanced-rule'
 import type { AdvancedRuleOptions, ParseEmpty } from '@/types'
 
@@ -116,11 +117,11 @@ export class NumericRule<
 
     // Numeric (integer or float)
     if (this.integer) {
-      if (!integerRegex.test(value)) {
+      if (!isInteger.test(value)) {
         return new Message(this.messages.integer)
       }
     } else {
-      if (!floatRegex.test(value)) {
+      if (!isFloat.test(value)) {
         return new Message(this.messages.numeric)
       }
     }

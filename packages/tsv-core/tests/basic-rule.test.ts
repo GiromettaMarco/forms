@@ -26,41 +26,72 @@ class BarRule extends BasicRule<string> {
   }
 }
 
-test('basic rule', () => {
-  const schema1 = new Schema({
-    foo: new FooRule()
-  })
+const schema1 = new Schema({
+  foo: new FooRule()
+})
 
+function fooIsBarRule({ bar, foo }: { bar: unknown; foo: unknown }) {
+  if (foo === bar) {
+    return true
+  }
+
+  return new Message('"foo" is different from "bar"!')
+}
+
+const schema2 = new Schema(
+  {
+    bar: new BarRule(),
+    foo: new FooRule()
+  },
+  {
+    postValidation: [
+      {
+        addTo: 'foo',
+        callback: fooIsBarRule
+      }
+    ]
+  }
+)
+
+const schema3 = new Schema(
+  {
+    bar: new FooRule(),
+    foo: new FooRule()
+  },
+  {
+    postValidation: [
+      {
+        addTo: 'foo',
+        callback: fooIsBarRule
+      }
+    ]
+  }
+)
+
+test('Schema with BasicRule', () => {
   const fooResult = schema1.validate({ foo: 'foo' })
   const barResult = schema1.validate({ foo: 'bar' })
 
   expect(fooResult.success).toBe(true)
   expect(barResult.success).toBe(false)
   expect(barResult.errors?.foo.text).toBe('This is not "foo"!')
+})
 
-  const schema2 = new Schema(
-    {
-      bar: new BarRule(),
-      foo: new FooRule()
-    },
-    {
-      postValidation: [
-        {
-          addTo: 'foo',
-          callback({ bar, foo }) {
-            if (foo === bar) {
-              return true
-            }
-
-            return new Message('"foo" is different from "bar"!')
-          }
-        }
-      ]
-    }
-  )
-
+test('Schema with postValidation', () => {
   const foobarResult = schema2.validate({ bar: 'bar', foo: 'foo' })
 
   expect(foobarResult.success).toBe(false)
   expect(foobarResult.errors?.foo.text).toBe('"foo" is different from "bar"!')
+
+  const fooFooResult = schema3.validate({ bar: 'foo', foo: 'foo' })
+
+  expect(fooFooResult.success).toBe(true)
+})
+
+test('using FormData', () => {
+  const formData = new FormData()
+  formData.append('foo', 'foo')
+  const formDataResult = schema1.validate(formData)
+
+  expect(formDataResult.success).toBe(true)
 })

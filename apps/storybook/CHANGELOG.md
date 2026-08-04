@@ -1,5 +1,16 @@
 # @gmcode/storybook
 
+## 0.1.0
+
+### Minor Changes
+
+- Add PasswordField stories
+
+### Patch Changes
+
+- Updated dependencies
+  - @gmcode/forms@0.1.0
+
 ## 0.0.1
 
 ### Patch Changes

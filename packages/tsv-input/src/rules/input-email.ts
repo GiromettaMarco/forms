@@ -1,4 +1,5 @@
-import { Message, emailRegex } from '@gmcode/tsv-core'
+import { Message } from '@gmcode/tsv-core'
+import { isEmail } from '@gmcode/tsv-core/regex'
 import {
   InputRule,
   type InputRuleOptions,
@@ -67,7 +68,7 @@ export class InputEmailRule<
     }
 
     // Email regex
-    if (!emailRegex.test(value)) {
+    if (!isEmail.test(value)) {
       return new Message(this.messages.email)
     }
 
