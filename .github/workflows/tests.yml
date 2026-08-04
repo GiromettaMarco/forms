@@ -28,6 +28,12 @@ jobs:
           node-version: '24'
           cache: true
 
+      - name: Install dependencies
+        run: vp install
+
+      - name: Build packages
+        run: vp run build
+
       - name: Get installed Playwright version
         id: playwright-version
         run: echo "VERSION=$(node -e "console.log(require('playwright/package.json').version)")" >> "$GITHUB_OUTPUT"

@@ -26,6 +26,12 @@ jobs:
           node-version: '24'
           cache: true
 
+      - name: Install dependencies
+        run: vp install
+
+      - name: Build packages
+        run: vp run build
+
       - name: Format and Lint
         run: vp check --fix
 
