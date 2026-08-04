@@ -1,4 +1,5 @@
-import { Message, hexColorRegex } from '@gmcode/tsv-core'
+import { Message } from '@gmcode/tsv-core'
+import { isHexColor } from '@gmcode/tsv-core/regex'
 import {
   InputRule,
   type InputRuleOptions,
@@ -37,7 +38,7 @@ export class InputColorRule<
     }
 
     // Hex color regex
-    if (!hexColorRegex.test(value)) {
+    if (!isHexColor.test(value)) {
       return new Message(this.messages.color)
     }
 

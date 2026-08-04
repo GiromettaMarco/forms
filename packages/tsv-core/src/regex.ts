@@ -1,8 +1,13 @@
-export const hexColorRegex = /^#(?:[0-9a-fA-F]{3}){1,2}$/
+export const hasMixedCase = /([a-z]+.*[A-Z])|([A-Z]+.*[a-z])/
 
-export const emailRegex =
-  /^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9-]*\.)+[A-Za-z]{2,}$/
+export const hasNumber = /[0-9]/
 
-export const floatRegex = /^[0-9.]+$/
+export const hasSymbol = /\p{Z}|\p{S}|\p{P}/u
 
-export const integerRegex = /^[0-9]+$/
+export const isEmail = /^[\w\-.]+@([\w-]+\.)+[\w-]{2,}$/
+
+export const isFloat = /^[0-9.]+$/
+
+export const isHexColor = /^#(?:[0-9a-fA-F]{3}){1,2}$/
+
+export const isInteger = /^[0-9]+$/
