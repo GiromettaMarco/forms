@@ -1,3 +1,4 @@
+import { InputPasswordRule } from '@gmcode/tsv-input'
 import { expect, vi } from 'vite-plus/test'
 import { render } from 'vitest-browser-react'
 import {
@@ -16,8 +17,8 @@ const onSuccess = vi.fn()
 function FormAndSchema() {
   const schema = new Schema(
     {
-      password: new InputTextRule({ minChars: 8 }),
-      password_confirm: new InputTextRule({ minChars: 8 })
+      password: new InputPasswordRule(),
+      password_confirm: new InputTextRule()
     },
     {
       postValidation: [
@@ -77,8 +78,8 @@ test('PasswordField component', async ({ worker }) => {
   // Render
   const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
 
-  await screen.getByLabelText('Password', { exact: true }).fill('admin1234')
-  await screen.getByLabelText('Confirm Password').fill('admin1234')
+  await screen.getByLabelText('Password', { exact: true }).fill('Admin_123456')
+  await screen.getByLabelText('Confirm Password').fill('Admin_123456')
 
   // Submit
   await screen.getByText('Submit').click()

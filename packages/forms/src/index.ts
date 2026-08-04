@@ -24,6 +24,7 @@ export {
   InputColorRule,
   InputEmailRule,
   InputNumberRule,
+  InputPasswordRule,
   InputRule,
   InputSelectRule,
   InputTextRule,
