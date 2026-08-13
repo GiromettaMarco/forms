@@ -1,5 +1,13 @@
 # @gmcode/storybook
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @gmcode/forms@0.1.1
+  - @gmcode/react-ui@0.3.6
+
 ## 0.1.0
 
 ### Minor Changes
