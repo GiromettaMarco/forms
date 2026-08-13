@@ -39,6 +39,7 @@
     "@repo/badge": "workspace:*",
     "@repo/typescript": "workspace:*",
     "typescript": "catalog:",
+    "vite": "catalog:",
     "vite-plus": "catalog:"
   }
 }
