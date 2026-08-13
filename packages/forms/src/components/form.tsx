@@ -11,7 +11,7 @@ import type {
   SharedPageProps
 } from '@inertiajs/core'
 import { useForm as useInertiaForm } from '@inertiajs/react'
-import { type ReactNode, useEffect, useState } from 'react'
+import { type ComponentProps, type ReactNode, useEffect, useState } from 'react'
 import type {
   DefaultValues,
   FieldValues,
@@ -60,10 +60,13 @@ export function Form<
   rootError: displayRootError = 'flash',
   route,
   schema,
-  setDefaultsOnSuccess = false
-}: {
+  setDefaultsOnSuccess = false,
+  ...props
+}: Omit<
+  ComponentProps<'form'>,
+  'action' | 'children' | 'method' | 'onSubmit'
+> & {
   children: RenderFN<TValues>
-  className?: string
   defaults?: Partial<DefaultValues<TValues>>
   onBefore?: GlobalEventCallback<'before', RequestPayload>
   onBeforeUpdate?: GlobalEventCallback<'beforeUpdate', RequestPayload>
@@ -187,6 +190,7 @@ export function Form<
         className={cn('grid gap-6', className)}
         method={route.method}
         onSubmit={reactForm.handleSubmit(onSubmit)}
+        {...props}
       >
         <>
           {children({
