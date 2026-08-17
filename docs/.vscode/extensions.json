@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "antfu.file-nesting",
     "fanaticpythoner.better-todo-tree",
     "bradlc.vscode-tailwindcss",
     "unifiedjs.vscode-mdx",
