@@ -17,7 +17,7 @@ minimumReleaseAgeExclude:
 catalogMode: prefer
 catalog:
   '@babel/core': ^8.0.1
-  '@changesets/cli': 3.0.0-next.9
+  '@changesets/cli': 3.0.0
   '@inertiajs/core': ^3.5.0
   '@inertiajs/react': ^3.5.0
   '@rolldown/plugin-babel': ^0.2.3
