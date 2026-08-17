@@ -10,7 +10,3 @@ runs:
       with:
         node-version: '24'
         cache: true
-
-    - name: Install dependencies
-      shell: bash
-      run: vp install
