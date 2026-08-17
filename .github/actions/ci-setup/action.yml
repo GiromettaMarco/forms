@@ -6,7 +6,7 @@ runs:
   using: composite
   steps:
     - name: Setup Vite+
-      uses: voidzero-dev/setup-vp@v1
+      uses: voidzero-dev/setup-vp@v1.17.0
       with:
         node-version: '24'
         cache: true
