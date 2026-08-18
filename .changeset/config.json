@@ -1,11 +1,16 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@3.1.4/schema.json",
+  "$schema": "https://unpkg.com/@changesets/config@4.0.0/schema.json",
+  "access": "public",
+  "baseBranch": "master",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [],
+  "format": "auto",
+  "ignore": [],
   "linked": [],
-  "access": "public",
-  "baseBranch": "master",
-  "updateInternalDependencies": "patch",
-  "ignore": []
+  "privatePackages": {
+    "version": true,
+    "tag": false
+  },
+  "updateInternalDependencies": "patch"
 }

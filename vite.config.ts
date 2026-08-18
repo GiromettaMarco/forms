@@ -8,8 +8,7 @@ export default defineConfig({
       'pnpm-lock.yaml',
       '**/dist',
       'internal/mock-inertia/core.js',
-      '**/mockServiceWorker.js',
-      '.changeset/*.md'
+      '**/mockServiceWorker.js'
     ],
     overrides: [
       {
