@@ -1,0 +1,15 @@
+name: Setup CI
+
+description: Install pnpm with node 24, enable cache and install dependencies.
+
+# @see https://github.com/changesets/changesets/issues/2151
+# @see https://github.com/voidzero-dev/vite-plus/issues/1169
+
+runs:
+  using: composite
+  steps:
+    - name: Install pnpm and Node.js
+      uses: pnpm/setup@c9883cc79df532ad1a7b81bf9ab944ceb090d65c # v2.0.0
+      with:
+        runtime: node@24
+        cache: true

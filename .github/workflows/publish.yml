@@ -1,5 +1,11 @@
 name: Publish
 
+# We have replace vite-plus with pnpm here, because changesets expects to find
+# pnpm installed globally while vite-plus installs it locally for each package.
+#
+# @see https://github.com/changesets/changesets/issues/2151
+# @see https://github.com/voidzero-dev/vite-plus/issues/1169
+
 on:
   push:
     branches:
@@ -23,16 +29,19 @@ jobs:
       contents: read # to check out repo (actions/checkout)
     steps:
       - name: Check out repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false # recommended: do not persist git credentials on disk
 
-      - name: CI setup
-        uses: ./.github/actions/ci-setup
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@c9883cc79df532ad1a7b81bf9ab944ceb090d65c # v2.0.0
+        with:
+          runtime: node@24
+          cache: true
 
       - name: Select Changesets mode
         id: select-mode
-        uses: changesets/action/select-mode@v2
+        uses: changesets/action/select-mode@3b7c71c440e75fca5d335f779290425fc1117fe8 # v2.1.0
 
   version:
     if: needs.select-mode.outputs.mode == 'version'
@@ -45,16 +54,19 @@ jobs:
       pull-requests: write # to create pull request (changesets/action/version)
     steps:
       - name: Check out repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false # recommended: do not persist git credentials on disk
 
-      - name: CI setup
-        uses: ./.github/actions/ci-setup
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@c9883cc79df532ad1a7b81bf9ab944ceb090d65c # v2.0.0
+        with:
+          runtime: node@24
+          cache: false # recommended: avoid cache poisoning
 
       - name: Version packages
         id: version
-        uses: changesets/action/version@v2
+        uses: changesets/action/version@3b7c71c440e75fca5d335f779290425fc1117fe8 # v2.1.0
 
   pack:
     if: needs.select-mode.outputs.mode == 'publish'
@@ -66,19 +78,28 @@ jobs:
       contents: read # to check out repo (actions/checkout)
     steps:
       - name: Check out repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false # recommended: do not persist git credentials on disk
 
-      - name: CI setup
-        uses: ./.github/actions/ci-setup
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@c9883cc79df532ad1a7b81bf9ab944ceb090d65c # v2.0.0
+        with:
+          runtime: node@24
+          cache: false # recommended: avoid cache poisoning
 
       - name: Build packages
-        run: vpr build
+        run: |
+          pnpm --filter tsv-core build
+          pnpm --filter tsv-advanced build
+          pnpm --filter tsv-input build
+          pnpm --filter tsv-hookform build
+          pnpm --filter react-ui build
+          pnpm --filter forms build
 
       - name: Pack packages
         id: pack
-        uses: changesets/action/pack@v2
+        uses: changesets/action/pack@3b7c71c440e75fca5d335f779290425fc1117fe8 # v2.1.0
         with:
           publish-plan-artifact-id: ${{ needs.select-mode.outputs.publish-plan-artifact-id }}
 
@@ -90,15 +111,18 @@ jobs:
       id-token: write # for trusted publishing (changesets/action/publish)
     steps:
       - name: Check out repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false # recommended: do not persist git credentials on disk
 
-      - name: CI setup
-        uses: ./.github/actions/ci-setup
+      - name: Install pnpm and Node.js
+        uses: pnpm/setup@c9883cc79df532ad1a7b81bf9ab944ceb090d65c # v2.0.0
+        with:
+          runtime: node@24
+          cache: false # recommended: avoid cache poisoning
 
       - name: Publish packages
-        uses: changesets/action/publish@v2
+        uses: changesets/action/publish@3b7c71c440e75fca5d335f779290425fc1117fe8 # v2.1.0
         with:
           pack-dir-artifact-id: ${{ needs.pack.outputs.pack-dir-artifact-id }}
           push-git-tags: true
