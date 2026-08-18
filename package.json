@@ -1,10 +1,6 @@
 {
   "name": "forms-monorepo",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
   "type": "module",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
