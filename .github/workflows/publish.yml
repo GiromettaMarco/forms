@@ -29,19 +29,19 @@ jobs:
       contents: read # to check out repo (actions/checkout)
     steps:
       - name: Check out repo
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false # recommended: do not persist git credentials on disk
 
       - name: Install pnpm and Node.js
-        uses: pnpm/setup@c9883cc79df532ad1a7b81bf9ab944ceb090d65c # v2.0.0
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
         with:
           runtime: node@24
           cache: true
 
       - name: Select Changesets mode
         id: select-mode
-        uses: changesets/action/select-mode@3b7c71c440e75fca5d335f779290425fc1117fe8 # v2.1.0
+        uses: changesets/action/select-mode@8488615a623b1b9c987934bb89eae8af6a946ac1 # v2
 
   version:
     if: needs.select-mode.outputs.mode == 'version'
@@ -54,19 +54,19 @@ jobs:
       pull-requests: write # to create pull request (changesets/action/version)
     steps:
       - name: Check out repo
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false # recommended: do not persist git credentials on disk
 
       - name: Install pnpm and Node.js
-        uses: pnpm/setup@c9883cc79df532ad1a7b81bf9ab944ceb090d65c # v2.0.0
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
         with:
           runtime: node@24
           cache: false # recommended: avoid cache poisoning
 
       - name: Version packages
         id: version
-        uses: changesets/action/version@3b7c71c440e75fca5d335f779290425fc1117fe8 # v2.1.0
+        uses: changesets/action/version@8488615a623b1b9c987934bb89eae8af6a946ac1 # v2
 
   pack:
     if: needs.select-mode.outputs.mode == 'publish'
@@ -78,12 +78,12 @@ jobs:
       contents: read # to check out repo (actions/checkout)
     steps:
       - name: Check out repo
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false # recommended: do not persist git credentials on disk
 
       - name: Install pnpm and Node.js
-        uses: pnpm/setup@c9883cc79df532ad1a7b81bf9ab944ceb090d65c # v2.0.0
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
         with:
           runtime: node@24
           cache: false # recommended: avoid cache poisoning
@@ -99,7 +99,7 @@ jobs:
 
       - name: Pack packages
         id: pack
-        uses: changesets/action/pack@3b7c71c440e75fca5d335f779290425fc1117fe8 # v2.1.0
+        uses: changesets/action/pack@8488615a623b1b9c987934bb89eae8af6a946ac1 # v2
         with:
           publish-plan-artifact-id: ${{ needs.select-mode.outputs.publish-plan-artifact-id }}
 
@@ -111,18 +111,18 @@ jobs:
       id-token: write # for trusted publishing (changesets/action/publish)
     steps:
       - name: Check out repo
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false # recommended: do not persist git credentials on disk
 
       - name: Install pnpm and Node.js
-        uses: pnpm/setup@c9883cc79df532ad1a7b81bf9ab944ceb090d65c # v2.0.0
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
         with:
           runtime: node@24
           cache: false # recommended: avoid cache poisoning
 
       - name: Publish packages
-        uses: changesets/action/publish@3b7c71c440e75fca5d335f779290425fc1117fe8 # v2.1.0
+        uses: changesets/action/publish@8488615a623b1b9c987934bb89eae8af6a946ac1 # v2
         with:
           pack-dir-artifact-id: ${{ needs.pack.outputs.pack-dir-artifact-id }}
           push-git-tags: true
