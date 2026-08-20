@@ -155,6 +155,7 @@
     "jsdom",
     "Lngs",
     "lucide",
+    "rimraf",
     "sonner",
     "stefanzweifel",
     "subcomponents",
