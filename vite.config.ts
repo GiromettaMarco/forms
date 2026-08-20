@@ -157,7 +157,8 @@ export default defineConfig({
         ]
       },
       ready: {
-        command: ['vp check', 'vp run test']
+        command: ['vp check', 'vp run test'],
+        dependsOn: ['build']
       },
       test: {
         command: 'vp run -r test',
