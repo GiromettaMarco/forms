@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/tsv-advanced",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Fully typed Typescript schema validations with i18n support.",
   "keywords": [
     "i18n",

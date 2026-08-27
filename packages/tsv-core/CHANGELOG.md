@@ -1,5 +1,12 @@
 # @gmcode/tsv-core
 
+## 0.2.2
+
+### Patch Changes
+
+- 03d485b: Upgrade vite-plus
+- 03d485b: Upgrade typescript to v7
+
 ## 0.2.1
 
 ### Patch Changes
