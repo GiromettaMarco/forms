@@ -1,5 +1,14 @@
 # @gmcode/tsv-input
 
+## 0.3.2
+
+### Patch Changes
+
+- Upgrade vite-plus
+- Upgrade typescript to v7
+- Updated dependencies
+  - @gmcode/tsv-core@0.2.2
+
 ## 0.3.1
 
 ### Patch Changes

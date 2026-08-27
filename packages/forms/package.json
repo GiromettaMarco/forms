@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/forms",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Fully functional inertia react forms with client side validations.",
   "keywords": [
     "i18next",

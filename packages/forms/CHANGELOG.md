@@ -1,5 +1,16 @@
 # @gmcode/forms
 
+## 0.1.2
+
+### Patch Changes
+
+- Upgrade vite-plus
+- Upgrade typescript to v7
+- Updated dependencies
+  - @gmcode/react-ui@0.3.7
+  - @gmcode/tsv-hookform@0.1.7
+  - @gmcode/tsv-input@0.3.2
+
 ## 0.1.1
 
 ### Patch Changes
