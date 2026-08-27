@@ -4,10 +4,9 @@
 
 ### Patch Changes
 
-- 03d485b: Upgrade vite-plus
-- 03d485b: Upgrade typescript to v7
-- Updated dependencies [03d485b]
-- Updated dependencies [03d485b]
+- Upgrade vite-plus
+- Upgrade typescript to v7
+- Updated dependencies
   - @gmcode/react-ui@0.3.7
   - @gmcode/tsv-hookform@0.1.7
   - @gmcode/tsv-input@0.3.2

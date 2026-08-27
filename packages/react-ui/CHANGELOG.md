@@ -4,8 +4,8 @@
 
 ### Patch Changes
 
-- 03d485b: Upgrade vite-plus
-- 03d485b: Upgrade typescript to v7
+- Upgrade vite-plus
+- Upgrade typescript to v7
 
 ## 0.3.6
 
