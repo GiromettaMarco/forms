@@ -1,5 +1,19 @@
 # @gmcode/forms
 
+## 0.2.0
+
+### Minor Changes
+
+- d1788a2: Change i18next context strategy: remove the built-in i18n instance and search translations in the "forms" namespace of the instance provided through the I18nextProvider.
+
+### Patch Changes
+
+- 6d6cb77: Downgrade typescript to v6
+- Updated dependencies [6d6cb77]
+  - @gmcode/react-ui@0.3.8
+  - @gmcode/tsv-hookform@0.1.8
+  - @gmcode/tsv-input@0.3.3
+
 ## 0.1.2
 
 ### Patch Changes

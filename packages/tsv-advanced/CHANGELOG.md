@@ -1,5 +1,13 @@
 # @gmcode/tsv-advanced
 
+## 0.1.8
+
+### Patch Changes
+
+- 6d6cb77: Downgrade typescript to v6
+- Updated dependencies [6d6cb77]
+  - @gmcode/tsv-core@0.2.3
+
 ## 0.1.7
 
 ### Patch Changes

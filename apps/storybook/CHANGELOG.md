@@ -1,5 +1,15 @@
 # @gmcode/storybook
 
+## 0.1.3
+
+### Patch Changes
+
+- 6d6cb77: Downgrade typescript to v6
+- Updated dependencies [6d6cb77]
+- Updated dependencies [d1788a2]
+  - @gmcode/forms@0.2.0
+  - @gmcode/react-ui@0.3.8
+
 ## 0.1.2
 
 ### Patch Changes

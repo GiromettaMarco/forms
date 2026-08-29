@@ -1,5 +1,11 @@
 # @gmcode/react-ui
 
+## 0.3.8
+
+### Patch Changes
+
+- 6d6cb77: Downgrade typescript to v6
+
 ## 0.3.7
 
 ### Patch Changes

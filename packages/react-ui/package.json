@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/react-ui",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "General purpose React UI compatible with shadcn projects.",
   "keywords": [
     "radix-ui",
