@@ -1,16 +1,14 @@
 import { expect, vi } from 'vite-plus/test'
-import { render } from 'vitest-browser-react'
 import {
   ErrorMonitor,
   Form,
   InputTextRule,
   Schema,
   Submit,
-  TextField,
-  i18n
+  TextField
 } from '@/index'
-import { formRoute, inertiaResponseSuccess, test } from './utility'
-import { WithToaster } from './with-toaster'
+import i18n from './i18n'
+import { formRoute, inertiaResponseSuccess, render, test } from './utility'
 
 function Default() {
   const schema = new Schema({
@@ -46,7 +44,7 @@ test('I18n with default locales', async ({ worker }) => {
   await i18n.changeLanguage('it')
 
   // Render
-  const screen = await render(<Default />, { wrapper: WithToaster })
+  const screen = await render(<Default />)
 
   await screen.getByLabelText('Name').fill('Jim')
   await screen.getByText('Invia').click()
@@ -97,7 +95,7 @@ test('I18n with custom strings', async ({ worker }) => {
   worker.use(inertiaResponseSuccess)
 
   // Render
-  const screen = await render(<Custom />, { wrapper: WithToaster })
+  const screen = await render(<Custom />)
 
   await screen.getByLabelText('Name').fill('Jim')
   await screen.getByText('Submit').click()
@@ -116,7 +114,7 @@ test('ErrorMonitor without i18next provider fallback', async () => {
   // Render
   const screen = await render(
     <ErrorMonitor error={{ message: 'No i18next provider' }} />,
-    { wrapper: WithToaster }
+    { wrapper: undefined }
   )
 
   expect(screen.getByText('No i18next provider')).toBeInTheDocument()

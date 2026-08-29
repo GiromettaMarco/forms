@@ -1,13 +1,12 @@
 import { expect, vi } from 'vite-plus/test'
-import { render } from 'vitest-browser-react'
 import { Form, InputTextRule, Schema, Submit, TextField } from '@/index'
 import {
   formRoute,
   inertiaResponseError,
   inertiaResponseSuccess,
+  render,
   test
 } from './utility'
-import { WithToaster } from './with-toaster'
 
 const onError = vi.fn()
 const onSuccess = vi.fn()
@@ -57,7 +56,7 @@ test('Form component', async ({ worker }) => {
   worker.use(inertiaResponseError)
 
   // Wrap with Toaster component
-  const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
+  const screen = await render(<FormAndSchema />)
 
   const input = screen.getByLabelText('Name')
 
@@ -89,9 +88,7 @@ test('Form component with inline root errors', async ({ worker }) => {
   worker.use(inertiaResponseError)
 
   // Wrap with Toaster component
-  const screen = await render(<FormAndSchema rootError="monitor" />, {
-    wrapper: WithToaster
-  })
+  const screen = await render(<FormAndSchema rootError="monitor" />)
 
   // Submit the form
   await screen.getByLabelText('Name').fill('John')
@@ -114,9 +111,7 @@ test('Form component without reset on success', async ({ worker }) => {
   worker.use(inertiaResponseSuccess)
 
   // Wrap with Toaster component
-  const screen = await render(<FormAndSchema resetOnSuccess={false} />, {
-    wrapper: WithToaster
-  })
+  const screen = await render(<FormAndSchema resetOnSuccess={false} />)
 
   const input = screen.getByLabelText('Name')
 
@@ -136,9 +131,7 @@ test('Form component with set defaults on success', async ({ worker }) => {
   worker.use(inertiaResponseSuccess)
 
   // Wrap with Toaster component
-  const screen = await render(<FormAndSchema setDefaultsOnSuccess />, {
-    wrapper: WithToaster
-  })
+  const screen = await render(<FormAndSchema setDefaultsOnSuccess />)
 
   const input = screen.getByLabelText('Name')
 

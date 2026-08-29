@@ -1,5 +1,4 @@
 import { expect, vi } from 'vite-plus/test'
-import { render } from 'vitest-browser-react'
 import {
   Form,
   InputSelectRule,
@@ -7,8 +6,7 @@ import {
   Schema,
   Submit
 } from '@/index'
-import { formRoute, inertiaResponseSuccess, test } from './utility'
-import { WithToaster } from './with-toaster'
+import { formRoute, inertiaResponseSuccess, render, test } from './utility'
 
 const onSuccess = vi.fn()
 
@@ -53,7 +51,7 @@ test('NullableSelectField component', async ({ worker }) => {
   worker.use(inertiaResponseSuccess)
 
   // Render
-  const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
+  const screen = await render(<FormAndSchema />)
 
   await screen.getByLabelText('Select').click()
   const option1 = screen.getByText('Option 1').last()

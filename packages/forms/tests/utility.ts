@@ -7,10 +7,10 @@ import {
 import { type SetupWorker, setupWorker } from 'msw/browser'
 import type { ReactNode } from 'react'
 import { test as testBase } from 'vite-plus/test'
-import { type RenderOptions, render } from 'vitest-browser-react'
-import { WithToaster } from './with-toaster'
+import { type RenderOptions, render as renderBase } from 'vitest-browser-react'
+import { Wrapper } from './wrapper'
 
-//#region Rest Handlers
+//#region MSW
 export const formRoute = {
   method: 'post' as const,
   url: 'forms'
@@ -53,9 +53,9 @@ export const inertiaResponseError = http.post('/forms', () => {
   )
 })
 
-//#region Worker
 export const worker = setupWorker()
 
+//#region Fixtures
 /**
  * Vitest test function extended with msw browser worker.
  *
@@ -85,7 +85,9 @@ export const test = testBase.extend<{ worker: SetupWorker }>({
   ]
 })
 
-//#region Rendering
-export function renderWithToaster(content: ReactNode, options?: RenderOptions) {
-  return render(content, { wrapper: WithToaster, ...options })
+/**
+ * Render function extended with default wrapper.
+ */
+export function render(content: ReactNode, options?: RenderOptions) {
+  return renderBase(content, { wrapper: Wrapper, ...options })
 }

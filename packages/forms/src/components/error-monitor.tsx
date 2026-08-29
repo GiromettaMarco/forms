@@ -4,7 +4,7 @@ import type { ErrorData } from '@/types'
 
 export function ErrorMonitor({ error }: { error?: ErrorData }) {
   // i18n
-  const { t } = useTranslation()
+  const { t } = useTranslation('forms')
 
   if (!error?.message) {
     return null

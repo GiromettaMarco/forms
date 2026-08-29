@@ -12,7 +12,7 @@ export function Submit({
   loading?: boolean
 }) {
   // i18n
-  const { t } = useTranslation()
+  const { t } = useTranslation('forms')
 
   return (
     <Button

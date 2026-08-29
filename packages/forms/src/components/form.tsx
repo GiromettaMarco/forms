@@ -19,9 +19,7 @@ import type {
   UseFormReturn
 } from 'react-hook-form'
 import { useForm as userReactForm } from 'react-hook-form'
-import { I18nextProvider } from 'react-i18next'
 import { ErrorMonitor } from '@/components/error-monitor'
-import i18n from '@/i18n'
 import type { Schema } from '@/index'
 import type { ErrorData, Method, RouteDefinition } from '@/types'
 
@@ -184,24 +182,22 @@ export function Form<
   }, [inertiaForm.errors, reactForm])
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <form
-        action={route.url}
-        className={cn('grid gap-6', className)}
-        method={route.method}
-        onSubmit={reactForm.handleSubmit(onSubmit)}
-        {...props}
-      >
-        <>
-          {children({
-            errors: inertiaForm.errors,
-            form: reactForm,
-            loading: inertiaForm.processing
-          })}
-        </>
+    <form
+      action={route.url}
+      className={cn('grid gap-6', className)}
+      method={route.method}
+      onSubmit={reactForm.handleSubmit(onSubmit)}
+      {...props}
+    >
+      <>
+        {children({
+          errors: inertiaForm.errors,
+          form: reactForm,
+          loading: inertiaForm.processing
+        })}
+      </>
 
-        {displayRootError === 'monitor' && <ErrorMonitor error={rootError} />}
-      </form>
-    </I18nextProvider>
+      {displayRootError === 'monitor' && <ErrorMonitor error={rootError} />}
+    </form>
   )
 }

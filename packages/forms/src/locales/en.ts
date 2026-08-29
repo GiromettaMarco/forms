@@ -1,7 +1,7 @@
 import type { Resource } from 'i18next'
 
 export default {
-  translation: {
+  forms: {
     array: 'The field must be an array.',
     date: 'The field must be a valid date',
     decrease: 'Decrease',

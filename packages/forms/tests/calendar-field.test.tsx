@@ -1,8 +1,6 @@
 import { expect, vi } from 'vite-plus/test'
-import { render } from 'vitest-browser-react'
 import { CalendarField, Form, InputRule, Schema, Submit } from '@/index'
-import { formRoute, inertiaResponseSuccess, test } from './utility'
-import { WithToaster } from './with-toaster'
+import { formRoute, inertiaResponseSuccess, render, test } from './utility'
 
 const onSuccess = vi.fn()
 
@@ -47,7 +45,7 @@ test('CalendarField component', async ({ worker }) => {
   worker.use(inertiaResponseSuccess)
 
   // Render
-  const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
+  const screen = await render(<FormAndSchema />)
 
   const button = screen.getByLabelText('1').first()
   await button.click()
@@ -66,7 +64,7 @@ test('CalendarField component 2', async ({ worker }) => {
   worker.use(inertiaResponseSuccess)
 
   // Render
-  const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
+  const screen = await render(<FormAndSchema />)
 
   const button = screen.getByLabelText('1').first()
   await button.click()
@@ -81,9 +79,7 @@ test('CalendarField component 2', async ({ worker }) => {
 })
 
 test('CalendarField component disabled', async () => {
-  const screen = await render(<FormAndSchema disabled />, {
-    wrapper: WithToaster
-  })
+  const screen = await render(<FormAndSchema disabled />)
 
   expect(screen.getByLabelText('1').first()).toBeDisabled()
 })

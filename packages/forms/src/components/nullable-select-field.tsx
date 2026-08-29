@@ -53,7 +53,7 @@ export function NullableSelectField<
   type?: HTMLInputTypeAttribute
 }) {
   // i18n
-  const { t } = useTranslation()
+  const { t } = useTranslation('forms')
 
   return (
     <Controller

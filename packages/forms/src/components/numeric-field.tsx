@@ -81,7 +81,7 @@ export function NumericField<TFieldValues extends FieldValues = FieldValues>({
   }
 }) {
   // i18n
-  const { t } = useTranslation()
+  const { t } = useTranslation('forms')
 
   function stepValue(value: string, add: boolean) {
     if (ui?.setValue) {

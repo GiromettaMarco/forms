@@ -1,8 +1,6 @@
 import { expect, vi } from 'vite-plus/test'
-import { render } from 'vitest-browser-react'
 import { Form, InputNumberRule, NumericField, Schema, Submit } from '@/index'
-import { formRoute, inertiaResponseSuccess, test } from './utility'
-import { WithToaster } from './with-toaster'
+import { formRoute, inertiaResponseSuccess, render, test } from './utility'
 
 const onSuccess = vi.fn()
 
@@ -62,8 +60,7 @@ test('NumericField component with UI', async ({ worker }) => {
       ui_max={5}
       ui_min={0}
       ui_step={1}
-    />,
-    { wrapper: WithToaster }
+    />
   )
 
   const input = screen.getByLabelText('Numeric field with UI')

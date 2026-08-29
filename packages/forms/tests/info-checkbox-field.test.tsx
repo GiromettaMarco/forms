@@ -1,6 +1,5 @@
 import type { PropsWithChildren } from 'react'
 import { expect, vi } from 'vite-plus/test'
-import { render } from 'vitest-browser-react'
 import {
   Form,
   InfoCheckboxField,
@@ -8,8 +7,7 @@ import {
   Schema,
   Submit
 } from '@/index'
-import { formRoute, inertiaResponseSuccess, test } from './utility'
-import { WithToaster } from './with-toaster'
+import { formRoute, inertiaResponseSuccess, render, test } from './utility'
 
 const onCheckedChange = vi.fn()
 const onSuccess = vi.fn()
@@ -51,9 +49,7 @@ test('InfoCheckboxField component', async ({ worker }) => {
   worker.use(inertiaResponseSuccess)
 
   // Render
-  const screen = await render(<FormAndSchema label="Info Checkbox" />, {
-    wrapper: WithToaster
-  })
+  const screen = await render(<FormAndSchema label="Info Checkbox" />)
 
   await screen.getByLabelText('Info Checkbox').click()
   expect(onCheckedChange).toHaveBeenCalledOnce()
@@ -88,8 +84,7 @@ test('InfoCheckboxField component with children', async ({ worker }) => {
           Privacy Policy
         </a>
       </p>
-    </FormAndSchema>,
-    { wrapper: WithToaster }
+    </FormAndSchema>
   )
 
   await screen.getByLabelText('I have read and agree').click()

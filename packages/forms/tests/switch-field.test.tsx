@@ -1,8 +1,6 @@
 import { expect, vi } from 'vite-plus/test'
-import { render } from 'vitest-browser-react'
 import { Form, InputCheckboxRule, Schema, Submit, SwitchField } from '@/index'
-import { formRoute, inertiaResponseSuccess, test } from './utility'
-import { WithToaster } from './with-toaster'
+import { formRoute, inertiaResponseSuccess, render, test } from './utility'
 
 const onCheckedChange = vi.fn()
 const onSuccess = vi.fn()
@@ -39,7 +37,7 @@ test('SwitchField component', async ({ worker }) => {
   worker.use(inertiaResponseSuccess)
 
   // Render
-  const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
+  const screen = await render(<FormAndSchema />)
 
   await screen.getByLabelText('Switch').click()
   expect(onCheckedChange).toHaveBeenCalledOnce()

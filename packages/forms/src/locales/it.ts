@@ -1,7 +1,7 @@
 import type en from '@/locales/en'
 
 export default {
-  translation: {
+  forms: {
     array: 'Il campo deve essere un array.',
     date: 'Il campo deve essere una data valida',
     decrease: 'Diminuisci',

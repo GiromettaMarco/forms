@@ -1,6 +1,5 @@
 import { InputPasswordRule } from '@gmcode/tsv-input'
 import { expect, vi } from 'vite-plus/test'
-import { render } from 'vitest-browser-react'
 import {
   Form,
   InputTextRule,
@@ -9,8 +8,7 @@ import {
   Schema,
   Submit
 } from '@/index'
-import { formRoute, inertiaResponseSuccess, test } from './utility'
-import { WithToaster } from './with-toaster'
+import { formRoute, inertiaResponseSuccess, render, test } from './utility'
 
 const onSuccess = vi.fn()
 
@@ -76,7 +74,7 @@ test('PasswordField component', async ({ worker }) => {
   worker.use(inertiaResponseSuccess)
 
   // Render
-  const screen = await render(<FormAndSchema />, { wrapper: WithToaster })
+  const screen = await render(<FormAndSchema />)
 
   await screen.getByLabelText('Password', { exact: true }).fill('Admin_123456')
   await screen.getByLabelText('Confirm Password').fill('Admin_123456')
