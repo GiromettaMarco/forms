@@ -4,17 +4,30 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "$(trash) clear",
-      "detail": "Remove node modules and artifacts dirs. Requires rimraf installed globally.",
-      "type": "shell",
-      "command": "rimraf -g -- **/node_modules **/coverage **/dist **/storybook-static **/__screenshots__ **/.vitest-attachments",
+      "command": "pnpm --filter storybook dev",
+      "detail": "Open Storybook.",
+      "label": "$(remote-explorer-documentation) Storybook",
       "options": {
         "statusbar": {
-          "label": "$(trash)",
-          "detail": "clear",
-          "color": "#22C1D6"
+          "color": "#22C1D6",
+          "detail": "storybook",
+          "label": "$(remote-explorer-documentation)"
         }
-      }
+      },
+      "type": "shell"
+    },
+    {
+      "command": "rimraf -g -- **/node_modules **/coverage **/dist **/storybook-static **/__screenshots__ **/.vitest-attachments",
+      "detail": "Remove node modules and artifacts dirs. Requires rimraf installed globally.",
+      "label": "$(trash) clear",
+      "options": {
+        "statusbar": {
+          "color": "#22C1D6",
+          "detail": "clear",
+          "label": "$(trash)"
+        }
+      },
+      "type": "shell"
     }
   ]
 }
