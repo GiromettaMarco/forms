@@ -1,5 +1,11 @@
 # @gmcode/react-ui
 
+## 0.4.0
+
+### Minor Changes
+
+- 0c77265: Reduce input and textarea font-size
+
 ## 0.3.8
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @gmcode/forms
 
+## 0.2.1
+
+### Patch Changes
+
+- 1508410: Add inputClassName and labelClassName props to the InputField component.
+- Updated dependencies [0c77265]
+  - @gmcode/react-ui@0.4.0
+
 ## 0.2.0
 
 ### Minor Changes
