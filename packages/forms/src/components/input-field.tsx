@@ -13,9 +13,11 @@ export function InputField<TFieldValues extends FieldValues = FieldValues>({
   autoComplete,
   control,
   disabled,
+  inputClassName,
   inputId,
   inputName,
   label,
+  labelClassName,
   placeholder,
   readOnly,
   type,
@@ -24,9 +26,11 @@ export function InputField<TFieldValues extends FieldValues = FieldValues>({
   autoComplete?: HTMLInputAutoCompleteAttribute
   control: Control<TFieldValues>
   disabled?: boolean
+  inputClassName?: string
   inputId?: string
   inputName: FieldPath<TFieldValues>
   label?: string
+  labelClassName?: string
   onChange?: ChangeEventHandler<HTMLDivElement, HTMLInputElement>
   placeholder?: string
   readOnly?: boolean
@@ -43,12 +47,18 @@ export function InputField<TFieldValues extends FieldValues = FieldValues>({
           {...props}
         >
           {label && (
-            <FieldLabel htmlFor={inputId ?? inputName}>{label}</FieldLabel>
+            <FieldLabel
+              className={labelClassName}
+              htmlFor={inputId ?? inputName}
+            >
+              {label}
+            </FieldLabel>
           )}
 
           <Input
             aria-invalid={fieldState.invalid}
             autoComplete={autoComplete}
+            className={inputClassName}
             id={inputId ?? (label ? inputName : undefined)}
             placeholder={placeholder}
             readOnly={readOnly}
