@@ -30,7 +30,8 @@
   },
   "scripts": {
     "build": "vp pack",
-    "test": "vp test run --coverage && badge"
+    "test": "vp test run --coverage && badge",
+    "test:ui": "vp test watch --browser.headless=false"
   },
   "dependencies": {
     "class-variance-authority": "catalog:",
