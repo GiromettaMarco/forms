@@ -1,5 +1,15 @@
 # @gmcode/react-ui
 
+## 0.4.0
+
+### Minor Changes
+
+- 0c77265: Reduce input and textarea font-size
+
+### Patch Changes
+
+- 302d63e: Add "indeterminate" state support to the Checkbox component
+
 ## 0.3.8
 
 ### Patch Changes
