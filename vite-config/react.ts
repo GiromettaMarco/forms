@@ -15,7 +15,11 @@ export default mergeConfig(defaultConfig, {
       enabled: true,
       headless: true,
       instances: [{ browser: 'chromium' }],
-      provider: playwright()
+      provider: playwright({
+        contextOptions: {
+          colorScheme: null
+        }
+      })
     }
   }
 })
