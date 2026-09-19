@@ -1,6 +1,6 @@
 export { Button, buttonVariants } from '@/components/button'
 export { Calendar, CalendarDayButton } from '@/components/calendar'
-export { Checkbox } from '@/components/checkbox'
+export { Checkbox, type CheckedState } from '@/components/checkbox'
 export {
   Field,
   FieldContent,
