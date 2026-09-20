@@ -1,6 +1,7 @@
 import { Toaster } from '@gmcode/react-ui'
-import type { PropsWithChildren } from 'react'
+import { useEffect, type PropsWithChildren } from 'react'
 import { I18nextProvider } from 'react-i18next'
+import { toast } from 'sonner'
 import i18n from './i18n'
 
 export function WithI18n({ children }: PropsWithChildren) {
@@ -8,6 +9,12 @@ export function WithI18n({ children }: PropsWithChildren) {
 }
 
 export function WithToaster({ children }: PropsWithChildren) {
+  useEffect(() => {
+    return () => {
+      toast.dismiss()
+    }
+  }, [])
+
   return (
     <div>
       <Toaster
