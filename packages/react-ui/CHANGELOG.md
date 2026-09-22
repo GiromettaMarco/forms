@@ -1,5 +1,11 @@
 # @gmcode/react-ui
 
+## 0.4.1
+
+### Patch Changes
+
+- 46a688e: Update sonner
+
 ## 0.4.0
 
 ### Minor Changes

@@ -1,5 +1,14 @@
 # @gmcode/storybook
 
+## 0.1.5
+
+### Patch Changes
+
+- fc3e524: Update storybook to version 10.6.0
+- Updated dependencies [46a688e]
+  - @gmcode/react-ui@0.4.1
+  - @gmcode/forms@0.2.2
+
 ## 0.1.4
 
 ### Patch Changes

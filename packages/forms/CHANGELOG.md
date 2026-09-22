@@ -1,5 +1,12 @@
 # @gmcode/forms
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [46a688e]
+  - @gmcode/react-ui@0.4.1
+
 ## 0.2.1
 
 ### Patch Changes
