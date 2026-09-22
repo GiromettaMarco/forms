@@ -1,0 +1,123 @@
+import { InputTextRule, Schema } from '@gmcode/tsv-input'
+import { expect, vi } from 'vite-plus/test'
+import { ErrorMonitor } from '@/components/error-monitor'
+import { Form } from '@/components/form'
+import { Submit } from '@/components/submit'
+import { TextField } from '@/components/text-field'
+import { formRoute, inertiaResponseSuccess } from '../fixtures/msw'
+import { render } from '../fixtures/render'
+import { test } from '../fixtures/test'
+import i18n from '../providers/i18n'
+
+function Default() {
+  const schema = new Schema({
+    name: new InputTextRule({ maxChars: 20, minChars: 4 })
+  })
+
+  return (
+    <Form
+      className="w-72"
+      defaults={{ name: '' }}
+      route={formRoute}
+      schema={schema}
+    >
+      {({ form, loading }) => (
+        <>
+          <TextField
+            control={form.control}
+            inputName="name"
+            label="Name"
+          />
+
+          <Submit loading={loading} />
+        </>
+      )}
+    </Form>
+  )
+}
+
+test('I18n with default locales', async ({ worker }) => {
+  // Rest handler
+  worker.use(inertiaResponseSuccess)
+
+  await i18n.changeLanguage('it')
+
+  // Render
+  const screen = await render(<Default />)
+
+  await screen.getByLabelText('Name').fill('Jim')
+  await screen.getByText('Invia').click()
+  expect(
+    screen.getByText('Il campo deve contenere almeno 4 caratteri.')
+  ).toBeInTheDocument()
+
+  await i18n.changeLanguage('en')
+})
+
+function Custom() {
+  const schema = new Schema({
+    name: new InputTextRule({
+      maxChars: 20,
+      messages: {
+        maxChars: 'name.maxChars',
+        minChars: 'name.minChars',
+        required: 'name.required'
+      },
+      minChars: 4
+    })
+  })
+
+  return (
+    <Form
+      className="w-72"
+      defaults={{ name: '' }}
+      route={formRoute}
+      schema={schema}
+    >
+      {({ form, loading }) => (
+        <>
+          <TextField
+            control={form.control}
+            inputName="name"
+            label="Name"
+          />
+
+          <Submit loading={loading} />
+        </>
+      )}
+    </Form>
+  )
+}
+
+test('I18n with custom strings', async ({ worker }) => {
+  // Rest handler
+  worker.use(inertiaResponseSuccess)
+
+  // Render
+  const screen = await render(<Custom />)
+
+  await screen.getByLabelText('Name').fill('Jim')
+  await screen.getByText('Submit').click()
+  expect(
+    screen.getByText(
+      'Your name must be at least 4 characters. The chosen name is 3 characters long.'
+    )
+  ).toBeInTheDocument()
+})
+
+test('ErrorMonitor without i18next provider fallback', async () => {
+  const consoleMock = vi
+    .spyOn(console, 'warn')
+    .mockImplementation(() => undefined)
+
+  // Render
+  const screen = await render(
+    <ErrorMonitor error={{ message: 'No i18next provider' }} />,
+    { wrapper: undefined }
+  )
+
+  expect(screen.getByText('No i18next provider')).toBeInTheDocument()
+  expect(consoleMock).toHaveBeenCalledOnce()
+
+  consoleMock.mockReset()
+})

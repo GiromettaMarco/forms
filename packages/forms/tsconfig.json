@@ -2,7 +2,7 @@
   "extends": "@repo/typescript/react.json",
 
   // Files
-  "include": ["src", "tests", "vitest.setup.ts"],
+  "include": ["src", "test"],
   "exclude": ["dist", "node_modules"],
 
   "compilerOptions": {

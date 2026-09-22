@@ -15,7 +15,7 @@ export default mergeConfig(reactConfig, {
     },
     clearMocks: true,
     name: 'forms',
-    setupFiles: ['./vitest.setup.ts'],
+    setupFiles: ['./test/vitest.setup.ts'],
     testTimeout: 5_000
   }
 })
