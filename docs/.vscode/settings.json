@@ -5,8 +5,7 @@
     "**/dist/**": true,
     "composer.lock": true,
     "pnpm-lock.yaml": true,
-    "node_modules/": true,
-    "**/storybook-static/**": true
+    "node_modules/": true
   },
 
   // Ensure VSCode uses pnpm instead of npm
