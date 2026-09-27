@@ -1,7 +1,7 @@
 import i18n from '@/i18n'
 
 export { i18n }
-export type { ErrorData, Method, Option, RouteDefinition } from '@/types'
+export type { ErrorData, Option, RouteDefinition } from '@/types'
 export { CalendarField } from '@/components/calendar-field'
 export { CheckboxField } from '@/components/checkbox-field'
 export { EmailField } from '@/components/email-field'

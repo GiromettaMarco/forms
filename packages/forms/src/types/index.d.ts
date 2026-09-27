@@ -1,7 +1,6 @@
 import type { MessageParams } from '@gmcode/tsv-input'
+import type { Method } from '@inertiajs/core'
 import type { ReactNode } from 'react'
-
-export type Method = 'get' | 'post' | 'put' | 'delete' | 'patch'
 
 export type RouteDefinition<TMethod extends Method | Method[]> = {
   url: string

@@ -6,6 +6,7 @@ import type {
   Errors,
   FormDataErrors,
   GlobalEventCallback,
+  Method,
   Page,
   RequestPayload,
   SharedPageProps
@@ -21,7 +22,7 @@ import type {
 import { useForm as userReactForm } from 'react-hook-form'
 import { ErrorMonitor } from '@/components/error-monitor'
 import type { Schema } from '@/index'
-import type { ErrorData, Method, RouteDefinition } from '@/types'
+import type { ErrorData, RouteDefinition } from '@/types'
 
 type RenderFN<TValues extends FieldValues> = ({
   errors,
