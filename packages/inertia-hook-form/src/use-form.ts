@@ -84,7 +84,7 @@ export function useForm<
   )
 
   // React Hook Form
-  const reactForm = useReactForm({
+  const reactForm = useReactForm<TValues>({
     defaultValues: defaultValues as DefaultValues<TValues>,
     resolver: useTsvResolver(schema)
   })
