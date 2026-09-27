@@ -388,6 +388,9 @@ importers:
 
   packages/forms:
     dependencies:
+      '@gmcode/inertia-hook-form':
+        specifier: workspace:*
+        version: link:../inertia-hook-form
       '@gmcode/react-ui':
         specifier: workspace:*
         version: link:../react-ui
