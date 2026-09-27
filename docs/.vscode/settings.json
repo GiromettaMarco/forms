@@ -164,6 +164,7 @@
   // Conventional Commits
   "conventionalCommits.scopes": [
     "forms",
+    "inertia-hook-form",
     "react-ui",
     "tsv-advanced",
     "tsv-core",

@@ -1,0 +1,13 @@
+{
+  "extends": "@repo/typescript/react.json",
+
+  // Files
+  "include": ["src", "test"],
+  "exclude": ["dist", "node_modules"],
+
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

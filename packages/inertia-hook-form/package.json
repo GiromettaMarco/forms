@@ -1,0 +1,60 @@
+{
+  "name": "@gmcode/inertia-hook-form",
+  "version": "0.0.1",
+  "description": "Inertia form with client-side validations powered by react-hook-form.",
+  "keywords": [
+    "inertiajs",
+    "react",
+    "react-hook-form",
+    "typescript",
+    "validations"
+  ],
+  "homepage": "https://github.com/GiromettaMarco/inertia-hook-form#readme",
+  "bugs": {
+    "url": "https://github.com/GiromettaMarco/forms/issues"
+  },
+  "license": "MIT",
+  "author": "Marco Girometta",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GiromettaMarco/forms.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack",
+    "test": "vp test run --coverage && badge",
+    "test:ui": "vp test watch --browser.headless=false --standalone"
+  },
+  "dependencies": {
+    "@gmcode/tsv-hookform": "workspace:*",
+    "@gmcode/tsv-input": "workspace:*",
+    "react-hook-form": "catalog:"
+  },
+  "devDependencies": {
+    "@repo/badge": "workspace:*",
+    "@repo/mock-inertia": "workspace:*",
+    "@repo/typescript": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "msw": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:",
+    "vitest-browser-react": "catalog:"
+  },
+  "peerDependencies": {
+    "@inertiajs/core": "catalog:",
+    "@inertiajs/react": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  }
+}
