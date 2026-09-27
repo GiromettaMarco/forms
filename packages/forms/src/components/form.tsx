@@ -1,6 +1,6 @@
 import { cn, flash } from '@gmcode/react-ui'
 import { type InferSchema, useTsvResolver } from '@gmcode/tsv-hookform'
-import type { Ruleset } from '@gmcode/tsv-input'
+import type { Ruleset, Schema } from '@gmcode/tsv-input'
 import type {
   CancelTokenCallback,
   Errors,
@@ -19,9 +19,8 @@ import type {
   Path,
   UseFormReturn
 } from 'react-hook-form'
-import { useForm as userReactForm } from 'react-hook-form'
+import { useForm as useReactForm } from 'react-hook-form'
 import { ErrorMonitor } from '@/components/error-monitor'
-import type { Schema } from '@/index'
 import type { ErrorData, RouteDefinition } from '@/types'
 
 type RenderFN<TValues extends FieldValues> = ({
@@ -112,7 +111,7 @@ export function Form<
   ) as DefaultValues<TValues>
 
   // React Hook Form
-  const reactForm = userReactForm<TValues>({
+  const reactForm = useReactForm<TValues>({
     defaultValues,
     resolver: useTsvResolver(schema)
   })
@@ -190,13 +189,11 @@ export function Form<
       onSubmit={reactForm.handleSubmit(onSubmit)}
       {...props}
     >
-      <>
-        {children({
-          errors: inertiaForm.errors,
-          form: reactForm,
-          loading: inertiaForm.processing
-        })}
-      </>
+      {children({
+        errors: inertiaForm.errors,
+        form: reactForm,
+        loading: inertiaForm.processing
+      })}
 
       {displayRootError === 'monitor' && <ErrorMonitor error={rootError} />}
     </form>
