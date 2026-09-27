@@ -1,5 +1,7 @@
 # @gmcode/forms
 
+[![npm](https://img.shields.io/npm/v/@gmcode/forms)](https://npm.im/@gmcode/forms)
+
 Form and input components with validations, i18n, tailwind theming and built-in inertia form.
 
 ## Requirements
