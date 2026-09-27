@@ -37,6 +37,7 @@
     "test:ui": "vp test watch --browser.headless=false --standalone"
   },
   "dependencies": {
+    "@gmcode/inertia-hook-form": "workspace:*",
     "@gmcode/react-ui": "workspace:*",
     "@gmcode/tsv-hookform": "workspace:*",
     "@gmcode/tsv-input": "workspace:*",
