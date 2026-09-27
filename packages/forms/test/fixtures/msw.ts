@@ -5,7 +5,6 @@ import {
   http
 } from 'msw'
 
-//#region MSW
 export const formRoute = {
   method: 'post' as const,
   url: 'forms'
