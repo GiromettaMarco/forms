@@ -1,23 +1,17 @@
 import { InputRule, type inputRuleMessages } from '@/rules/input-rule'
 
-type OptionalDefaultTrue<TOptional extends boolean | undefined> =
-  TOptional extends false ? false : true | undefined
-
-interface InputCheckboxOptions<
-  TOptional extends boolean | undefined,
-  TMessages extends typeof inputRuleMessages = typeof inputRuleMessages
-> {
+interface InputCheckboxOptions {
   /**
    * Error messages.
    */
-  messages?: Partial<TMessages>
+  messages?: Partial<typeof inputRuleMessages>
 
   /**
    * If true, falsy values will pass validation.
    *
    * @defaultValue `true`
    */
-  optional?: TOptional
+  optional?: boolean
 }
 
 /**
@@ -25,9 +19,7 @@ interface InputCheckboxOptions<
  *
  * Converts any value to a string and is optional by default.
  */
-export class InputCheckboxRule<
-  TOptional extends boolean | undefined = undefined
-> extends InputRule<OptionalDefaultTrue<TOptional>> {
+export class InputCheckboxRule extends InputRule {
   /**
    * If true, falsy values will pass validation.
    *
@@ -35,10 +27,7 @@ export class InputCheckboxRule<
    */
   optional: boolean
 
-  constructor({
-    messages,
-    optional = true
-  }: InputCheckboxOptions<TOptional> = {}) {
+  constructor({ messages, optional = true }: InputCheckboxOptions = {}) {
     super({ messages })
 
     this.optional = optional

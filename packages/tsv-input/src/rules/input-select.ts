@@ -10,10 +10,9 @@ const defaultMessages = {
   missing: 'missing'
 }
 
-interface InputSelectOptions<
-  TValue extends string,
-  TOptional extends boolean | undefined
-> extends InputRuleOptions<TOptional, typeof defaultMessages> {
+interface InputSelectOptions<TValue extends string> extends InputRuleOptions<
+  typeof defaultMessages
+> {
   /**
    * Accepted values.
    */
@@ -23,10 +22,7 @@ interface InputSelectOptions<
 /**
  * Validation for an HTML input select field.
  */
-export class InputSelectRule<
-  TOptions extends string,
-  TOptional extends boolean | undefined = undefined
-> extends InputRule<TOptional> {
+export class InputSelectRule<TOptions extends string> extends InputRule {
   /**
    * Error messages.
    */
@@ -37,11 +33,7 @@ export class InputSelectRule<
    */
   options: Array<TOptions>
 
-  constructor({
-    messages,
-    optional,
-    options
-  }: InputSelectOptions<TOptions, TOptional>) {
+  constructor({ messages, optional, options }: InputSelectOptions<TOptions>) {
     super({ optional })
 
     this.messages = { ...defaultMessages, ...messages }

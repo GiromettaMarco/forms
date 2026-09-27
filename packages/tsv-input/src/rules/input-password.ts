@@ -15,9 +15,9 @@ const defaultMessages = {
   minChars: 'minChars'
 }
 
-interface InputPasswordOptions<
-  TOptional extends boolean | undefined
-> extends InputRuleOptions<TOptional, typeof defaultMessages> {
+interface InputPasswordOptions extends InputRuleOptions<
+  typeof defaultMessages
+> {
   /**
    * Require at least one uppercase and one lowercase letter.
    *
@@ -57,9 +57,7 @@ interface InputPasswordOptions<
 /**
  * Validation for an HTML input password field.
  */
-export class InputPasswordRule<
-  TOptional extends boolean | undefined = undefined
-> extends InputRule<TOptional> {
+export class InputPasswordRule extends InputRule {
   /**
    * Require at least one uppercase and one lowercase letter.
    *
@@ -108,7 +106,7 @@ export class InputPasswordRule<
     messages,
     minChars = 12,
     optional
-  }: InputPasswordOptions<TOptional> = {}) {
+  }: InputPasswordOptions = {}) {
     super({ optional })
 
     this.messages = { ...defaultMessages, ...messages }

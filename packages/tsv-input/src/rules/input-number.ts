@@ -13,9 +13,7 @@ const defaultMessages = {
   number: 'number'
 }
 
-interface InputNumberOptions<
-  TOptional extends boolean | undefined
-> extends InputRuleOptions<TOptional, typeof defaultMessages> {
+interface InputNumberOptions extends InputRuleOptions<typeof defaultMessages> {
   /**
    * If true, value must be an integer.
    *
@@ -41,9 +39,7 @@ interface InputNumberOptions<
 /**
  * Validation for an HTML input number field.
  */
-export class InputNumberRule<
-  TOptional extends boolean | undefined = undefined
-> extends InputRule<TOptional> {
+export class InputNumberRule extends InputRule {
   /**
    * If true, value must be an integer.
    *
@@ -76,7 +72,7 @@ export class InputNumberRule<
     messages,
     minValue = 0,
     optional
-  }: InputNumberOptions<TOptional> = {}) {
+  }: InputNumberOptions = {}) {
     super({ optional })
 
     this.messages = { ...defaultMessages, ...messages }

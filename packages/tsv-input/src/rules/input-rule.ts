@@ -4,11 +4,7 @@ export const inputRuleMessages = {
   required: 'required'
 }
 
-export type InputRuleSanitized<TOptional extends boolean | undefined> =
-  TOptional extends true ? string | null : string
-
 export interface InputRuleOptions<
-  TOptional extends boolean | undefined,
   TMessages extends typeof inputRuleMessages = typeof inputRuleMessages
 > {
   /**
@@ -21,15 +17,13 @@ export interface InputRuleOptions<
    *
    * @defaultValue `false`
    */
-  optional?: TOptional
+  optional?: boolean
 }
 
 /**
  * Preset class for form field validation rules.
  */
-export class InputRule<
-  TOptional extends boolean | undefined = undefined
-> extends BasicRule<InputRuleSanitized<TOptional>> {
+export class InputRule extends BasicRule<string> {
   /**
    * Error messages.
    */
@@ -42,10 +36,7 @@ export class InputRule<
    */
   optional: boolean
 
-  constructor({
-    messages,
-    optional = false
-  }: InputRuleOptions<TOptional> = {}) {
+  constructor({ messages, optional = false }: InputRuleOptions = {}) {
     super()
 
     this.messages = { ...inputRuleMessages, ...messages }
@@ -53,12 +44,12 @@ export class InputRule<
     this.optional = optional
   }
 
-  sanitize(value: unknown): string | null {
+  sanitize(value: unknown): string {
     // oxlint-disable-next-line typescript/no-base-to-string
-    return value ? String(value).trim() : null
+    return value ? String(value).trim() : ''
   }
 
-  test(value: string | null): true | Message {
+  test(value: string): true | Message {
     // Falsy
     if (!value) {
       return this.isFalsyResponse()

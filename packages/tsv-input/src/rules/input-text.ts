@@ -11,9 +11,7 @@ const defaultMessages = {
   minChars: 'minChars'
 }
 
-interface InputTextOptions<
-  TOptional extends boolean | undefined
-> extends InputRuleOptions<TOptional, typeof defaultMessages> {
+interface InputTextOptions extends InputRuleOptions<typeof defaultMessages> {
   /**
    * Maximum string length. `null` for no check.
    *
@@ -32,9 +30,7 @@ interface InputTextOptions<
 /**
  * Validation for an HTML input text field.
  */
-export class InputTextRule<
-  TOptional extends boolean | undefined = undefined
-> extends InputRule<TOptional> {
+export class InputTextRule extends InputRule {
   /**
    * Maximum string length. `null` for no check.
    *
@@ -59,7 +55,7 @@ export class InputTextRule<
     messages,
     minChars = null,
     optional
-  }: InputTextOptions<TOptional> = {}) {
+  }: InputTextOptions = {}) {
     super({ optional })
 
     this.messages = { ...defaultMessages, ...messages }

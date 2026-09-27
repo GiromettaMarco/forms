@@ -12,9 +12,7 @@ const defaultMessages = {
   maxChars: 'maxChars'
 }
 
-interface InputEmailOptions<
-  TOptional extends boolean | undefined
-> extends InputRuleOptions<TOptional, typeof defaultMessages> {
+interface InputEmailOptions extends InputRuleOptions<typeof defaultMessages> {
   /**
    * Maximum string length. `null` for no check.
    *
@@ -26,9 +24,7 @@ interface InputEmailOptions<
 /**
  * Validation for an HTML input email field.
  */
-export class InputEmailRule<
-  TOptional extends boolean | undefined = undefined
-> extends InputRule<TOptional> {
+export class InputEmailRule extends InputRule {
   /**
    * Maximum string length. `null` for no check.
    *
@@ -41,11 +37,7 @@ export class InputEmailRule<
    */
   messages: typeof defaultMessages
 
-  constructor({
-    maxChars = 255,
-    messages,
-    optional
-  }: InputEmailOptions<TOptional> = {}) {
+  constructor({ maxChars = 255, messages, optional }: InputEmailOptions = {}) {
     super({ optional })
 
     this.messages = { ...defaultMessages, ...messages }

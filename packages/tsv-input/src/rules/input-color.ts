@@ -14,9 +14,7 @@ const defaultMessages = {
 /**
  * Validation for an HTML input color field.
  */
-export class InputColorRule<
-  TOptional extends boolean | undefined = undefined
-> extends InputRule<TOptional> {
+export class InputColorRule extends InputRule {
   /**
    * Error messages.
    */
@@ -25,7 +23,7 @@ export class InputColorRule<
   constructor({
     messages,
     optional
-  }: InputRuleOptions<TOptional, typeof defaultMessages> = {}) {
+  }: InputRuleOptions<typeof defaultMessages> = {}) {
     super({ optional })
 
     this.messages = { ...defaultMessages, ...messages }
