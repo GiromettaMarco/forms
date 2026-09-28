@@ -1,6 +1,6 @@
 {
   "name": "@gmcode/inertia-hook-form",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Inertia form with client-side validations powered by react-hook-form.",
   "keywords": [
     "inertiajs",

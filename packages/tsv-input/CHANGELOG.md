@@ -1,5 +1,11 @@
 # @gmcode/tsv-input
 
+## 0.4.0
+
+### Minor Changes
+
+- 3ba5e96: Sanitize falsy values to an empty string
+
 ## 0.3.3
 
 ### Patch Changes

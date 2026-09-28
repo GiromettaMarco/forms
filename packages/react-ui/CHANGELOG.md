@@ -1,5 +1,11 @@
 # @gmcode/react-ui
 
+## 0.4.2
+
+### Patch Changes
+
+- 1801a43: Update radix-ui
+
 ## 0.4.1
 
 ### Patch Changes

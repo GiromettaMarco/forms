@@ -1,5 +1,24 @@
 # @gmcode/forms
 
+## 0.3.0
+
+### Minor Changes
+
+- 23a5d8b: Remove Method type
+
+### Patch Changes
+
+- 1801a43: Update radix-ui
+- 44871f7: Outsource form logic to inertia-hook-form
+- 329b060: Update Form component code
+- a582f8d: Move i18next modules in peer dependencies
+- Updated dependencies [1801a43]
+- Updated dependencies [3ba5e96]
+- Updated dependencies [5a9024b]
+  - @gmcode/react-ui@0.4.2
+  - @gmcode/tsv-input@0.4.0
+  - @gmcode/inertia-hook-form@0.0.2
+
 ## 0.2.2
 
 ### Patch Changes
