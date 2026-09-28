@@ -75,6 +75,7 @@ export default defineConfig({
       {
         files: [
           'packages/forms/**',
+          'packages/inertia-hook-form/**',
           'packages/react-ui/**',
           'packages/tsv-hookform/**'
         ],
