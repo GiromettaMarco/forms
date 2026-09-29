@@ -73,7 +73,9 @@ export function InfoCheckboxField<
             />
 
             <div className="grid gap-1.5 font-normal">
-              <p className="text-sm leading-none font-medium">{label}</p>
+              {label && (
+                <p className="text-sm leading-none font-medium">{label}</p>
+              )}
               {text ? (
                 <p className="text-sm text-muted-foreground">{text}</p>
               ) : (
