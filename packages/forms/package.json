@@ -28,7 +28,9 @@
   "sideEffects": false,
   "exports": {
     ".": "./dist/index.mjs",
+    "./hookform": "./dist/hookform.mjs",
     "./locales": "./dist/locales.mjs",
+    "./tsv": "./dist/tsv.mjs",
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -40,7 +42,6 @@
     "@gmcode/inertia-hook-form": "workspace:*",
     "@gmcode/react-ui": "workspace:*",
     "@gmcode/tsv-hookform": "workspace:*",
-    "@gmcode/tsv-input": "workspace:*",
     "lucide-react": "catalog:",
     "radix-ui": "catalog:",
     "react-day-picker": "catalog:",

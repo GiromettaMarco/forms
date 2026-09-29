@@ -1,6 +1,10 @@
 import { useForm, type RouteDefinition } from '@gmcode/inertia-hook-form'
+import type {
+  Ruleset,
+  SanitizedValues,
+  Schema
+} from '@gmcode/inertia-hook-form/tsv'
 import { cn, flash } from '@gmcode/react-ui'
-import type { Ruleset, SanitizedValues, Schema } from '@gmcode/tsv-input'
 import type {
   CancelTokenCallback,
   Errors,

@@ -1,4 +1,4 @@
-import { InputNumberRule, Schema } from '@gmcode/tsv-input'
+import { InputNumberRule, Schema } from '@gmcode/inertia-hook-form/tsv'
 import { test } from '@repo/msw-fixture'
 import { expect, vi } from 'vite-plus/test'
 import { Form } from '@/components/form'

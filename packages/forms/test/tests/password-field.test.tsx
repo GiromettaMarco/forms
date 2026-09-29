@@ -3,7 +3,7 @@ import {
   InputTextRule,
   Message,
   Schema
-} from '@gmcode/tsv-input'
+} from '@gmcode/inertia-hook-form/tsv'
 import { test } from '@repo/msw-fixture'
 import { expect, vi } from 'vite-plus/test'
 import { Form } from '@/components/form'

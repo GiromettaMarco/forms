@@ -1,4 +1,4 @@
-import { InputCheckboxRule, Schema } from '@gmcode/tsv-input'
+import { InputCheckboxRule, Schema } from '@gmcode/inertia-hook-form/tsv'
 import { test } from '@repo/msw-fixture'
 import { expect, vi } from 'vite-plus/test'
 import { CheckboxField } from '@/components/checkbox-field'

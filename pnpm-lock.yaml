@@ -409,9 +409,6 @@ importers:
       '@gmcode/tsv-hookform':
         specifier: workspace:*
         version: link:../tsv-hookform
-      '@gmcode/tsv-input':
-        specifier: workspace:*
-        version: link:../tsv-input
       '@inertiajs/core':
         specifier: 'catalog:'
         version: 3.5.0(axios@1.18.1(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0))

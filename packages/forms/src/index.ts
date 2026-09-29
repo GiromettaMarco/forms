@@ -1,6 +1,3 @@
-import i18n from '@/i18n'
-
-export { i18n }
 export { CalendarField } from '@/components/calendar-field'
 export { CheckboxField } from '@/components/checkbox-field'
 export { EmailField } from '@/components/email-field'
@@ -18,26 +15,5 @@ export { Submit } from '@/components/submit'
 export { SwitchField } from '@/components/switch-field'
 export { TextField } from '@/components/text-field'
 export { TextareaField } from '@/components/textarea-field'
-export {
-  InputCheckboxRule,
-  InputColorRule,
-  InputEmailRule,
-  InputNumberRule,
-  InputPasswordRule,
-  InputRule,
-  InputSelectRule,
-  InputTextRule,
-  Message,
-  type MessageParams,
-  type Ruleset,
-  type Sanitized,
-  type SanitizedValues,
-  Schema,
-  type SchemaOptions,
-  type SchemaRule,
-  type SchemaValues
-} from '@gmcode/tsv-input'
-export { type InferSchema, useTsvResolver } from '@gmcode/tsv-hookform'
-export type { FieldValues } from 'react-hook-form'
 export type { Option } from '@/types'
 export type { ErrorData, RouteDefinition } from '@gmcode/inertia-hook-form'
