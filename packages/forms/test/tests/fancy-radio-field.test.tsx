@@ -1,12 +1,13 @@
 import { InputSelectRule, Schema } from '@gmcode/tsv-input'
+import { test } from '@repo/msw-fixture'
 import { Monitor, Moon, Sun } from 'lucide-react'
 import { expect, vi } from 'vite-plus/test'
 import { FancyRadioField } from '@/components/fancy-radio-field'
 import { Form } from '@/components/form'
 import { Submit } from '@/components/submit'
-import { formRoute, inertiaResponseSuccess } from '../fixtures/msw'
 import { render } from '../fixtures/render'
-import { test } from '../fixtures/test'
+import { inertiaResponseSuccess } from '../mocks/handlers'
+import { formRoute } from '../mocks/routes'
 
 const onSuccess = vi.fn()
 

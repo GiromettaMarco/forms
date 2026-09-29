@@ -1,11 +1,12 @@
 import { InputRule, Schema } from '@gmcode/tsv-input'
+import { test } from '@repo/msw-fixture'
 import { expect, vi } from 'vite-plus/test'
 import { Form } from '@/components/form'
 import { HiddenField } from '@/components/hidden-field'
 import { Submit } from '@/components/submit'
-import { formRoute, inertiaResponseSuccess } from '../fixtures/msw'
 import { render } from '../fixtures/render'
-import { test } from '../fixtures/test'
+import { inertiaResponseSuccess } from '../mocks/handlers'
+import { formRoute } from '../mocks/routes'
 
 const onSuccess = vi.fn()
 

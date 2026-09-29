@@ -1,7 +1,7 @@
+import { test } from '@repo/msw-fixture'
 import { expect, vi } from 'vite-plus/test'
 import { render } from 'vitest-browser-react'
 import { Form } from '../components/form'
-import { test } from '../fixtures/test'
 import {
   inertiaResponseFiledError,
   inertiaResponseRootError,

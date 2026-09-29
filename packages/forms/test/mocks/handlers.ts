@@ -5,11 +5,6 @@ import {
   http
 } from 'msw'
 
-export const formRoute = {
-  method: 'post' as const,
-  url: 'forms'
-}
-
 function getResponseBody(props: object = {}): JsonBodyType {
   return {
     component: 'forms',

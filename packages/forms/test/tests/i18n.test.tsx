@@ -1,12 +1,13 @@
 import { InputTextRule, Schema } from '@gmcode/tsv-input'
+import { test } from '@repo/msw-fixture'
 import { expect, vi } from 'vite-plus/test'
 import { ErrorMonitor } from '@/components/error-monitor'
 import { Form } from '@/components/form'
 import { Submit } from '@/components/submit'
 import { TextField } from '@/components/text-field'
-import { formRoute, inertiaResponseSuccess } from '../fixtures/msw'
 import { render } from '../fixtures/render'
-import { test } from '../fixtures/test'
+import { inertiaResponseSuccess } from '../mocks/handlers'
+import { formRoute } from '../mocks/routes'
 import i18n from '../providers/i18n'
 
 function Default() {

@@ -50,6 +50,7 @@
   "devDependencies": {
     "@repo/badge": "workspace:*",
     "@repo/mock-inertia": "workspace:*",
+    "@repo/msw-fixture": "workspace:*",
     "@repo/themes": "workspace:*",
     "@repo/typescript": "workspace:*",
     "@types/react": "catalog:",

@@ -3,6 +3,9 @@ import { test as testBase } from 'vite-plus/test'
 
 const worker = setupWorker()
 
+/** Keep track of the state of the worker */
+let started = false
+
 /**
  * Vitest test function extended with msw browser worker.
  *
@@ -12,19 +15,21 @@ export const test = testBase.extend<{ worker: SetupWorker }>({
   worker: [
     // oxlint-disable-next-line no-empty-pattern
     async ({}, use) => {
-      // Start the worker before the test.
-      await worker.start({ onUnhandledRequest: 'error', quiet: true })
+      // We remove handlers at the start instead of the end of the test, so we
+      // can keep working with handlers even in UI mode.
+      worker.resetHandlers()
+
+      // Start the worker if not already.
+      if (!started) {
+        await worker.start({ onUnhandledRequest: 'error', quiet: true })
+        started = true
+      }
 
       // Expose the worker object on the test's context.
       await use(worker)
 
-      // Remove any request handlers added in individual test cases.
-      // This prevents them from affecting unrelated tests.
-      worker.resetHandlers()
-
-      // Stop the worker to avoid '[MSW] Found a redundant "worker.start()"
-      // call.' warning on the next test start.
-      worker.stop()
+      // We purposely omit stopping the worker.
+      // @see https://mswjs.io/docs/recipes/vitest-browser-mode#example
     },
     {
       auto: true
