@@ -16,4 +16,8 @@ export { SwitchField } from '@/components/switch-field'
 export { TextField } from '@/components/text-field'
 export { TextareaField } from '@/components/textarea-field'
 export type { Option } from '@/types'
-export type { ErrorData, RouteDefinition } from '@gmcode/inertia-hook-form'
+export {
+  type ErrorData,
+  type RouteDefinition,
+  useForm
+} from '@gmcode/inertia-hook-form'
