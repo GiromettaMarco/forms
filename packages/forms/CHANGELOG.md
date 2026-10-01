@@ -1,5 +1,12 @@
 # @gmcode/forms
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [852decb]
+  - @gmcode/inertia-hook-form@0.0.4
+
 ## 0.4.0
 
 ### Minor Changes
