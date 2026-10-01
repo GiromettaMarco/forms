@@ -1,5 +1,22 @@
 # @gmcode/forms
 
+## 0.4.0
+
+### Minor Changes
+
+- 43dc56c: Organize the module exports and remove the deprecated i18n instance
+
+### Patch Changes
+
+- 81efba4: Upgrade vite-plus to the new stable v1.0.0
+- 544c65f: Update the InfoCheckboxField component
+- 7deb1aa: Re-export the useForm hook from inertia-hook-form
+- Updated dependencies [4350a23]
+- Updated dependencies [81efba4]
+  - @gmcode/inertia-hook-form@0.0.3
+  - @gmcode/react-ui@0.4.3
+  - @gmcode/tsv-hookform@0.1.9
+
 ## 0.3.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @gmcode/tsv-input
 
+## 0.4.1
+
+### Patch Changes
+
+- 81efba4: Upgrade vite-plus to the new stable v1.0.0
+- Updated dependencies [81efba4]
+  - @gmcode/tsv-core@0.2.4
+
 ## 0.4.0
 
 ### Minor Changes
