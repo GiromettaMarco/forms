@@ -53,10 +53,10 @@ test('CalendarField component', async ({ worker }) => {
   // Render
   const screen = await render(<FormAndSchema />)
 
-  const button = screen.getByLabelText('1').first()
+  const button = screen.getByText('1', { exact: true }).first()
   await button.click()
   await button.click()
-  await screen.getByLabelText('2').first().click()
+  await screen.getByText('2', { exact: true }).first().click()
 
   // Submit
   await screen.getByText('Submit').click()
@@ -68,5 +68,5 @@ test('CalendarField component', async ({ worker }) => {
 test('CalendarField component disabled', async () => {
   const screen = await render(<FormAndSchema disabled />)
 
-  expect(screen.getByLabelText('1').first()).toBeDisabled()
+  expect(screen.getByText('1', { exact: true }).first()).toBeDisabled()
 })

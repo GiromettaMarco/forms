@@ -134,9 +134,11 @@ export default defineConfig({
         dependsOn: ['build']
       },
       test: {
+        cache: {
+          input: [{ auto: true }, '!**/coverage/.tmp/**']
+        },
         command: 'vp run -r test',
-        dependsOn: ['build'],
-        input: [{ auto: true }, '!**/coverage/.tmp/**']
+        dependsOn: ['build']
       }
     }
   },

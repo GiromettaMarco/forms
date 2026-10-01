@@ -70,9 +70,9 @@ test('NumericField component with UI', async ({ worker }) => {
   )
 
   const input = screen.getByLabelText('Numeric field with UI')
-  const minus = screen.getByLabelText('Decrease')
-  const plus = screen.getByLabelText('Increase')
-  const submit = screen.getByText('Submit')
+  const minus = screen.getByRole('button', { name: 'Decrease' })
+  const plus = screen.getByRole('button', { name: 'Increase' })
+  const submit = screen.getByRole('button', { name: 'Submit' })
 
   await input.fill('10')
   await submit.click()
@@ -81,18 +81,18 @@ test('NumericField component with UI', async ({ worker }) => {
   ).toBeInTheDocument()
 
   await input.fill('a')
-  await plus.click(plus)
+  await plus.click()
   expect(input).toHaveValue('')
   expect(screen.getByText('The field is required.')).toBeInTheDocument()
 
   await input.fill('4')
-  await plus.click(plus)
-  await plus.click(plus)
+  await plus.click()
+  await plus.click()
   expect(input).toHaveValue('5')
 
   await input.fill('1')
-  await minus.click(minus)
-  await minus.click(minus)
+  await minus.click()
+  await minus.click()
   expect(input).toHaveValue('0')
 
   // Submit

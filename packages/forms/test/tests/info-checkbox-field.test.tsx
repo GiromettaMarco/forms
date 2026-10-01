@@ -87,7 +87,7 @@ test('InfoCheckboxField component with children', async ({ worker }) => {
     </FormAndSchema>
   )
 
-  await screen.getByLabelText('I have read and agree').click()
+  await screen.getByLabelText('I have read and agree', { exact: false }).click()
   expect(onCheckedChange).toHaveBeenCalledOnce()
 
   // Submit

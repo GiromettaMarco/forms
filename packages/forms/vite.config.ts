@@ -15,7 +15,6 @@ export default mergeConfig(reactConfig, {
     alias: {
       '@inertiajs/core': import.meta.resolve('@repo/mock-inertia/core.js')
     },
-    clearMocks: true,
     name: 'forms',
     setupFiles: ['./test/vitest.setup.ts'],
     testTimeout: 5_000
