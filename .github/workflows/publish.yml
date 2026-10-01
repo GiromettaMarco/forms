@@ -89,13 +89,7 @@ jobs:
           cache: false # recommended: avoid cache poisoning
 
       - name: Build packages
-        run: |
-          pnpm --filter tsv-core build
-          pnpm --filter tsv-advanced build
-          pnpm --filter tsv-input build
-          pnpm --filter tsv-hookform build
-          pnpm --filter react-ui build
-          pnpm --filter forms build
+        run: pnpm --filter "./packages/**" run build
 
       - name: Pack packages
         id: pack
