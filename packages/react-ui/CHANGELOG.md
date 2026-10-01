@@ -1,5 +1,11 @@
 # @gmcode/react-ui
 
+## 0.4.3
+
+### Patch Changes
+
+- 81efba4: Upgrade vite-plus to the new stable v1.0.0
+
 ## 0.4.2
 
 ### Patch Changes
