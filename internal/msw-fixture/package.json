@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "msw": "catalog:",
-    "vite-plus": "catalog:",
-    "vitest": "catalog:"
+    "vite-plus": "catalog:"
+  },
+  "inlinedDependencies": {
+    "tinybench": "6.2.2",
+    "vitest": "5.0.4"
   }
 }
