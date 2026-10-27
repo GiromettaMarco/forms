@@ -26,6 +26,9 @@ export function Toaster({ className, ...props }: ToasterProps) {
           '--normal-text': 'var(--popover-foreground)'
         } as React.CSSProperties
       }
+      toastOptions={{
+        descriptionClassName: '!text-inherit'
+      }}
       {...props}
     />
   )
