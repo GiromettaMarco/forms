@@ -19,8 +19,8 @@ catalogMode: prefer
 catalog:
   '@babel/core': ^8.0.9
   '@changesets/cli': 3.0.3
-  '@inertiajs/core': ^3.5.0
-  '@inertiajs/react': ^3.5.0
+  '@inertiajs/core': ^3.9.1
+  '@inertiajs/react': ^3.9.1
   '@rolldown/plugin-babel': ^0.2.4
   '@tailwindcss/vite': ^4.3.3
   '@testing-library/dom': ^10.4.2

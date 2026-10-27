@@ -1,4 +1,4 @@
-// '@inertiajs/core': '3.5.0'
+// '@inertiajs/core': '3.9.1'
 
 // src/router.ts
 import { cloneDeep as cloneDeep4, isEqual as isEqual3 } from "es-toolkit";
@@ -52,10 +52,12 @@ import { get as get4 } from "es-toolkit/compat";
 // src/debounce.ts
 function debounce(fn, delay) {
   let timeoutID;
-  return function(...args) {
+  const debounced = function(...args) {
     clearTimeout(timeoutID);
     timeoutID = setTimeout(() => fn.apply(this, args), delay);
   };
+  debounced.cancel = () => clearTimeout(timeoutID);
+  return debounced;
 }
 
 // src/events.ts
@@ -80,8 +82,8 @@ var fireHttpExceptionEvent = (response) => {
 var fireBeforeUpdateEvent = (page2) => {
   return fireEvent("beforeUpdate", { detail: { page: page2 } });
 };
-var fireNavigateEvent = (page2, { cached = false, visitId } = {}) => {
-  return fireEvent("navigate", { detail: { page: page2, cached, visitId } });
+var fireNavigateEvent = (page2, { type, cached = false, visitId }) => {
+  return fireEvent("navigate", { detail: { page: page2, type, cached, visitId } });
 };
 var fireClientVisitEvent = (page2, { replace, visitId }) => {
   return fireEvent("clientVisit", { detail: { page: page2, replace, visitId } });
@@ -104,9 +106,86 @@ var firePrefetchingEvent = (visit) => {
 var fireFlashEvent = (flash) => {
   return fireEvent("flash", { detail: { flash } });
 };
+var fireLocationEvent = (url, versionChange) => {
+  return fireEvent("location", { cancelable: true, detail: { url, versionChange } });
+};
 
 // src/history.ts
 import { cloneDeep as cloneDeep3, isEqual } from "es-toolkit";
+
+// src/json.ts
+var bigIntMarker = "$bigint";
+var replaceBigInt = (_key, value) => {
+  if (typeof value === "bigint") {
+    return { [bigIntMarker]: value.toString() };
+  }
+  return value;
+};
+var replaceBigIntWithDigits = (_key, value) => {
+  if (typeof value === "bigint") {
+    return value.toString();
+  }
+  return value;
+};
+function parsePage(text) {
+  const page2 = JSON.parse(text);
+  if (page2?.preserveBigIntegers === true && text.includes(`"${bigIntMarker}"`)) {
+    reviveBigIntegers(page2);
+  }
+  return page2;
+}
+function reviveBigIntegers(value) {
+  if (Array.isArray(value)) {
+    for (let index = 0; index < value.length; index++) {
+      value[index] = reviveBigInteger(value[index]);
+    }
+    return;
+  }
+  for (const key of Object.keys(value)) {
+    value[key] = reviveBigInteger(value[key]);
+  }
+}
+function reviveBigInteger(value) {
+  if (value === null || typeof value !== "object") {
+    return value;
+  }
+  if (typeof value[bigIntMarker] === "string") {
+    return BigInt(value[bigIntMarker]);
+  }
+  reviveBigIntegers(value);
+  return value;
+}
+function stringifyPage(page2) {
+  return stringify(page2, () => ({ ...page2, preserveBigIntegers: true }), replaceBigInt);
+}
+function stringifyJson(value) {
+  return stringify(value, () => value, replaceBigIntWithDigits);
+}
+function stringify(value, retryValue, replacer) {
+  try {
+    return JSON.stringify(value);
+  } catch (error) {
+    try {
+      return JSON.stringify(retryValue(), replacer);
+    } catch {
+      throw error;
+    }
+  }
+}
+function containsBigInt(value, seen = /* @__PURE__ */ new WeakSet()) {
+  if (typeof value === "bigint") {
+    return true;
+  }
+  if (value === null || typeof value !== "object") {
+    return false;
+  }
+  if (seen.has(value)) {
+    return false;
+  }
+  seen.add(value);
+  const values = Array.isArray(value) ? value : Object.values(value);
+  return values.some((nested) => containsBigInt(nested, seen));
+}
 
 // src/sessionStorage.ts
 var SessionStorage = class {
@@ -156,30 +235,38 @@ var SessionStorage = class {
 };
 
 // src/encryption.ts
+var ivLength = 12;
 var encryptHistory = async (data) => {
   if (typeof window === "undefined") {
     throw new Error("Unable to encrypt history");
   }
-  const iv = getIv();
+  if (SessionStorage.exists(historySessionStorageKeys.iv)) {
+    SessionStorage.remove(historySessionStorageKeys.key);
+    SessionStorage.remove(historySessionStorageKeys.iv);
+  }
   const storedKey = await getKeyFromSessionStorage();
   const key = await getOrCreateKey(storedKey);
   if (!key) {
     throw new Error("Unable to encrypt history");
   }
-  const encrypted = await encryptData(iv, key, data);
-  return encrypted;
+  const iv = window.crypto.getRandomValues(new Uint8Array(ivLength));
+  const encrypted = new Uint8Array(await encryptData(iv, key, data));
+  const entry = new Uint8Array(iv.length + encrypted.length);
+  entry.set(iv);
+  entry.set(encrypted, iv.length);
+  return entry.buffer;
 };
 var historySessionStorageKeys = {
   key: "historyKey",
   iv: "historyIv"
 };
 var decryptHistory = async (data) => {
-  const iv = getIv();
   const storedKey = await getKeyFromSessionStorage();
   if (!storedKey) {
     throw new Error("Unable to decrypt history");
   }
-  return await decryptData(iv, storedKey, data);
+  const entry = new Uint8Array(data);
+  return await decryptData(entry.subarray(0, ivLength), storedKey, entry.subarray(ivLength));
 };
 var encryptData = async (iv, key, data) => {
   if (typeof window === "undefined") {
@@ -190,7 +277,7 @@ var encryptData = async (iv, key, data) => {
     return Promise.resolve(data);
   }
   const textEncoder = new TextEncoder();
-  const str = JSON.stringify(data);
+  const str = stringifyPage(data);
   const encoded = new Uint8Array(str.length * 3);
   const result = textEncoder.encodeInto(str, encoded);
   return window.crypto.subtle.encrypt(
@@ -215,16 +302,7 @@ var decryptData = async (iv, key, data) => {
     key,
     data
   );
-  return JSON.parse(new TextDecoder().decode(decrypted));
-};
-var getIv = () => {
-  const ivString = SessionStorage.get(historySessionStorageKeys.iv);
-  if (ivString) {
-    return new Uint8Array(ivString);
-  }
-  const iv = window.crypto.getRandomValues(new Uint8Array(12));
-  SessionStorage.set(historySessionStorageKeys.iv, Array.from(iv));
-  return iv;
+  return parsePage(new TextDecoder().decode(decrypted));
 };
 var createKey = async () => {
   if (typeof window.crypto.subtle === "undefined") {
@@ -285,7 +363,42 @@ import { get as get3, set as set3 } from "es-toolkit/compat";
 import { cloneDeep } from "es-toolkit";
 import { get as get2 } from "es-toolkit/compat";
 
+// src/httpErrors.ts
+var HttpError = class extends Error {
+  code;
+  url;
+  constructor(message, code, url) {
+    super(url ? `${message} (${url})` : message);
+    this.name = "HttpError";
+    this.code = code;
+    this.url = url;
+  }
+};
+var HttpResponseError = class extends HttpError {
+  response;
+  constructor(message, response, url) {
+    super(message, "ERR_HTTP_RESPONSE", url);
+    this.name = "HttpResponseError";
+    this.response = response;
+  }
+};
+var HttpCancelledError = class extends HttpError {
+  constructor(message = "Request was cancelled", url) {
+    super(message, "ERR_CANCELLED", url);
+    this.name = "HttpCancelledError";
+  }
+};
+var HttpNetworkError = class extends HttpError {
+  cause;
+  constructor(message, url, cause) {
+    super(message, "ERR_NETWORK", url);
+    this.name = "HttpNetworkError";
+    this.cause = cause;
+  }
+};
+
 // src/objectUtils.ts
+import { toPath } from "es-toolkit/compat";
 var stripTopLevelUndefined = (obj) => {
   const result = {};
   for (const key of Object.keys(obj)) {
@@ -330,6 +443,22 @@ var compareValues = (value1, value2) => {
       return value1 === value2;
   }
 };
+var setPathPreservingIdentity = (target, path, value) => {
+  const keys = toPath(path);
+  if (keys.length === 0) {
+    return target;
+  }
+  const copyAlongPath = (node, depth) => {
+    if (depth === keys.length) {
+      return value;
+    }
+    const key = keys[depth];
+    const copy = Array.isArray(node) ? [...node] : node && typeof node === "object" ? { ...node } : /^(?:0|[1-9]\d*)$/.test(key) ? [] : {};
+    copy[key] = copyAlongPath(node?.[key], depth + 1);
+    return copy;
+  };
+  return copyAlongPath(target, 0);
+};
 
 // src/time.ts
 var conversionMap = {
@@ -367,18 +496,21 @@ var PrefetchedRequests = class {
       return Promise.resolve();
     }
     const [stale, prefetchExpiresIn] = this.extractStaleValues(cacheFor);
+    let cancelled = false;
     const promise = new Promise((resolve, reject) => {
       sendFunc({
         ...params,
         onCancel: () => {
+          cancelled = true;
           this.remove(params);
+          this.removeFromInFlight(params.id);
           params.onCancel();
-          reject();
+          reject(new HttpCancelledError());
         },
         onError: (error) => {
           this.remove(params);
           params.onError(error);
-          reject();
+          reject(error);
         },
         onPrefetching(visitParams) {
           params.onPrefetching(visitParams);
@@ -389,12 +521,15 @@ var PrefetchedRequests = class {
         onPrefetchResponse(response) {
           resolve(response);
         },
-        onPrefetchError(error) {
-          prefetchedRequests.removeFromInFlight(params);
+        onPrefetchError: (error) => {
+          this.removeFromInFlight(params.id);
           reject(error);
         }
       });
     }).then((response) => {
+      if (!this.isInFlight(params.id)) {
+        return response;
+      }
       this.remove(params);
       const pageResponse = response.getPageResponse();
       page.mergeOncePropsIntoResponse(pageResponse);
@@ -413,20 +548,28 @@ var PrefetchedRequests = class {
         params,
         oncePropExpiresIn ? Math.min(prefetchExpiresIn, oncePropExpiresIn) : prefetchExpiresIn
       );
-      this.removeFromInFlight(params);
+      this.removeFromInFlight(params.id);
       response.handlePrefetch();
       return response;
     });
-    this.inFlightRequests.push({
-      params: { ...params },
-      response: promise,
-      staleTimestamp: null,
-      inFlight: true
+    if (!cancelled) {
+      this.inFlightRequests.push({
+        params: { ...params },
+        response: promise,
+        staleTimestamp: null,
+        inFlight: true
+      });
+    }
+    return promise.catch((error) => {
+      this.removeFromInFlight(params.id);
+      if (!(error instanceof HttpCancelledError)) {
+        throw error;
+      }
     });
-    return promise;
   }
   removeAll() {
     this.cached = [];
+    this.inFlightRequests = [];
     this.removalTimers.forEach((removalTimer) => {
       clearTimeout(removalTimer.timer);
     });
@@ -443,9 +586,12 @@ var PrefetchedRequests = class {
     });
     this.clearTimer(params);
   }
-  removeFromInFlight(params) {
+  isInFlight(visitId) {
+    return this.inFlightRequests.some((prefetching) => prefetching.params.id === visitId);
+  }
+  removeFromInFlight(visitId) {
     this.inFlightRequests = this.inFlightRequests.filter((prefetching) => {
-      return !this.paramsAreEqual(prefetching.params, params);
+      return prefetching.params.id !== visitId;
     });
   }
   extractStaleValues(cacheFor) {
@@ -497,15 +643,25 @@ var PrefetchedRequests = class {
       ...params,
       cached: true
     };
-    return prefetched.response.then((response) => {
-      if (this.currentUseId !== id) {
-        return;
+    return prefetched.response.then(
+      (response) => {
+        if (this.currentUseId !== id) {
+          return;
+        }
+        response.mergeParams({ ...consumedParams, onPrefetched: () => {
+        } });
+        this.removeSingleUseItems(params);
+        return response.handle();
+      },
+      (error) => {
+        if (!(error instanceof HttpCancelledError)) {
+          throw error;
+        }
+        consumedParams.onCancel();
+        consumedParams.cancelled = true;
+        consumedParams.onFinish(consumedParams);
       }
-      response.mergeParams({ ...consumedParams, onPrefetched: () => {
-      } });
-      this.removeSingleUseItems(params);
-      return response.handle();
-    });
+    );
   }
   removeSingleUseItems(params) {
     this.cached = this.cached.filter((prefetched) => {
@@ -551,6 +707,8 @@ var PrefetchedRequests = class {
         "onCancel",
         "onSuccess",
         "onError",
+        "onHttpException",
+        "onNetworkError",
         "onFlash",
         "onPrefetched",
         "onCancelToken",
@@ -709,7 +867,7 @@ var getInitialPageFromDOM = (id) => {
   }
   const scriptEl = document.querySelector(`script[data-page="${id}"][type="application/json"]`);
   if (scriptEl?.textContent) {
-    return JSON.parse(scriptEl.textContent);
+    return parsePage(scriptEl.textContent);
   }
   return null;
 };
@@ -845,6 +1003,8 @@ function append(form, key, value, format) {
     return form.append(key, value);
   } else if (typeof value === "number") {
     return form.append(key, `${value}`);
+  } else if (typeof value === "bigint") {
+    return form.append(key, value.toString());
   } else if (value === null || value === void 0) {
     return form.append(key, "");
   }
@@ -866,7 +1026,7 @@ function parse(query) {
   });
   return result;
 }
-function stringify(data, arrayFormat) {
+function stringify2(data, arrayFormat) {
   const pairs = [];
   build(data, "", pairs, arrayFormat);
   return pairs.length ? "?" + pairs.join("&") : "";
@@ -965,7 +1125,7 @@ function mergeDataIntoQueryString(method, href, data, qsArrayFormat = "brackets"
   const url = new URL(href.toString(), typeof window === "undefined" ? "http://localhost" : window.location.toString());
   if (hasDataForQueryString) {
     const arrayFormat = hasIndices(url) ? "indices" : qsArrayFormat;
-    url.search = stringify({ ...parse(url.search), ...data }, arrayFormat);
+    url.search = stringify2({ ...parse(url.search), ...data }, arrayFormat);
   }
   return [
     [
@@ -1027,10 +1187,10 @@ var CurrentPage = class {
     sharedProps: {},
     url: '/',
     version: '0'
-  }
+  };
   // @MOCK disable swapComponent and resolveComponent methods
-  swapComponent = (args) => new Promise((resolve) => resolve())
-  resolveComponent = (component, page) => null
+  swapComponent = (args) => new Promise((resolve) => resolve());
+  resolveComponent = (component, page) => null;
   onFlashCallback;
   componentId = {};
   listeners = [];
@@ -1041,6 +1201,7 @@ var CurrentPage = class {
   optimisticBaseline = {};
   pendingOptimistics = [];
   optimisticCounter = 0;
+  confirmedOptimisticId = 0;
   init({
     initialPage,
     swapComponent,
@@ -1062,6 +1223,7 @@ var CurrentPage = class {
     preserveState = false,
     viewTransition = false,
     cached = false,
+    initialRender = false,
     visitId
   } = {}) {
     if (Object.keys(page2.deferredProps || {}).length) {
@@ -1078,6 +1240,7 @@ var CurrentPage = class {
     const componentId = this.componentId;
     if (page2.clearHistory) {
       history.clear();
+      prefetchedRequests.removeAll();
     }
     return this.resolve(page2.component, page2).then((component) => {
       if (componentId !== this.componentId) {
@@ -1089,6 +1252,7 @@ var CurrentPage = class {
       const scrollRegions = !isServer3 && preserveScroll ? Scroll.getScrollRegions() : [];
       replace = replace || isSameUrlWithoutHash(hrefToUrl(page2.url), location);
       const pageForHistory = { ...page2, flash: {} };
+      history.clearInitialState(history.rememberedState);
       return new Promise(
         (resolve) => replace ? history.replaceState(pageForHistory, resolve) : history.pushState(pageForHistory, resolve)
       ).then(() => {
@@ -1116,7 +1280,8 @@ var CurrentPage = class {
           component,
           page: page2,
           preserveState,
-          viewTransition
+          viewTransition,
+          initialRender
         }).then(() => {
           if (preserveScroll) {
             window.requestAnimationFrame(() => Scroll.restoreScrollRegions(scrollRegions));
@@ -1128,7 +1293,7 @@ var CurrentPage = class {
           }
           this.pendingDeferredProps = null;
           if (!replace) {
-            fireNavigateEvent(page2, { cached, visitId });
+            fireNavigateEvent(page2, { type: "visit", cached, visitId });
           }
         });
       });
@@ -1137,6 +1302,7 @@ var CurrentPage = class {
   setQuietly(page2, {
     preserveState = false
   } = {}) {
+    this.componentId = {};
     return this.resolve(page2.component, page2).then((component) => {
       this.page = page2;
       this.cleared = false;
@@ -1184,17 +1350,26 @@ var CurrentPage = class {
     component,
     page: page2,
     preserveState,
-    viewTransition
+    viewTransition,
+    initialRender = false
   }) {
-    const doSwap = () => this.swapComponent({ component, page: page2, preserveState });
+    const doSwap = () => this.swapComponent({ component, page: page2, preserveState, initialRender });
     if (!viewTransition || !document?.startViewTransition || document.visibilityState === "hidden") {
       return doSwap();
     }
     const viewTransitionCallback = typeof viewTransition === "boolean" ? () => null : viewTransition;
+    const ignoreSkippedTransition = (promise) => {
+      promise.catch((error) => {
+        if (!(error instanceof DOMException)) {
+          throw error;
+        }
+      });
+    };
     return new Promise((resolve) => {
       const transitionResult = document.startViewTransition(() => doSwap().then(resolve));
-      transitionResult.ready.catch(() => {
-      });
+      ignoreSkippedTransition(transitionResult.ready);
+      ignoreSkippedTransition(transitionResult.finished);
+      ignoreSkippedTransition(transitionResult.updateCallbackDone);
       viewTransitionCallback(transitionResult);
     });
   }
@@ -1203,6 +1378,12 @@ var CurrentPage = class {
   }
   nextOptimisticId() {
     return ++this.optimisticCounter;
+  }
+  markOptimisticConfirmed(id) {
+    this.confirmedOptimisticId = Math.max(this.confirmedOptimisticId, id);
+  }
+  hasConfirmedOptimisticAfter(id) {
+    return this.confirmedOptimisticId > id;
   }
   setBaseline(key, value) {
     if (!(key in this.optimisticBaseline)) {
@@ -1250,6 +1431,7 @@ var CurrentPage = class {
   clearOptimisticState() {
     this.optimisticBaseline = {};
     this.pendingOptimistics = [];
+    this.confirmedOptimisticId = 0;
   }
   isTheSame(page2) {
     return this.page.component === page2.component;
@@ -1287,9 +1469,18 @@ var Queue = class {
     return this.process();
   }
   process() {
-    this.processingPromise ??= this.processNext().finally(() => {
-      this.processingPromise = null;
-    });
+    this.processingPromise ??= this.processNext().then(
+      () => {
+        this.processingPromise = null;
+        if (this.items.length > 0) {
+          return this.process();
+        }
+      },
+      (error) => {
+        this.processingPromise = null;
+        throw error;
+      }
+    );
     return this.processingPromise;
   }
   processNext() {
@@ -1472,15 +1663,22 @@ var History = class {
   }
   doReplaceState(data, url) {
     return this.withThrottleProtection(() => {
-      window.history.replaceState(
-        {
-          ...data,
-          scrollRegions: data.scrollRegions ?? window.history.state?.scrollRegions,
-          documentScrollPosition: data.documentScrollPosition ?? window.history.state?.documentScrollPosition
-        },
-        "",
-        url
-      );
+      try {
+        window.history.replaceState(
+          {
+            ...data,
+            scrollRegions: data.scrollRegions ?? window.history.state?.scrollRegions,
+            documentScrollPosition: data.documentScrollPosition ?? window.history.state?.documentScrollPosition
+          },
+          "",
+          url
+        );
+      } catch (error) {
+        if (!this.isQuotaExceededError(error)) {
+          throw error;
+        }
+        console.error(error.message);
+      }
     });
   }
   doPushState(data, url) {
@@ -1506,7 +1704,7 @@ var History = class {
   }
   clearInitialState(key) {
     if (this.initialState && this.initialState[key] !== void 0) {
-      delete this.initialState[key];
+      this.initialState = { ...this.initialState, [key]: void 0 };
     }
   }
   browserHasHistoryEntry() {
@@ -1598,7 +1796,7 @@ var EventHandler = class {
       router.cancelAll({ prefetch: false });
       page.setQuietly(data, { preserveState: false }).then(() => {
         Scroll.restore(history.getScrollRegions());
-        fireNavigateEvent(page.get());
+        fireNavigateEvent(page.get(), { type: "history" });
         const pendingDeferred = {};
         const pageProps = page.get().props;
         for (const [group, props] of Object.entries(data.initialDeferredProps ?? data.deferredProps ?? {})) {
@@ -1675,10 +1873,14 @@ var InitialVisit = class {
     }
     const scrollRegions = history.getScrollRegions();
     history.decrypt().then((data) => {
+      if (page.get().version !== data.version) {
+        this.handleDefault();
+        return;
+      }
       const visitId = uid();
       page.set(data, { preserveScroll: true, preserveState: true, visitId }).then(() => {
         Scroll.restore(scrollRegions);
-        fireNavigateEvent(page.get(), { visitId });
+        fireNavigateEvent(page.get(), { type: "history", visitId });
       });
     }).catch(() => {
       eventHandler.onMissingHistoryItem();
@@ -1705,6 +1907,7 @@ var InitialVisit = class {
       page.set(page.get(), {
         preserveScroll: locationVisit.preserveScroll,
         preserveState: true,
+        initialRender: true,
         visitId
       }).then(() => {
         if (locationVisit.preserveScroll) {
@@ -1722,7 +1925,7 @@ var InitialVisit = class {
       page.setUrlHash(window.location.hash);
     }
     const visitId = uid();
-    page.set(page.get(), { preserveScroll: true, preserveState: true, visitId }).then(() => {
+    page.set(page.get(), { preserveScroll: true, preserveState: true, initialRender: true, visitId }).then(() => {
       if (navigationType.isReload()) {
         Scroll.restore(history.getScrollRegions());
       } else {
@@ -1733,7 +1936,7 @@ var InitialVisit = class {
   }
   static fireInitialEvents(visitId) {
     const page2 = page.get();
-    fireNavigateEvent(page2, { visitId });
+    fireNavigateEvent(page2, { type: "initial", visitId });
     if (Object.keys(page2.flash).length > 0) {
       queueMicrotask(() => fireFlashEvent(page2.flash));
     }
@@ -1744,8 +1947,8 @@ var InitialVisit = class {
 var Poll = class {
   intervalId = null;
   timeoutId = null;
-  throttle = false;
-  keepAlive = false;
+  hidden = false;
+  background;
   cb;
   interval;
   cbCount = 0;
@@ -1754,8 +1957,10 @@ var Poll = class {
   currentCancel = null;
   stopped = true;
   instanceId = 0;
+  lastPolledAt = 0;
   constructor(interval, cb, options) {
-    this.keepAlive = options.keepAlive ?? false;
+    this.background = options.background ?? (options.keepAlive ? "continue" : "throttle");
+    this.hidden = typeof document !== "undefined" && document.hidden;
     this.mode = options.mode ?? "overlap";
     this.cb = cb;
     this.interval = interval;
@@ -1768,6 +1973,68 @@ var Poll = class {
     this.instanceId++;
     this.inFlight = false;
     this.currentCancel = null;
+    this.clearTimers();
+  }
+  start() {
+    if (typeof window === "undefined") {
+      return;
+    }
+    this.stop();
+    this.stopped = false;
+    this.lastPolledAt = Date.now();
+    if (this.isPaused()) {
+      return;
+    }
+    if (this.mode === "rest") {
+      this.scheduleNext();
+      return;
+    }
+    this.startInterval();
+  }
+  isInBackground(hidden2) {
+    if (hidden2 === this.hidden) {
+      return;
+    }
+    this.hidden = hidden2;
+    if (this.isThrottled()) {
+      this.cbCount = 0;
+    }
+    if (this.background !== "pause") {
+      return;
+    }
+    if (hidden2) {
+      this.clearTimers();
+    } else {
+      this.resume();
+    }
+  }
+  isThrottled() {
+    return this.hidden && this.background === "throttle";
+  }
+  isPaused() {
+    return this.hidden && this.background === "pause";
+  }
+  resume() {
+    if (this.stopped || this.mode === "rest" && this.inFlight) {
+      return;
+    }
+    const remaining = this.interval - (Date.now() - this.lastPolledAt);
+    if (remaining > 0) {
+      this.timeoutId = window.setTimeout(() => {
+        this.timeoutId = null;
+        this.resume();
+      }, remaining);
+      return;
+    }
+    this.fire();
+    if (this.mode !== "rest") {
+      this.startInterval();
+    }
+  }
+  startInterval() {
+    this.intervalId = window.setInterval(() => this.tick(), this.interval);
+  }
+  clearTimers() {
     if (this.intervalId) {
       clearInterval(this.intervalId);
       this.intervalId = null;
@@ -1777,26 +2044,8 @@ var Poll = class {
       this.timeoutId = null;
     }
   }
-  start() {
-    if (typeof window === "undefined") {
-      return;
-    }
-    this.stop();
-    this.stopped = false;
-    if (this.mode === "rest") {
-      this.scheduleNext();
-      return;
-    }
-    this.intervalId = window.setInterval(() => this.tick(), this.interval);
-  }
-  isInBackground(hidden2) {
-    this.throttle = this.keepAlive ? false : hidden2;
-    if (this.throttle) {
-      this.cbCount = 0;
-    }
-  }
   scheduleNext() {
-    if (this.stopped) {
+    if (this.stopped || this.isPaused()) {
       return;
     }
     this.timeoutId = window.setTimeout(() => {
@@ -1805,12 +2054,13 @@ var Poll = class {
     }, this.interval);
   }
   tick() {
-    if (!this.throttle || this.cbCount % 10 === 0) {
+    const throttled = this.isThrottled();
+    if (!throttled || this.cbCount % 10 === 0) {
       this.fire();
     } else if (this.mode === "rest") {
       this.scheduleNext();
     }
-    if (this.throttle) {
+    if (throttled) {
       this.cbCount++;
     }
   }
@@ -1818,6 +2068,7 @@ var Poll = class {
     if (this.inFlight && this.mode === "cancel") {
       this.currentCancel?.();
     }
+    this.lastPolledAt = Date.now();
     const instance = this.instanceId;
     this.cb({
       onStart: (cancel) => {
@@ -1834,6 +2085,7 @@ var Poll = class {
         this.inFlight = false;
         this.currentCancel = null;
         if (this.mode === "rest") {
+          this.lastPolledAt = Date.now();
           this.scheduleNext();
         }
       }
@@ -1932,44 +2184,13 @@ var HttpHandlers = class {
 };
 var httpHandlers = new HttpHandlers();
 
-// src/httpErrors.ts
-var HttpError = class extends Error {
-  code;
-  url;
-  constructor(message, code, url) {
-    super(url ? `${message} (${url})` : message);
-    this.name = "HttpError";
-    this.code = code;
-    this.url = url;
-  }
-};
-var HttpResponseError = class extends HttpError {
-  response;
-  constructor(message, response, url) {
-    super(message, "ERR_HTTP_RESPONSE", url);
-    this.name = "HttpResponseError";
-    this.response = response;
-  }
-};
-var HttpCancelledError = class extends HttpError {
-  constructor(message = "Request was cancelled", url) {
-    super(message, "ERR_CANCELLED", url);
-    this.name = "HttpCancelledError";
-  }
-};
-var HttpNetworkError = class extends HttpError {
-  cause;
-  constructor(message, url, cause) {
-    super(message, "ERR_NETWORK", url);
-    this.name = "HttpNetworkError";
-    this.cause = cause;
-  }
-};
-
 // src/xhrHttpClient.ts
 function getCookie(name) {
   const match = document.cookie.match(new RegExp("(^|;\\s*)(" + name + ")=([^;]*)"));
   return match ? decodeURIComponent(match[3]) : null;
+}
+function isSameOrigin(url) {
+  return new URL(url, window.location.href).origin === window.location.origin;
 }
 function parseHeaders(xhr) {
   const headers = {};
@@ -1981,11 +2202,17 @@ function parseHeaders(xhr) {
   });
   return headers;
 }
+function isFormDataRequestBody(value) {
+  return typeof FormData !== "undefined" && value instanceof FormData;
+}
+function isRawRequestBody(value) {
+  return typeof value === "string" || isFormDataRequestBody(value) || typeof Blob !== "undefined" && value instanceof Blob || typeof ArrayBuffer !== "undefined" && value instanceof ArrayBuffer || typeof ArrayBuffer !== "undefined" && ArrayBuffer.isView(value) || typeof URLSearchParams !== "undefined" && value instanceof URLSearchParams;
+}
 function setHeaders(xhr, config2) {
   if (!config2.headers) {
     return;
   }
-  const isFormData2 = config2.data instanceof FormData;
+  const isFormData2 = isFormDataRequestBody(config2.data);
   Object.entries(config2.headers).forEach(([key, value]) => {
     if (key.toLowerCase() !== "content-type" || !isFormData2) {
       xhr.setRequestHeader(key, String(value));
@@ -2020,16 +2247,26 @@ var XhrHttpClient = class {
   }
   doRequest(config2) {
     return new Promise((resolve, reject) => {
+      if (config2.signal?.aborted) {
+        reject(new HttpCancelledError("Request was cancelled", config2.url));
+        return;
+      }
       const xhr = new XMLHttpRequest();
       const url = buildUrlWithParams(config2.url, config2.params);
       xhr.open(config2.method.toUpperCase(), url, true);
-      const xsrfToken = getCookie(this.xsrfCookieName);
+      const xsrfToken = isSameOrigin(url) ? getCookie(this.xsrfCookieName) : null;
       if (xsrfToken) {
         xhr.setRequestHeader(this.xsrfHeaderName, xsrfToken);
       }
+      const hasRequestedWithHeader = Object.keys(config2.headers ?? {}).some(
+        (key) => key.toLowerCase() === "x-requested-with"
+      );
+      if (!hasRequestedWithHeader) {
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+      }
       let body = null;
       if (config2.data !== null && config2.data !== void 0) {
-        if (config2.data instanceof FormData) {
+        if (isRawRequestBody(config2.data)) {
           body = config2.data;
         } else if (typeof config2.data === "object") {
           body = JSON.stringify(config2.data);
@@ -2076,6 +2313,7 @@ var XhrHttpClient = class {
 var xhrHttpClient = new XhrHttpClient();
 
 // src/http.ts
+precognitionClient.withSerializer(stringifyJson);
 var httpClient = xhrHttpClient;
 function isHttpClientOptions(client) {
   return !("request" in client);
@@ -2223,6 +2461,9 @@ var RequestParams = class _RequestParams {
   }
   isDeferredPropsRequest() {
     return this.params.deferredProps === true;
+  }
+  isPollRequest() {
+    return this.params.poll === true;
   }
   onCancelToken(cb) {
     this.params.onCancelToken({
@@ -2415,18 +2656,20 @@ var partialReloadRequestsSomeProps = (visit, props) => {
 // src/response.ts
 var queue2 = new Queue();
 var Response = class _Response {
-  constructor(requestParams, response, originatingPage) {
+  constructor(requestParams, response, originatingPage, optimisticId = null) {
     this.requestParams = requestParams;
     this.response = response;
     this.originatingPage = originatingPage;
+    this.optimisticId = optimisticId;
   }
   requestParams;
   response;
   originatingPage;
+  optimisticId;
   wasPrefetched = false;
   processed = false;
-  static create(params, response, originatingPage) {
-    return new _Response(params, response, originatingPage);
+  static create(params, response, originatingPage, optimisticId = null) {
+    return new _Response(params, response, originatingPage, optimisticId);
   }
   isProcessed() {
     return this.processed;
@@ -2547,12 +2790,20 @@ var Response = class _Response {
    */
   locationVisit(url) {
     try {
-      SessionStorage.set(SessionStorage.locationVisitKey, {
-        preserveScroll: this.requestParams.all().preserveScroll === true
-      });
       if (typeof window === "undefined") {
         return;
       }
+      const responseVersion = this.getHeader("x-inertia-version");
+      const versionChange = !!responseVersion && responseVersion !== page.get().version;
+      if (!fireLocationEvent(url, versionChange)) {
+        return;
+      }
+      if (versionChange && this.requestParams.all().async) {
+        return;
+      }
+      SessionStorage.set(SessionStorage.locationVisitKey, {
+        preserveScroll: this.requestParams.all().preserveScroll === true
+      });
       if (isSameUrlWithoutHash(window.location, url)) {
         window.location.reload();
       } else {
@@ -2591,7 +2842,7 @@ var Response = class _Response {
       return response;
     }
     try {
-      return JSON.parse(response);
+      return parsePage(response);
     } catch (error) {
       return response;
     }
@@ -2620,7 +2871,7 @@ var Response = class _Response {
     return responseUrl.pathname + responseUrl.search + responseUrl.hash;
   }
   preserveOptimisticProps(pageResponse) {
-    if (!router.hasPendingOptimistic()) {
+    if (!router.hasPendingOptimistic() && !this.isStaleOptimisticResponse()) {
       return;
     }
     for (const key of Object.keys(pageResponse.props)) {
@@ -2629,6 +2880,9 @@ var Response = class _Response {
         pageResponse.props[key] = page.get().props[key];
       }
     }
+  }
+  isStaleOptimisticResponse() {
+    return this.optimisticId !== null && page.hasConfirmedOptimisticAfter(this.optimisticId);
   }
   preserveEqualProps(pageResponse) {
     if (pageResponse.component !== page.get().component) {
@@ -2833,32 +3087,40 @@ var Response = class _Response {
 
 // src/request.ts
 var Request = class _Request {
-  constructor(params, page2, { optimistic = false } = {}) {
+  constructor(params, page2, { optimisticId = null } = {}) {
     this.page = page2;
     this.requestParams = RequestParams.create(params);
     this.cancelToken = new AbortController();
-    this.optimistic = optimistic;
+    this.optimisticId = optimisticId;
   }
   page;
   response;
   cancelToken;
   requestParams;
   requestHasFinished = false;
-  optimistic;
+  optimisticId;
   static create(params, page2, options) {
     return new _Request(params, page2, options);
   }
   isPrefetch() {
     return this.requestParams.isPrefetch();
   }
+  getUrl() {
+    return this.requestParams.all().url;
+  }
   isOptimistic() {
-    return this.optimistic;
+    return this.optimisticId !== null;
   }
   isPendingOptimistic() {
     return this.isOptimistic() && (!this.response || !this.response.isProcessed());
   }
   async send() {
-    this.requestParams.onCancelToken(() => this.cancel({ cancelled: true }));
+    this.requestParams.onCancelToken(() => {
+      if (this.response) {
+        return;
+      }
+      this.cancel({ cancelled: true });
+    });
     fireStartEvent(this.requestParams.all());
     this.requestParams.onStart();
     if (this.requestParams.all().prefetch) {
@@ -2874,13 +3136,17 @@ var Request = class _Request {
       headers: this.getHeaders(),
       onUploadProgress: this.onProgress.bind(this)
     };
+    if (containsBigInt(config2.data)) {
+      config2.data = stringifyJson(config2.data);
+      config2.headers = { "Content-Type": "application/json", ...config2.headers };
+    }
     const processedConfig = await interceptors.processRequest(this.requestParams.all(), config2);
     return http.getClient().request(processedConfig).then((response) => {
-      this.response = Response.create(this.requestParams, response, this.page);
+      this.response = Response.create(this.requestParams, response, this.page, this.optimisticId);
       return this.response.handle();
     }).catch((error) => {
       if (error instanceof HttpResponseError) {
-        this.response = Response.create(this.requestParams, error.response, this.page);
+        this.response = Response.create(this.requestParams, error.response, this.page, this.optimisticId);
         return this.response.handle();
       }
       return Promise.reject(error);
@@ -2975,8 +3241,12 @@ var RequestStream = class {
   interruptInFlight() {
     this.cancel({ interrupted: true }, false);
   }
-  cancelInFlight({ prefetch = true, optimistic = true } = {}) {
-    this.requests.filter((request) => prefetch || !request.isPrefetch()).filter((request) => optimistic || !request.isOptimistic()).forEach((request) => request.cancel({ cancelled: true }));
+  cancelInFlight(options = {}) {
+    const shouldCancel = typeof options === "function" ? options : (request) => {
+      const { prefetch = true, optimistic = true } = options;
+      return (prefetch || !request.isPrefetch()) && (optimistic || !request.isOptimistic());
+    };
+    this.requests.filter(shouldCancel).forEach((request) => request.cancel({ cancelled: true }));
   }
   cancel({ cancelled = false, interrupted = false } = {}, force = false) {
     if (!force && !this.shouldCancel()) {
@@ -3113,7 +3383,8 @@ var Router = class {
       interval,
       ({ onStart, onFinish }) => {
         const resolved = typeof requestOptions === "function" ? requestOptions() : requestOptions;
-        this.reload({
+        this.doReload({
+          poll: true,
           preserveErrors: true,
           ...resolved,
           onCancelToken: (token) => {
@@ -3128,6 +3399,7 @@ var Router = class {
       },
       {
         autoStart: options.autoStart ?? true,
+        background: options.background,
         keepAlive: options.keepAlive ?? false,
         mode: options.mode
       }
@@ -3151,13 +3423,17 @@ var Router = class {
     const isPartialReload = visit.only.length > 0 || visit.except.length > 0 || visit.reset.length > 0;
     const isSamePage = isPartialReload ? isSameUrlWithoutQueryOrHash(visit.url, currentPageUrl) : isSameUrlWithoutHash(visit.url, currentPageUrl);
     if (!isSamePage) {
-      this.asyncRequestStream.cancelInFlight({ prefetch: false, optimistic: false });
+      this.asyncRequestStream.cancelInFlight(
+        (request) => !request.isPrefetch() && !request.isOptimistic() && isSameUrlWithoutQueryOrHash(request.getUrl(), currentPageUrl)
+      );
     }
     if (!visit.async) {
       this.syncRequestStream.interruptInFlight();
     }
+    let optimisticId = null;
     if (options.optimistic) {
-      this.applyOptimisticUpdate(options.optimistic, events);
+      optimisticId = page.nextOptimisticId();
+      this.applyOptimisticUpdate(options.optimistic, events, optimisticId);
     }
     if (!page.isCleared() && !visit.preserveUrl) {
       Scroll.save();
@@ -3174,7 +3450,7 @@ var Router = class {
       } else {
         progress.reveal(true);
         const requestStream = visit.async ? this.asyncRequestStream : this.syncRequestStream;
-        requestStream.send(Request.create(requestParams, page.get(), { optimistic: !!options.optimistic }));
+        requestStream.send(Request.create(requestParams, page.get(), { optimisticId }));
       }
     };
     if (Array.isArray(visit.component)) {
@@ -3267,6 +3543,7 @@ var Router = class {
   }
   clearHistory() {
     history.clear();
+    prefetchedRequests.removeAll();
   }
   decryptHistory() {
     return history.decrypt();
@@ -3283,7 +3560,7 @@ var Router = class {
       preserveState: true,
       props(currentProps) {
         const newValue = typeof value === "function" ? value(get7(currentProps, name), currentProps) : value;
-        return set5(cloneDeep4(currentProps), name, newValue);
+        return setPathPreservingIdentity(currentProps, name, newValue);
       },
       ...options || {}
     });
@@ -3386,6 +3663,7 @@ var Router = class {
     );
     const resolvedPageProps = typeof visit.pageProps === "function" ? visit.pageProps(cloneDeep4(current.props), cloneDeep4(sharedProps)) : visit.pageProps;
     const intermediateProps = resolvedPageProps !== null ? { ...resolvedPageProps } : { ...sharedProps };
+    const onceProps = this.preserveOncePropsOnInstantVisit(current, intermediateProps);
     const intermediatePage = {
       component: visit.component,
       url: visit.url.pathname + visit.url.search + visit.url.hash,
@@ -3399,6 +3677,7 @@ var Router = class {
       clearHistory: false,
       encryptHistory: current.encryptHistory,
       sharedProps: current.sharedProps,
+      onceProps,
       rememberedState: {}
     };
     return page.set(intermediatePage, {
@@ -3408,6 +3687,26 @@ var Router = class {
       viewTransition: visit.viewTransition,
       visitId: visit.id
     });
+  }
+  /**
+   * Once props are remembered client-side, so the placeholder page must preserve their values
+   * and registry. Otherwise the swap discards the value, and an in-flight prefetch that already
+   * claimed the prop resolves with nothing to restore it from.
+   */
+  preserveOncePropsOnInstantVisit(current, props) {
+    const onceProps = {};
+    Object.entries(current.onceProps ?? {}).forEach(([key, onceProp]) => {
+      if (get7(props, onceProp.prop) !== void 0) {
+        return;
+      }
+      const currentValue = get7(current.props, onceProp.prop);
+      if (currentValue === void 0) {
+        return;
+      }
+      set5(props, onceProp.prop, currentValue);
+      onceProps[key] = onceProp;
+    });
+    return onceProps;
   }
   getPrefetchParams(href, options) {
     return {
@@ -3498,7 +3797,7 @@ var Router = class {
       onPrefetching: options.onPrefetching || noop
     };
   }
-  applyOptimisticUpdate(optimistic, events) {
+  applyOptimisticUpdate(optimistic, events, id) {
     const currentProps = page.get().props;
     const optimisticProps = optimistic(cloneDeep4(currentProps));
     if (!optimisticProps) {
@@ -3513,7 +3812,6 @@ var Router = class {
     if (changedKeys.length === 0) {
       return;
     }
-    const id = page.nextOptimisticId();
     const component = page.get().component;
     for (const key of changedKeys) {
       page.setBaseline(key, cloneDeep4(currentProps[key]));
@@ -3524,6 +3822,7 @@ var Router = class {
     const originalOnSuccess = events.onSuccess;
     events.onSuccess = (page2) => {
       shouldRestore = false;
+      page.markOptimisticConfirmed(id);
       return originalOnSuccess(page2);
     };
     const originalOnFinish = events.onFinish;
@@ -3676,6 +3975,12 @@ function normalizeHeaders(headers) {
   }
   return normalized;
 }
+function isBinaryRequestBody(value) {
+  return typeof Blob !== "undefined" && value instanceof Blob || typeof ArrayBuffer !== "undefined" && value instanceof ArrayBuffer || typeof ArrayBuffer !== "undefined" && ArrayBuffer.isView(value);
+}
+function hasContentTypeHeader(headers) {
+  return Object.keys(headers ?? {}).some((key) => key.toLowerCase() === "content-type");
+}
 function toHttpProgressEvent(axiosEvent) {
   return {
     progress: axiosEvent.progress,
@@ -3716,13 +4021,17 @@ var AxiosHttpClient = class {
   }
   async doRequest(config2) {
     const axios = await this.getAxios();
+    const headers = { ...config2.headers ?? {} };
+    if (isBinaryRequestBody(config2.data) && !hasContentTypeHeader(config2.headers)) {
+      headers["Content-Type"] = false;
+    }
     try {
       const response = await axios({
         method: config2.method,
         url: config2.url,
         data: config2.data,
         params: config2.params,
-        headers: config2.headers,
+        headers,
         signal: config2.signal,
         responseType: "text",
         onUploadProgress: config2.onUploadProgress ? (event) => config2.onUploadProgress(toHttpProgressEvent(event)) : void 0
@@ -4021,6 +4330,8 @@ var useInfiniteScrollData = (options) => {
     state.lastLoadedPage = scrollProp.currentPage;
     state.requestCount = 0;
   };
+  let cancelInFlightRequest = null;
+  let flushed = false;
   const getRememberKey = () => `inertia:infinite-scroll-data:${options.getPropName()}`;
   if (typeof window !== "undefined") {
     resetState();
@@ -4080,6 +4391,10 @@ var useInfiniteScrollData = (options) => {
         [MERGE_INTENT_HEADER]: side === "previous" ? "prepend" : "append",
         ...reloadOptions.headers
       },
+      onCancelToken: (cancelToken) => {
+        cancelInFlightRequest = cancelToken.cancel;
+        reloadOptions.onCancelToken?.(cancelToken);
+      },
       onBefore: (visit) => {
         side === "next" ? options.onBeforeNextRequest() : options.onBeforePreviousRequest();
         reloadOptions.onBefore?.(visit);
@@ -4089,14 +4404,20 @@ var useInfiniteScrollData = (options) => {
         reloadOptions.onBeforeUpdate?.(page3);
       },
       onSuccess: (page3) => {
+        if (flushed) {
+          return;
+        }
         syncStateOnSuccess(side);
         reloadOptions.onSuccess?.(page3);
       },
       onFinish: (visit) => {
         state.loading = false;
-        const completed = visit.completed;
-        const page3 = completed ? state.lastLoadedPage : null;
-        side === "next" ? options.onCompleteNextRequest(page3, { page: page3, completed }) : options.onCompletePreviousRequest(page3, { page: page3, completed });
+        cancelInFlightRequest = null;
+        if (!flushed) {
+          const completed = visit.completed;
+          const page3 = completed ? state.lastLoadedPage : null;
+          side === "next" ? options.onCompleteNextRequest(page3, { page: page3, completed }) : options.onCompletePreviousRequest(page3, { page: page3, completed });
+        }
         reloadOptions.onFinish?.(visit);
       }
     });
@@ -4106,6 +4427,11 @@ var useInfiniteScrollData = (options) => {
   const hasNext = () => !!state.nextPage;
   const fetchPrevious = (reloadOptions) => fetchPage("previous", reloadOptions);
   const fetchNext = (reloadOptions) => fetchPage("next", reloadOptions);
+  const flush = () => {
+    flushed = true;
+    removeEventListener();
+    cancelInFlightRequest?.();
+  };
   return {
     getLastLoadedPage,
     getPageName,
@@ -4114,7 +4440,8 @@ var useInfiniteScrollData = (options) => {
     hasNext,
     fetchNext,
     fetchPrevious,
-    removeEventListener
+    removeEventListener,
+    flush
   };
 };
 
@@ -4207,6 +4534,7 @@ var useInfiniteScrollElementManager = (options) => {
     disableTriggers();
     intersectionObservers.flushAll();
     itemsMutationObserver?.disconnect();
+    rememberElementsDebounced.cancel();
   };
   const addedElements = /* @__PURE__ */ new Set();
   const elementIsUntagged = (element) => !(INFINITE_SCROLL_PAGE_KEY in element.dataset) && !(INFINITE_SCROLL_IGNORE_KEY in element.dataset);
@@ -4500,7 +4828,7 @@ function useInfiniteScroll(options) {
     elementManager,
     flush: () => {
       removeEventListener();
-      dataManager.removeEventListener();
+      dataManager.flush();
       elementManager.flushAll();
       queryStringManager.cancel();
     }
@@ -5191,7 +5519,7 @@ function resetFormFields(formElement, defaults, fieldNames) {
 
 // src/ssrUtils.ts
 function buildSSRBody(id, page2, html) {
-  const json = JSON.stringify(page2).replace(/\//g, "\\/");
+  const json = stringifyPage(page2).replace(/\//g, "\\/").replace(/</g, "\\u003c");
   return `<script data-page="${id}" type="application/json">${json}<\/script><div data-server-rendered="true" id="${id}">${html}</div>`;
 }
 
