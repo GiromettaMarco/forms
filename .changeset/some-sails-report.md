@@ -9,4 +9,4 @@
 '@repo/msw-fixture': patch
 ---
 
-Update vite-plus
+Update vite-plus to v1.2.0
