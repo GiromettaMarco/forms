@@ -7,6 +7,7 @@ test('Calendar component', async () => {
     <Calendar
       className="w-72 rounded-md border"
       fixedWeeks={true}
+      mode="single"
     />
   )
 })

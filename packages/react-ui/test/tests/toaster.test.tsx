@@ -10,6 +10,7 @@ test('Toaster component', async () => {
       <Toaster
         closeButton={true}
         position="bottom-center"
+        theme="system"
       />
       <div className="flex flex-wrap gap-2">
         <Button
@@ -94,6 +95,7 @@ test('Toaster component with an array of flash messages', async () => {
       <Toaster
         closeButton={true}
         position="bottom-center"
+        theme="system"
       />
       <div className="flex flex-wrap gap-2">
         <Button
