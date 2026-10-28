@@ -39,3 +39,4 @@ function Page() {
 ## CSS themes
 
 - [Default](https://github.com/GiromettaMarco/forms/blob/master/internal/themes/default.css)
+- [Earth](https://github.com/GiromettaMarco/forms/blob/master/internal/themes/earth.css)
