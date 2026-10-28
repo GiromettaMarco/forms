@@ -169,6 +169,11 @@
     "tsv-advanced",
     "tsv-core",
     "tsv-hookform",
-    "tsv-input"
+    "tsv-input",
+    "badge",
+    "mock-inertia",
+    "msw-fixture",
+    "themes",
+    "typescript"
   ]
 }
