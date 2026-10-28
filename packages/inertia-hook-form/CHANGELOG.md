@@ -1,5 +1,20 @@
 # @gmcode/inertia-hook-form
 
+## 0.0.5
+
+### Patch Changes
+
+- 50e3606: Update node modules
+- 9b9353d: Update inertiajs
+- a13bd3b: Update vite-plus to v1.4.0
+- 3e7eaac: Update vite-plus to v1.2.0
+- 2bae39c: Update readme
+- Updated dependencies [50e3606]
+- Updated dependencies [a13bd3b]
+- Updated dependencies [3e7eaac]
+  - @gmcode/tsv-hookform@0.1.10
+  - @gmcode/tsv-input@0.4.2
+
 ## 0.0.4
 
 ### Patch Changes
