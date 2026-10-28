@@ -1,5 +1,14 @@
 # @gmcode/react-ui
 
+## 0.4.4
+
+### Patch Changes
+
+- 50e3606: Update node modules
+- a13bd3b: Update vite-plus to v1.4.0
+- 3e7eaac: Update vite-plus to v1.2.0
+- 5a581f3: Fix toaster description color
+
 ## 0.4.3
 
 ### Patch Changes

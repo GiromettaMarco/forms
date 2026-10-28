@@ -1,5 +1,16 @@
 # @gmcode/tsv-hookform
 
+## 0.1.10
+
+### Patch Changes
+
+- 50e3606: Update node modules
+- a13bd3b: Update vite-plus to v1.4.0
+- 3e7eaac: Update vite-plus to v1.2.0
+- Updated dependencies [a13bd3b]
+- Updated dependencies [3e7eaac]
+  - @gmcode/tsv-core@0.2.5
+
 ## 0.1.9
 
 ### Patch Changes
