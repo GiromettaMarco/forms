@@ -21,7 +21,7 @@ catalog:
   '@changesets/cli': 3.0.3
   '@inertiajs/core': ^3.11.0
   '@inertiajs/react': ^3.11.0
-  '@rolldown/plugin-babel': ^0.2.4
+  '@rolldown/plugin-babel': ^0.3.1
   '@tailwindcss/vite': ^4.3.5
   '@testing-library/dom': ^10.4.2
   '@testing-library/react': ^16.3.3
