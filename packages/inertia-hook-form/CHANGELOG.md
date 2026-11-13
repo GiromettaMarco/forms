@@ -1,5 +1,22 @@
 # @gmcode/inertia-hook-form
 
+## 0.1.0
+
+### Minor Changes
+
+- 68c1444: Upgrade @rolldown/plugin-babel
+
+### Patch Changes
+
+- fac5ab4: Update vite-plus
+- b392a75: Update inertiajs
+- f58105b: Update node modules
+- Updated dependencies [fac5ab4]
+- Updated dependencies [e6e1096]
+- Updated dependencies [f58105b]
+  - @gmcode/tsv-hookform@0.1.11
+  - @gmcode/tsv-input@0.4.3
+
 ## 0.0.5
 
 ### Patch Changes
