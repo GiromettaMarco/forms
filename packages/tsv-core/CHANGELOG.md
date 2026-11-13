@@ -1,5 +1,11 @@
 # @gmcode/tsv-core
 
+## 0.2.6
+
+### Patch Changes
+
+- fac5ab4: Update vite-plus
+
 ## 0.2.5
 
 ### Patch Changes

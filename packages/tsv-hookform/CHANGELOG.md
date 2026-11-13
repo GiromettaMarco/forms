@@ -1,5 +1,15 @@
 # @gmcode/tsv-hookform
 
+## 0.1.11
+
+### Patch Changes
+
+- fac5ab4: Update vite-plus
+- e6e1096: Upgrade hookform resolvers
+- f58105b: Update node modules
+- Updated dependencies [fac5ab4]
+  - @gmcode/tsv-core@0.2.6
+
 ## 0.1.10
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @gmcode/react-ui
 
+## 0.5.0
+
+### Minor Changes
+
+- 68c1444: Upgrade @rolldown/plugin-babel
+
+### Patch Changes
+
+- fac5ab4: Update vite-plus
+- f58105b: Update node modules
+
 ## 0.4.4
 
 ### Patch Changes
