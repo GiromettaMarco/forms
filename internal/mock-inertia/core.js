@@ -1,8 +1,8 @@
-// '@inertiajs/core': '3.9.1'
+// '@inertiajs/core': '3.11.0'
 
 // src/router.ts
 import { cloneDeep as cloneDeep4, isEqual as isEqual3 } from "es-toolkit";
-import { get as get7, set as set5 } from "es-toolkit/compat";
+import { get as get8, set as set5 } from "es-toolkit/compat";
 
 // src/config.ts
 import { get, has, set } from "es-toolkit/compat";
@@ -47,7 +47,7 @@ var config = new Config({
 });
 
 // src/eventHandler.ts
-import { get as get4 } from "es-toolkit/compat";
+import { get as get5 } from "es-toolkit/compat";
 
 // src/debounce.ts
 function debounce(fn, delay) {
@@ -108,6 +108,9 @@ var fireFlashEvent = (flash) => {
 };
 var fireLocationEvent = (url, versionChange) => {
   return fireEvent("location", { cancelable: true, detail: { url, versionChange } });
+};
+var fireLiveEvent = (details) => {
+  return fireEvent("live", { cancelable: true, detail: details });
 };
 
 // src/history.ts
@@ -357,11 +360,11 @@ var getKeyFromSessionStorage = async () => {
 
 // src/page.ts
 import { cloneDeep as cloneDeep2 } from "es-toolkit";
-import { get as get3, set as set3 } from "es-toolkit/compat";
+import { get as get4, set as set3 } from "es-toolkit/compat";
 
 // src/prefetched.ts
 import { cloneDeep } from "es-toolkit";
-import { get as get2 } from "es-toolkit/compat";
+import { get as get3 } from "es-toolkit/compat";
 
 // src/httpErrors.ts
 var HttpError = class extends Error {
@@ -399,6 +402,50 @@ var HttpNetworkError = class extends HttpError {
 
 // src/objectUtils.ts
 import { toPath } from "es-toolkit/compat";
+
+// src/formData.ts
+var isFormData = (value) => value instanceof FormData;
+function objectToFormData(source, form = new FormData(), parentKey = null, queryStringArrayFormat = "brackets") {
+  source = source || {};
+  for (const key in source) {
+    if (Object.prototype.hasOwnProperty.call(source, key)) {
+      append(form, composeKey(parentKey, key, "indices"), source[key], queryStringArrayFormat);
+    }
+  }
+  return form;
+}
+function composeKey(parent, key, format) {
+  if (!parent) {
+    return key;
+  }
+  return format === "brackets" ? `${parent}[]` : `${parent}[${key}]`;
+}
+function append(form, key, value, format) {
+  if (Array.isArray(value)) {
+    return Array.from(value.keys()).forEach(
+      (index) => append(form, composeKey(key, index.toString(), format), value[index], format)
+    );
+  } else if (value instanceof Date) {
+    return form.append(key, value.toISOString());
+  } else if (value instanceof File) {
+    return form.append(key, value, value.name);
+  } else if (value instanceof Blob) {
+    return form.append(key, value);
+  } else if (typeof value === "boolean") {
+    return form.append(key, value ? "1" : "0");
+  } else if (typeof value === "string") {
+    return form.append(key, value);
+  } else if (typeof value === "number") {
+    return form.append(key, `${value}`);
+  } else if (typeof value === "bigint") {
+    return form.append(key, value.toString());
+  } else if (value === null || value === void 0) {
+    return form.append(key, "");
+  }
+  objectToFormData(value, form, key, format);
+}
+
+// src/objectUtils.ts
 var stripTopLevelUndefined = (obj) => {
   const result = {};
   for (const key of Object.keys(obj)) {
@@ -433,7 +480,21 @@ var objectsAreEqual = (obj1, obj2, excludeKeys) => {
   }
   return true;
 };
+var formDataAreEqual = (formData1, formData2) => {
+  const entries1 = Array.from(formData1.entries());
+  const entries2 = Array.from(formData2.entries());
+  return entries1.length === entries2.length && entries1.every(([key, value], index) => key === entries2[index][0] && value === entries2[index][1]);
+};
 var compareValues = (value1, value2) => {
+  if (isFormData(value1) || isFormData(value2)) {
+    return isFormData(value1) && isFormData(value2) && formDataAreEqual(value1, value2);
+  }
+  if (value1 instanceof Date || value2 instanceof Date) {
+    return value1 instanceof Date && value2 instanceof Date && value1.getTime() === value2.getTime();
+  }
+  if (value1 === null || value2 === null || Array.isArray(value1) !== Array.isArray(value2)) {
+    return value1 === value2;
+  }
   switch (typeof value1) {
     case "object":
       return objectsAreEqual(value1, value2, []);
@@ -458,6 +519,281 @@ var setPathPreservingIdentity = (target, path, value) => {
     return copy;
   };
   return copyAlongPath(target, 0);
+};
+
+// src/propRefreshes.ts
+import { get as get2 } from "es-toolkit/compat";
+
+// src/partialReload.ts
+var isPathOrSubPath = (path, candidate) => {
+  return path === candidate || path.startsWith(`${candidate}.`);
+};
+var partialReloadRequestsProp = (visit, prop) => {
+  const { only, except } = visit;
+  if (only.length === 0 && except.length === 0) {
+    return false;
+  }
+  if (only.length > 0 && !only.some((candidate) => isPathOrSubPath(prop, candidate))) {
+    return false;
+  }
+  if (except.length > 0 && except.some((candidate) => isPathOrSubPath(prop, candidate))) {
+    return false;
+  }
+  return true;
+};
+var partialReloadRequestsSomeProps = (visit, props) => {
+  return props.some((prop) => partialReloadRequestsProp(visit, prop));
+};
+var visitRefreshesProp = (visit, prop) => {
+  const only = visit.only.concat(visit.reset);
+  const { except } = visit;
+  if (only.length === 0 && except.length === 0) {
+    return true;
+  }
+  if (only.length > 0 && !only.some((candidate) => isRelatedPath(prop, candidate))) {
+    return false;
+  }
+  if (except.length > 0 && except.some((candidate) => isPathOrSubPath(prop, candidate))) {
+    return false;
+  }
+  return true;
+};
+var isRelatedPath = (path, candidate) => {
+  return isPathOrSubPath(path, candidate) || isPathOrSubPath(candidate, path);
+};
+
+// src/files.ts
+var isFile = (value) => typeof File !== "undefined" && value instanceof File || value instanceof Blob || typeof FileList !== "undefined" && value instanceof FileList && value.length > 0;
+function hasFiles(data) {
+  return isFile(data) || data instanceof FormData && Array.from(data.values()).some((value) => hasFiles(value)) || typeof data === "object" && data !== null && Object.values(data).some((value) => hasFiles(value));
+}
+
+// src/queryString.ts
+function hasIndices(url) {
+  return /\[\d+\]/.test(decodeURIComponent(url.search));
+}
+function parse(query) {
+  if (!query || query === "?") {
+    return {};
+  }
+  const result = {};
+  query.replace(/^\?/, "").split("&").filter(Boolean).forEach((segment) => {
+    const [rawKey, rawValue] = splitPair(segment);
+    set2(result, decode(rawKey), decode(rawValue));
+  });
+  return result;
+}
+function stringify2(data, arrayFormat) {
+  const pairs = [];
+  build(data, "", pairs, arrayFormat);
+  return pairs.length ? "?" + pairs.join("&") : "";
+}
+function splitPair(pair) {
+  const index = pair.indexOf("=");
+  return index === -1 ? [pair, ""] : [pair.substring(0, index), pair.substring(index + 1)];
+}
+function decode(value) {
+  return decodeURIComponent(value.replace(/\+/g, " "));
+}
+function set2(target, key, value) {
+  const keys = parseKey(key);
+  if (keys.some((k) => k === "__proto__")) {
+    return;
+  }
+  let current = target;
+  while (keys.length > 1) {
+    const segment = keys.shift();
+    const nextIsArrayPush = keys[0] === "";
+    if (typeof current[segment] !== "object" || current[segment] === null) {
+      current[segment] = nextIsArrayPush ? [] : {};
+    }
+    current = current[segment];
+  }
+  const final = keys.shift();
+  if (final === "" && Array.isArray(current)) {
+    current.push(value);
+  } else {
+    current[final] = value;
+  }
+}
+function parseKey(key) {
+  const segments = [];
+  const base = key.split("[")[0];
+  if (base) {
+    segments.push(base);
+  }
+  let match;
+  const pattern = /\[([^\]]*)\]/g;
+  while ((match = pattern.exec(key)) !== null) {
+    segments.push(match[1]);
+  }
+  return segments;
+}
+function build(value, prefix, pairs, arrayFormat) {
+  if (value === void 0) {
+    return;
+  }
+  if (value === null) {
+    pairs.push(`${prefix}=`);
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => {
+      const key = arrayFormat === "indices" ? `${prefix}[${index}]` : `${prefix}[]`;
+      build(item, key, pairs, arrayFormat);
+    });
+    return;
+  }
+  if (typeof value === "object") {
+    Object.keys(value).forEach((key) => {
+      build(value[key], prefix ? `${prefix}[${key}]` : key, pairs, arrayFormat);
+    });
+    return;
+  }
+  pairs.push(`${prefix}=${encodeURIComponent(String(value))}`);
+}
+
+// src/url.ts
+function hrefToUrl(href) {
+  return new URL(href.toString(), typeof window === "undefined" ? void 0 : window.location.toString());
+}
+var transformUrlAndData = (href, data, method, forceFormData, queryStringArrayFormat) => {
+  let url = typeof href === "string" ? hrefToUrl(href) : href;
+  if ((hasFiles(data) || forceFormData) && !isFormData(data)) {
+    if (config.get("form.forceIndicesArrayFormatInFormData")) {
+      queryStringArrayFormat = "indices";
+    }
+    data = objectToFormData(data, new FormData(), null, queryStringArrayFormat);
+  }
+  if (isFormData(data)) {
+    return [url, data];
+  }
+  const [_href, _data] = mergeDataIntoQueryString(method, url, data, queryStringArrayFormat);
+  return [hrefToUrl(_href), _data];
+};
+function mergeDataIntoQueryString(method, href, data, qsArrayFormat = "brackets") {
+  const hasDataForQueryString = method === "get" && !isFormData(data) && Object.keys(data).length > 0;
+  const hasHost = urlHasProtocol(href.toString());
+  const hasAbsolutePath = hasHost || href.toString().startsWith("/") || href.toString() === "";
+  const hasRelativePath = !hasAbsolutePath && !href.toString().startsWith("#") && !href.toString().startsWith("?");
+  const hasRelativePathWithDotPrefix = /^[.]{1,2}([/]|$)/.test(href.toString());
+  const hasSearch = href.toString().includes("?") || hasDataForQueryString;
+  const hasHash = href.toString().includes("#");
+  const isServer3 = typeof window === "undefined";
+  const url = new URL(href.toString(), isServer3 ? "http://localhost" : window.location.toString());
+  if (hasDataForQueryString) {
+    const arrayFormat = hasIndices(url) ? "indices" : qsArrayFormat;
+    url.search = stringify2({ ...parse(url.search), ...data }, arrayFormat);
+  }
+  return [
+    [
+      hasHost ? `${url.protocol}//${url.host}` : "",
+      hasAbsolutePath ? url.pathname : "",
+      hasRelativePath ? url.pathname.substring(isServer3 && !hasRelativePathWithDotPrefix ? 1 : 0) : "",
+      hasSearch ? url.search : "",
+      hasHash ? url.hash : ""
+    ].join(""),
+    hasDataForQueryString ? {} : data
+  ];
+}
+function urlWithoutHash(url) {
+  url = new URL(url.href);
+  url.hash = "";
+  return url;
+}
+var setHashIfSameUrl = (originUrl, destinationUrl) => {
+  if (originUrl.hash && !destinationUrl.hash && urlWithoutHash(originUrl).href === destinationUrl.href) {
+    destinationUrl.hash = originUrl.hash;
+  }
+};
+var isSameUrlWithoutHash = (url1, url2) => {
+  return urlWithoutHash(url1).href === urlWithoutHash(url2).href;
+};
+var isSameUrlWithoutQueryOrHash = (url1, url2) => {
+  return url1.origin === url2.origin && url1.pathname === url2.pathname;
+};
+function isUrlMethodPair(href) {
+  return href !== null && typeof href === "object" && href !== void 0 && "url" in href && "method" in href;
+}
+function resolveUrlMethodPairComponent(pair) {
+  if (!pair.component) {
+    return null;
+  }
+  if (typeof pair.component !== "string") {
+    console.error(
+      `The "component" property on the URL method pair received multiple components (${Object.keys(pair.component).join(", ")}), but only a single component string is supported for instant visits. Use the withComponent() method to specify which component to use.`
+    );
+    return null;
+  }
+  return pair.component;
+}
+function isSameOrigin(url) {
+  return new URL(url, window.location.href).origin === window.location.origin;
+}
+function urlHasProtocol(url) {
+  return /^([a-z][a-z0-9+.-]*:)?\/\/[^/]/i.test(url);
+}
+function urlToString(url, absolute) {
+  const urlObj = typeof url === "string" ? hrefToUrl(url) : url;
+  return absolute ? `${urlObj.protocol}//${urlObj.host}${urlObj.pathname}${urlObj.search}${urlObj.hash}` : `${urlObj.pathname}${urlObj.search}${urlObj.hash}`;
+}
+
+// src/propRefreshes.ts
+var activeVisits = /* @__PURE__ */ new Map();
+var listeners = /* @__PURE__ */ new Set();
+var pendingDeferredProps = null;
+var notify = () => {
+  listeners.forEach((listener) => listener());
+};
+var trackPropRefresh = (visit) => {
+  if (typeof window === "undefined" || visit.prefetch) {
+    return;
+  }
+  if (!isSameUrlWithoutQueryOrHash(visit.url, window.location)) {
+    return;
+  }
+  activeVisits.set(visit.id, { only: visit.only, except: visit.except, reset: visit.reset });
+  notify();
+};
+var setPendingDeferredProps = (props, deferredProps) => {
+  if (typeof window === "undefined") {
+    return;
+  }
+  const missing = Object.values(deferredProps ?? {}).flat().filter((prop) => get2(props, prop) === void 0);
+  if (missing.length === 0) {
+    clearPendingDeferredProps();
+    return;
+  }
+  pendingDeferredProps = { only: missing, except: [], reset: [] };
+  notify();
+};
+var clearPendingDeferredProps = () => {
+  if (pendingDeferredProps === null) {
+    return;
+  }
+  pendingDeferredProps = null;
+  notify();
+};
+var untrackPropRefresh = (visit) => {
+  if (activeVisits.delete(visit.id)) {
+    notify();
+  }
+};
+var propRefreshes = {
+  isRefreshing(prop) {
+    for (const visit of activeVisits.values()) {
+      if (visitRefreshesProp(visit, prop)) {
+        return true;
+      }
+    }
+    return pendingDeferredProps !== null && visitRefreshesProp(pendingDeferredProps, prop);
+  },
+  onChange(listener) {
+    listeners.add(listener);
+    return () => {
+      listeners.delete(listener);
+    };
+  }
 };
 
 // src/time.ts
@@ -485,7 +821,7 @@ var PrefetchedRequests = class {
   cached = [];
   inFlightRequests = [];
   removalTimers = [];
-  currentUseId = null;
+  currentUse = null;
   add(params, sendFunc, { cacheFor, cacheTags }) {
     const inFlight = this.findInFlight(params);
     if (inFlight) {
@@ -638,30 +974,65 @@ var PrefetchedRequests = class {
   }
   use(prefetched, params) {
     const id = `${params.url.pathname}-${Date.now()}-${Math.random().toString(36).substring(7)}`;
-    this.currentUseId = id;
     const consumedParams = {
       ...params,
       cached: true
     };
+    this.currentUse = { id, async: params.async, params: consumedParams, response: null };
+    trackPropRefresh(consumedParams);
     return prefetched.response.then(
       (response) => {
-        if (this.currentUseId !== id) {
+        if (this.currentUse?.id !== id) {
           return;
         }
         response.mergeParams({ ...consumedParams, onPrefetched: () => {
         } });
         this.removeSingleUseItems(params);
-        return response.handle();
+        this.currentUse.response = response;
+        return response.handle().finally(() => {
+          if (this.currentUse?.id === id) {
+            this.currentUse = null;
+          }
+        });
       },
       (error) => {
         if (!(error instanceof HttpCancelledError)) {
           throw error;
         }
-        consumedParams.onCancel();
-        consumedParams.cancelled = true;
-        consumedParams.onFinish(consumedParams);
+        if (this.currentUse?.id === id) {
+          this.currentUse = null;
+        }
+        this.cancelUse(consumedParams);
       }
-    );
+    ).finally(() => untrackPropRefresh(consumedParams));
+  }
+  /**
+   * A cached response isn't part of a request stream, so the router interrupts it here, like an in-flight
+   * request of the stream its visit belongs to. One that's still waiting for its prefetch is cancelled.
+   */
+  interruptInFlight({ async }) {
+    const use = this.currentUse;
+    if (use?.async !== async) {
+      return;
+    }
+    this.currentUse = null;
+    if (use.response) {
+      use.response.interrupt();
+    } else {
+      this.cancelUse(use.params);
+    }
+  }
+  /**
+   * Both the router and a cancelled prefetch can cancel a visit that's waiting for it, but it only finishes once.
+   */
+  cancelUse(params) {
+    if (params.cancelled) {
+      return;
+    }
+    params.cancelled = true;
+    untrackPropRefresh(params);
+    params.onCancel();
+    params.onFinish(params);
   }
   removeSingleUseItems(params) {
     this.cached = this.cached.filter((prefetched) => {
@@ -728,7 +1099,7 @@ var PrefetchedRequests = class {
         const pageResponse = response.getPageResponse();
         page.mergeOncePropsIntoResponse(pageResponse, { force: true });
         for (const [group, deferredProps] of Object.entries(pageResponse.deferredProps ?? {})) {
-          const remaining = deferredProps.filter((prop) => get2(pageResponse.props, prop) === void 0);
+          const remaining = deferredProps.filter((prop) => get3(pageResponse.props, prop) === void 0);
           if (remaining.length > 0) {
             pageResponse.deferredProps[group] = remaining;
           } else {
@@ -963,220 +1334,6 @@ var Scroll = class {
   }
 };
 
-// src/files.ts
-var isFile = (value) => typeof File !== "undefined" && value instanceof File || value instanceof Blob || typeof FileList !== "undefined" && value instanceof FileList && value.length > 0;
-function hasFiles(data) {
-  return isFile(data) || data instanceof FormData && Array.from(data.values()).some((value) => hasFiles(value)) || typeof data === "object" && data !== null && Object.values(data).some((value) => hasFiles(value));
-}
-
-// src/formData.ts
-var isFormData = (value) => value instanceof FormData;
-function objectToFormData(source, form = new FormData(), parentKey = null, queryStringArrayFormat = "brackets") {
-  source = source || {};
-  for (const key in source) {
-    if (Object.prototype.hasOwnProperty.call(source, key)) {
-      append(form, composeKey(parentKey, key, "indices"), source[key], queryStringArrayFormat);
-    }
-  }
-  return form;
-}
-function composeKey(parent, key, format) {
-  if (!parent) {
-    return key;
-  }
-  return format === "brackets" ? `${parent}[]` : `${parent}[${key}]`;
-}
-function append(form, key, value, format) {
-  if (Array.isArray(value)) {
-    return Array.from(value.keys()).forEach(
-      (index) => append(form, composeKey(key, index.toString(), format), value[index], format)
-    );
-  } else if (value instanceof Date) {
-    return form.append(key, value.toISOString());
-  } else if (value instanceof File) {
-    return form.append(key, value, value.name);
-  } else if (value instanceof Blob) {
-    return form.append(key, value);
-  } else if (typeof value === "boolean") {
-    return form.append(key, value ? "1" : "0");
-  } else if (typeof value === "string") {
-    return form.append(key, value);
-  } else if (typeof value === "number") {
-    return form.append(key, `${value}`);
-  } else if (typeof value === "bigint") {
-    return form.append(key, value.toString());
-  } else if (value === null || value === void 0) {
-    return form.append(key, "");
-  }
-  objectToFormData(value, form, key, format);
-}
-
-// src/queryString.ts
-function hasIndices(url) {
-  return /\[\d+\]/.test(decodeURIComponent(url.search));
-}
-function parse(query) {
-  if (!query || query === "?") {
-    return {};
-  }
-  const result = {};
-  query.replace(/^\?/, "").split("&").filter(Boolean).forEach((segment) => {
-    const [rawKey, rawValue] = splitPair(segment);
-    set2(result, decode(rawKey), decode(rawValue));
-  });
-  return result;
-}
-function stringify2(data, arrayFormat) {
-  const pairs = [];
-  build(data, "", pairs, arrayFormat);
-  return pairs.length ? "?" + pairs.join("&") : "";
-}
-function splitPair(pair) {
-  const index = pair.indexOf("=");
-  return index === -1 ? [pair, ""] : [pair.substring(0, index), pair.substring(index + 1)];
-}
-function decode(value) {
-  return decodeURIComponent(value.replace(/\+/g, " "));
-}
-function set2(target, key, value) {
-  const keys = parseKey(key);
-  if (keys.some((k) => k === "__proto__")) {
-    return;
-  }
-  let current = target;
-  while (keys.length > 1) {
-    const segment = keys.shift();
-    const nextIsArrayPush = keys[0] === "";
-    if (typeof current[segment] !== "object" || current[segment] === null) {
-      current[segment] = nextIsArrayPush ? [] : {};
-    }
-    current = current[segment];
-  }
-  const final = keys.shift();
-  if (final === "" && Array.isArray(current)) {
-    current.push(value);
-  } else {
-    current[final] = value;
-  }
-}
-function parseKey(key) {
-  const segments = [];
-  const base = key.split("[")[0];
-  if (base) {
-    segments.push(base);
-  }
-  let match;
-  const pattern = /\[([^\]]*)\]/g;
-  while ((match = pattern.exec(key)) !== null) {
-    segments.push(match[1]);
-  }
-  return segments;
-}
-function build(value, prefix, pairs, arrayFormat) {
-  if (value === void 0) {
-    return;
-  }
-  if (value === null) {
-    pairs.push(`${prefix}=`);
-    return;
-  }
-  if (Array.isArray(value)) {
-    value.forEach((item, index) => {
-      const key = arrayFormat === "indices" ? `${prefix}[${index}]` : `${prefix}[]`;
-      build(item, key, pairs, arrayFormat);
-    });
-    return;
-  }
-  if (typeof value === "object") {
-    Object.keys(value).forEach((key) => {
-      build(value[key], prefix ? `${prefix}[${key}]` : key, pairs, arrayFormat);
-    });
-    return;
-  }
-  pairs.push(`${prefix}=${encodeURIComponent(String(value))}`);
-}
-
-// src/url.ts
-function hrefToUrl(href) {
-  return new URL(href.toString(), typeof window === "undefined" ? void 0 : window.location.toString());
-}
-var transformUrlAndData = (href, data, method, forceFormData, queryStringArrayFormat) => {
-  let url = typeof href === "string" ? hrefToUrl(href) : href;
-  if ((hasFiles(data) || forceFormData) && !isFormData(data)) {
-    if (config.get("form.forceIndicesArrayFormatInFormData")) {
-      queryStringArrayFormat = "indices";
-    }
-    data = objectToFormData(data, new FormData(), null, queryStringArrayFormat);
-  }
-  if (isFormData(data)) {
-    return [url, data];
-  }
-  const [_href, _data] = mergeDataIntoQueryString(method, url, data, queryStringArrayFormat);
-  return [hrefToUrl(_href), _data];
-};
-function mergeDataIntoQueryString(method, href, data, qsArrayFormat = "brackets") {
-  const hasDataForQueryString = method === "get" && !isFormData(data) && Object.keys(data).length > 0;
-  const hasHost = urlHasProtocol(href.toString());
-  const hasAbsolutePath = hasHost || href.toString().startsWith("/") || href.toString() === "";
-  const hasRelativePath = !hasAbsolutePath && !href.toString().startsWith("#") && !href.toString().startsWith("?");
-  const hasRelativePathWithDotPrefix = /^[.]{1,2}([/]|$)/.test(href.toString());
-  const hasSearch = href.toString().includes("?") || hasDataForQueryString;
-  const hasHash = href.toString().includes("#");
-  const url = new URL(href.toString(), typeof window === "undefined" ? "http://localhost" : window.location.toString());
-  if (hasDataForQueryString) {
-    const arrayFormat = hasIndices(url) ? "indices" : qsArrayFormat;
-    url.search = stringify2({ ...parse(url.search), ...data }, arrayFormat);
-  }
-  return [
-    [
-      hasHost ? `${url.protocol}//${url.host}` : "",
-      hasAbsolutePath ? url.pathname : "",
-      hasRelativePath ? url.pathname.substring(hasRelativePathWithDotPrefix ? 0 : 1) : "",
-      hasSearch ? url.search : "",
-      hasHash ? url.hash : ""
-    ].join(""),
-    hasDataForQueryString ? {} : data
-  ];
-}
-function urlWithoutHash(url) {
-  url = new URL(url.href);
-  url.hash = "";
-  return url;
-}
-var setHashIfSameUrl = (originUrl, destinationUrl) => {
-  if (originUrl.hash && !destinationUrl.hash && urlWithoutHash(originUrl).href === destinationUrl.href) {
-    destinationUrl.hash = originUrl.hash;
-  }
-};
-var isSameUrlWithoutHash = (url1, url2) => {
-  return urlWithoutHash(url1).href === urlWithoutHash(url2).href;
-};
-var isSameUrlWithoutQueryOrHash = (url1, url2) => {
-  return url1.origin === url2.origin && url1.pathname === url2.pathname;
-};
-function isUrlMethodPair(href) {
-  return href !== null && typeof href === "object" && href !== void 0 && "url" in href && "method" in href;
-}
-function resolveUrlMethodPairComponent(pair) {
-  if (!pair.component) {
-    return null;
-  }
-  if (typeof pair.component !== "string") {
-    console.error(
-      `The "component" property on the URL method pair received multiple components (${Object.keys(pair.component).join(", ")}), but only a single component string is supported for instant visits. Use the withComponent() method to specify which component to use.`
-    );
-    return null;
-  }
-  return pair.component;
-}
-function urlHasProtocol(url) {
-  return /^([a-z][a-z0-9+.-]*:)?\/\/[^/]/i.test(url);
-}
-function urlToString(url, absolute) {
-  const urlObj = typeof url === "string" ? hrefToUrl(url) : url;
-  return absolute ? `${urlObj.protocol}//${urlObj.host}${urlObj.pathname}${urlObj.search}${urlObj.hash}` : `${urlObj.pathname}${urlObj.search}${urlObj.hash}`;
-}
-
 // src/page.ts
 var CurrentPage = class {
   // @MOCK add filler page data
@@ -1208,7 +1365,10 @@ var CurrentPage = class {
     resolveComponent,
     onFlash
   }) {
-    this.page = { ...initialPage, flash: initialPage.flash ?? {}, rescuedProps: initialPage.rescuedProps ?? [] };
+    this.assignPage(
+      { ...initialPage, flash: initialPage.flash ?? {}, rescuedProps: initialPage.rescuedProps ?? [] },
+      initialPage.deferredProps
+    );
     this.swapComponent = swapComponent;
     this.resolveComponent = resolveComponent;
     this.onFlashCallback = onFlash;
@@ -1224,9 +1384,15 @@ var CurrentPage = class {
     viewTransition = false,
     cached = false,
     initialRender = false,
-    visitId
+    clientSide = false,
+    visitId,
+    isCancelled = () => false,
+    onCommit = () => {
+    }
   } = {}) {
-    if (Object.keys(page2.deferredProps || {}).length) {
+    const previousPendingDeferredProps = this.pendingDeferredProps;
+    const isClientVisitToSamePage = clientSide && this.isTheSame(page2) && page2.url === this.page.url;
+    if (!isClientVisitToSamePage && Object.keys(page2.deferredProps || {}).length) {
       this.pendingDeferredProps = {
         deferredProps: page2.deferredProps,
         component: page2.component,
@@ -1236,6 +1402,7 @@ var CurrentPage = class {
         page2.initialDeferredProps = page2.deferredProps;
       }
     }
+    const pendingDeferredProps2 = this.pendingDeferredProps;
     this.componentId = {};
     const componentId = this.componentId;
     if (page2.clearHistory) {
@@ -1243,9 +1410,13 @@ var CurrentPage = class {
       prefetchedRequests.removeAll();
     }
     return this.resolve(page2.component, page2).then((component) => {
-      if (componentId !== this.componentId) {
+      if (componentId !== this.componentId || isCancelled()) {
+        if (isCancelled() && this.pendingDeferredProps === pendingDeferredProps2) {
+          this.pendingDeferredProps = previousPendingDeferredProps;
+        }
         return;
       }
+      onCommit();
       page2.rememberedState ??= {};
       const isServer3 = typeof window === "undefined";
       const location = !isServer3 ? window.location : new URL(page2.url);
@@ -1260,8 +1431,8 @@ var CurrentPage = class {
         if (!isNewComponent && Object.keys(page2.props.errors || {}).length > 0) {
           viewTransition = false;
         }
-        this.page = page2;
         this.cleared = false;
+        this.assignPage(page2, this.pendingDeferredPropsFor(page2));
         if (this.hasOnceProps()) {
           prefetchedRequests.updateCachedOncePropsFromCurrentPage();
         }
@@ -1288,8 +1459,9 @@ var CurrentPage = class {
           } else {
             Scroll.reset();
           }
-          if (this.pendingDeferredProps && this.pendingDeferredProps.component === page2.component && this.pendingDeferredProps.url === page2.url) {
-            eventHandler.fireInternalEvent("loadDeferredProps", this.pendingDeferredProps.deferredProps);
+          const deferredProps = this.pendingDeferredPropsFor(page2);
+          if (deferredProps) {
+            eventHandler.fireInternalEvent("loadDeferredProps", deferredProps);
           }
           this.pendingDeferredProps = null;
           if (!replace) {
@@ -1304,8 +1476,8 @@ var CurrentPage = class {
   } = {}) {
     this.componentId = {};
     return this.resolve(page2.component, page2).then((component) => {
-      this.page = page2;
       this.cleared = false;
+      this.assignPage(page2);
       history.setCurrent(page2);
       return this.swap({ component, page: page2, preserveState, viewTransition: false });
     });
@@ -1324,6 +1496,23 @@ var CurrentPage = class {
   }
   hasOnceProps() {
     return Object.keys(this.page.onceProps ?? {}).length > 0;
+  }
+  /**
+   * Replace the whole page object and announce it. The partial mutations below
+   * deliberately do not, except `merge()`, which takes a `Partial<Page>` and is
+   * handed a whole page by `history.replaceState`.
+   */
+  assignPage(page2, pendingDeferredProps2) {
+    this.page = page2;
+    setPendingDeferredProps(page2.props, pendingDeferredProps2);
+    eventHandler.fireInternalEvent("pageUpdated", page2);
+  }
+  pendingDeferredPropsFor(page2) {
+    const pending = this.pendingDeferredProps;
+    if (!pending || pending.component !== page2.component || pending.url !== page2.url) {
+      return void 0;
+    }
+    return pending.deferredProps;
   }
   merge(data) {
     this.page = { ...this.page, ...data };
@@ -1451,8 +1640,8 @@ var CurrentPage = class {
       if (existingOnceProp === void 0) {
         return;
       }
-      if (force || get3(response.props, onceProp.prop) === void 0) {
-        set3(response.props, onceProp.prop, get3(this.page.props, existingOnceProp.prop));
+      if (force || get4(response.props, onceProp.prop) === void 0) {
+        set3(response.props, onceProp.prop, get4(this.page.props, existingOnceProp.prop));
         response.onceProps[key].expiresAt = existingOnceProp.expiresAt;
       }
     });
@@ -1732,14 +1921,16 @@ var history = new History();
 // src/eventHandler.ts
 var EventHandler = class {
   internalListeners = [];
+  onWindowScroll = debounce(() => Scroll.onWindowScroll(), 100);
+  onScroll = debounce((event) => Scroll.onScroll(event), 100);
   init() {
     if (typeof window !== "undefined") {
       window.addEventListener("popstate", this.handlePopstateEvent.bind(this));
       window.addEventListener("pageshow", this.handlePageshowEvent.bind(this));
-      window.addEventListener("scroll", debounce(Scroll.onWindowScroll.bind(Scroll), 100), true);
+      window.addEventListener("scroll", this.onWindowScroll, true);
     }
     if (typeof document !== "undefined") {
-      document.addEventListener("scroll", debounce(Scroll.onScroll.bind(Scroll), 100), true);
+      document.addEventListener("scroll", this.onScroll, true);
     }
   }
   onGlobalEvent(type, callback) {
@@ -1777,6 +1968,8 @@ var EventHandler = class {
     }
   }
   handlePopstateEvent(event) {
+    this.onWindowScroll.cancel();
+    this.onScroll.cancel();
     const state = event.state || null;
     if (state === null) {
       const url = hrefToUrl(page.get().url);
@@ -1788,19 +1981,19 @@ var EventHandler = class {
     if (!history.isValidState(state)) {
       return this.onMissingHistoryItem();
     }
+    router.cancelAll({ prefetch: false });
     history.decrypt(state.page).then((data) => {
       if (page.get().version !== data.version) {
         this.onMissingHistoryItem();
         return;
       }
-      router.cancelAll({ prefetch: false });
       page.setQuietly(data, { preserveState: false }).then(() => {
         Scroll.restore(history.getScrollRegions());
         fireNavigateEvent(page.get(), { type: "history" });
         const pendingDeferred = {};
         const pageProps = page.get().props;
         for (const [group, props] of Object.entries(data.initialDeferredProps ?? data.deferredProps ?? {})) {
-          const missing = props.filter((prop) => get4(pageProps, prop) === void 0);
+          const missing = props.filter((prop) => get5(pageProps, prop) === void 0);
           if (missing.length > 0) {
             pendingDeferred[group] = missing;
           }
@@ -2093,6 +2286,35 @@ var Poll = class {
   }
 };
 
+// src/visibility.ts
+var listeners2 = /* @__PURE__ */ new Set();
+var registered = false;
+var register = () => {
+  if (registered || typeof document === "undefined") {
+    return;
+  }
+  registered = true;
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+      listeners2.forEach((listener) => listener(document.hidden));
+    },
+    false
+  );
+};
+var visibility = {
+  isHidden() {
+    return typeof document !== "undefined" && document.hidden;
+  },
+  onChange(listener) {
+    register();
+    listeners2.add(listener);
+    return () => {
+      listeners2.delete(listener);
+    };
+  }
+};
+
 // src/polls.ts
 var Polls = class {
   polls = [];
@@ -2104,6 +2326,7 @@ var Polls = class {
   }
   add(interval, cb, options) {
     const poll = new Poll(interval, cb, options);
+    poll.isInBackground(visibility.isHidden());
     this.polls.push(poll);
     return {
       stop: () => poll.stop(),
@@ -2119,22 +2342,15 @@ var Polls = class {
     this.polls = [];
   }
   setupVisibilityListener() {
-    if (typeof document === "undefined") {
-      return;
-    }
-    document.addEventListener(
-      "visibilitychange",
-      () => {
-        this.polls.forEach((poll) => poll.isInBackground(document.hidden));
-      },
-      false
-    );
+    visibility.onChange((hidden2) => {
+      this.polls.forEach((poll) => poll.isInBackground(hidden2));
+    });
   }
 };
 var polls = new Polls();
 
 // src/request.ts
-import { get as get6 } from "es-toolkit/compat";
+import { get as get7 } from "es-toolkit/compat";
 
 // src/http.ts
 import { client as precognitionClient } from "laravel-precognition";
@@ -2188,9 +2404,6 @@ var httpHandlers = new HttpHandlers();
 function getCookie(name) {
   const match = document.cookie.match(new RegExp("(^|;\\s*)(" + name + ")=([^;]*)"));
   return match ? decodeURIComponent(match[3]) : null;
-}
-function isSameOrigin(url) {
-  return new URL(url, window.location.href).origin === window.location.origin;
 }
 function parseHeaders(xhr) {
   const headers = {};
@@ -2465,6 +2678,9 @@ var RequestParams = class _RequestParams {
   isPollRequest() {
     return this.params.poll === true;
   }
+  isQueryMethodReload() {
+    return this.params.queryMethodReload === true;
+  }
   onCancelToken(cb) {
     this.params.onCancelToken({
       cancel: cb
@@ -2561,11 +2777,22 @@ var RequestParams = class _RequestParams {
     }
     return value;
   }
+  /**
+   * Async visits run in the background, so only a sync visit to another URL leaves the page.
+   * Partial visits update the page they're on, so for those only another path counts.
+   * A full QUERY visit may carry a different body to the same URL, so it always leaves the page.
+   */
+  leavesPage(pageUrl, destinationUrl) {
+    if (this.params.async) {
+      return false;
+    }
+    return this.isPartial() ? !isSameUrlWithoutQueryOrHash(destinationUrl, pageUrl) : this.params.method === "query" || !isSameUrlWithoutHash(destinationUrl, pageUrl);
+  }
 };
 
 // src/response.ts
 import { isEqual as isEqual2 } from "es-toolkit";
-import { get as get5, set as set4 } from "es-toolkit/compat";
+import { get as get6, set as set4 } from "es-toolkit/compat";
 
 // src/dialog.ts
 var dialog_default = {
@@ -2632,27 +2859,6 @@ var dialog_default = {
   }
 };
 
-// src/partialReload.ts
-var isPathOrSubPath = (path, candidate) => {
-  return path === candidate || path.startsWith(`${candidate}.`);
-};
-var partialReloadRequestsProp = (visit, prop) => {
-  const { only, except } = visit;
-  if (only.length === 0 && except.length === 0) {
-    return false;
-  }
-  if (only.length > 0 && !only.some((candidate) => isPathOrSubPath(prop, candidate))) {
-    return false;
-  }
-  if (except.length > 0 && except.some((candidate) => isPathOrSubPath(prop, candidate))) {
-    return false;
-  }
-  return true;
-};
-var partialReloadRequestsSomeProps = (visit, props) => {
-  return props.some((prop) => partialReloadRequestsProp(visit, prop));
-};
-
 // src/response.ts
 var queue2 = new Queue();
 var Response = class _Response {
@@ -2668,6 +2874,7 @@ var Response = class _Response {
   optimisticId;
   wasPrefetched = false;
   processed = false;
+  pageApplied = false;
   static create(params, response, originatingPage, optimisticId = null) {
     return new _Response(params, response, originatingPage, optimisticId);
   }
@@ -2675,7 +2882,8 @@ var Response = class _Response {
     return this.processed;
   }
   async handlePrefetch() {
-    if (isSameUrlWithoutHash(this.requestParams.all().url, window.location)) {
+    const { method, url } = this.requestParams.all();
+    if (method !== "query" && isSameUrlWithoutHash(url, window.location)) {
       this.handle();
     }
   }
@@ -2683,6 +2891,7 @@ var Response = class _Response {
     return queue2.add(() => this.process());
   }
   async process() {
+    this.pageApplied = false;
     if (this.requestParams.all().prefetch) {
       this.wasPrefetched = true;
       this.requestParams.all().prefetch = false;
@@ -2692,6 +2901,9 @@ var Response = class _Response {
     }
     this.requestParams.runCallbacks();
     this.processed = true;
+    if (this.requestParams.wasCancelledAtAll()) {
+      return;
+    }
     if (!this.isInertiaResponse()) {
       return this.handleNonInertiaResponse();
     }
@@ -2709,28 +2921,39 @@ var Response = class _Response {
     }
     await history.processQueue();
     history.preserveUrl = this.requestParams.all().preserveUrl;
-    await this.setPage();
-    const { flash } = page.get();
-    if (Object.keys(flash).length > 0 && !this.requestParams.isDeferredPropsRequest()) {
-      fireFlashEvent(flash);
-      this.requestParams.all().onFlash(flash);
+    try {
+      await this.setPage();
+      if (this.requestParams.wasCancelledAtAll() && !this.pageApplied) {
+        return;
+      }
+      const { flash } = page.get();
+      if (Object.keys(flash).length > 0 && !this.requestParams.isDeferredPropsRequest()) {
+        fireFlashEvent(flash);
+        this.requestParams.all().onFlash(flash);
+      }
+      const errors = page.get().props.errors || {};
+      if (Object.keys(errors).length > 0) {
+        const scopedErrors = this.getScopedErrors(errors);
+        fireErrorEvent(scopedErrors, { page: page.get(), visitId: this.requestParams.all().id });
+        return this.requestParams.all().onError(scopedErrors);
+      }
+      router.flushByCacheTags(this.requestParams.all().invalidateCacheTags || []);
+      if (!this.wasPrefetched) {
+        router.flush(page.get().url);
+      }
+      fireSuccessEvent(page.get(), { visitId: this.requestParams.all().id });
+      await this.requestParams.all().onSuccess(page.get());
+    } finally {
+      history.preserveUrl = false;
     }
-    const errors = page.get().props.errors || {};
-    if (Object.keys(errors).length > 0) {
-      const scopedErrors = this.getScopedErrors(errors);
-      fireErrorEvent(scopedErrors, { page: page.get(), visitId: this.requestParams.all().id });
-      return this.requestParams.all().onError(scopedErrors);
-    }
-    router.flushByCacheTags(this.requestParams.all().invalidateCacheTags || []);
-    if (!this.wasPrefetched) {
-      router.flush(page.get().url);
-    }
-    fireSuccessEvent(page.get(), { visitId: this.requestParams.all().id });
-    await this.requestParams.all().onSuccess(page.get());
-    history.preserveUrl = false;
   }
   mergeParams(params) {
     this.requestParams.merge(params);
+  }
+  interrupt() {
+    if (!this.requestParams.wasCancelledAtAll()) {
+      this.requestParams.markAsCancelled({ cancelled: false, interrupted: true });
+    }
   }
   getPageResponse() {
     const data = this.getDataFromResponse(this.response.data);
@@ -2824,18 +3047,45 @@ var Response = class _Response {
     this.preserveOptimisticProps(pageResponse);
     this.preserveEqualProps(pageResponse);
     await this.setRememberedState(pageResponse);
+    if (this.requestParams.wasCancelledAtAll()) {
+      return;
+    }
+    const currentPageUrl = hrefToUrl(page.get().url);
+    const responseUrl = hrefToUrl(pageResponse.url);
+    const leavesPage = this.requestParams.leavesPage(currentPageUrl, responseUrl);
+    const keepsCurrentUrl = this.keepsCurrentUrl(currentPageUrl, responseUrl);
     this.requestParams.setPreserveOptions(pageResponse);
-    pageResponse.url = history.preserveUrl ? page.get().url : this.pageUrl(pageResponse);
+    const queryMethodData = this.queryMethodData(pageResponse);
+    if (queryMethodData) {
+      pageResponse.queryMethodData = queryMethodData;
+    }
+    pageResponse.url = history.preserveUrl || keepsCurrentUrl ? page.get().url : this.pageUrl(pageResponse);
     this.requestParams.all().onBeforeUpdate(pageResponse);
     fireBeforeUpdateEvent(pageResponse);
+    const visit = this.requestParams.all();
     return page.set(pageResponse, {
-      replace: this.requestParams.all().replace,
-      preserveScroll: this.requestParams.all().preserveScroll,
-      preserveState: this.requestParams.all().preserveState,
-      viewTransition: this.requestParams.all().viewTransition,
-      cached: this.requestParams.all().cached,
-      visitId: this.requestParams.all().id
+      replace: visit.replace,
+      preserveScroll: visit.preserveScroll,
+      preserveState: visit.preserveState,
+      viewTransition: visit.viewTransition,
+      cached: visit.cached,
+      visitId: visit.id,
+      isCancelled: () => this.requestParams.wasCancelledAtAll(),
+      onCommit: () => {
+        this.pageApplied = true;
+        if (leavesPage) {
+          eventHandler.fireInternalEvent("leavePage", currentPageUrl);
+        }
+      }
     });
+  }
+  queryMethodData(pageResponse) {
+    const { method, data, url, preserveUrl } = this.requestParams.all();
+    const wasRenderedByQuery = method === "query" && !isFormData(data) && isSameUrlWithoutHash(hrefToUrl(pageResponse.url), url) && Object.keys(pageResponse.props.errors ?? {}).length === 0;
+    if (!wasRenderedByQuery) {
+      return void 0;
+    }
+    return this.requestParams.isQueryMethodReload() && preserveUrl ? page.get().queryMethodData : data;
   }
   getDataFromResponse(response) {
     if (typeof response !== "string") {
@@ -2860,6 +3110,21 @@ var Response = class _Response {
     const originatingUrl = hrefToUrl(this.originatingPage.url);
     const currentPageUrl = hrefToUrl(page.get().url);
     return originatingUrl.origin === currentPageUrl.origin && originatingUrl.pathname === currentPageUrl.pathname;
+  }
+  /**
+   * A client visit, like the URL updates of <InfiniteScroll>, may change the query string while a reload of the
+   * page is in flight. The reload then keeps that URL instead of putting the previous query string back.
+   */
+  keepsCurrentUrl(currentPageUrl, responseUrl) {
+    const visit = this.requestParams.all();
+    if (!visit.async) {
+      return false;
+    }
+    const originatingUrl = hrefToUrl(this.originatingPage.url);
+    const reloadsOriginatingPage = isSameUrlWithoutHash(visit.url, originatingUrl);
+    const urlChangedSince = !isSameUrlWithoutHash(currentPageUrl, originatingUrl);
+    const landsOnCurrentPath = isSameUrlWithoutQueryOrHash(responseUrl, currentPageUrl);
+    return reloadsOriginatingPage && urlChangedSince && landsOnCurrentPath;
   }
   pageUrl(pageResponse) {
     const responseUrl = hrefToUrl(pageResponse.url);
@@ -2904,8 +3169,8 @@ var Response = class _Response {
     const propsToDeepMerge = pageResponse.deepMergeProps || [];
     const matchPropsOn = pageResponse.matchPropsOn || [];
     const mergeProp = (prop, shouldAppend) => {
-      const currentProp = get5(page.get().props, prop);
-      const incomingProp = get5(pageResponse.props, prop);
+      const currentProp = get6(page.get().props, prop);
+      const incomingProp = get6(pageResponse.props, prop);
       if (Array.isArray(incomingProp)) {
         const newArray = this.mergeOrMatchItems(
           currentProp || [],
@@ -2926,8 +3191,8 @@ var Response = class _Response {
     propsToAppend.forEach((prop) => mergeProp(prop, true));
     propsToPrepend.forEach((prop) => mergeProp(prop, false));
     propsToDeepMerge.forEach((prop) => {
-      const currentProp = get5(page.get().props, prop);
-      const incomingProp = get5(pageResponse.props, prop);
+      const currentProp = get6(page.get().props, prop);
+      const incomingProp = get6(pageResponse.props, prop);
       const deepMerge = (target, source, matchProp) => {
         if (Array.isArray(source)) {
           return this.mergeOrMatchItems(target, source, matchProp, matchPropsOn);
@@ -2964,6 +3229,12 @@ var Response = class _Response {
         ...pageResponse.scrollProps || {}
       };
     }
+    if (page.get().liveProps) {
+      pageResponse.liveProps = {
+        ...page.get().liveProps || {},
+        ...pageResponse.liveProps || {}
+      };
+    }
     if (page.hasOnceProps()) {
       pageResponse.onceProps = {
         ...page.get().onceProps || {},
@@ -2989,10 +3260,9 @@ var Response = class _Response {
     return Array.from(newRescued);
   }
   /**
-   * By default, the Laravel adapter shares validation errors via Inertia::always(),
-   * so responses always include errors, even when empty. Components like
-   * InfiniteScroll and WhenVisible, as well as loading deferred props,
-   * perform async requests that should practically never reset errors.
+   * The Laravel adapter shares validation errors via Inertia::always(), so responses
+   * always include errors, even when empty. InfiniteScroll, WhenVisible and deferred
+   * prop loading are async and should practically never reset them.
    */
   shouldPreserveErrors(pageResponse) {
     if (!this.requestParams.all().preserveErrors) {
@@ -3115,32 +3385,40 @@ var Request = class _Request {
     return this.isOptimistic() && (!this.response || !this.response.isProcessed());
   }
   async send() {
+    trackPropRefresh(this.requestParams.all());
     this.requestParams.onCancelToken(() => {
       if (this.response) {
         return;
       }
       this.cancel({ cancelled: true });
     });
-    fireStartEvent(this.requestParams.all());
-    this.requestParams.onStart();
-    if (this.requestParams.all().prefetch) {
-      this.requestParams.onPrefetching();
-      firePrefetchingEvent(this.requestParams.all());
+    let originallyPrefetch = false;
+    let processedConfig;
+    try {
+      fireStartEvent(this.requestParams.all());
+      this.requestParams.onStart();
+      if (this.requestParams.all().prefetch) {
+        this.requestParams.onPrefetching();
+        firePrefetchingEvent(this.requestParams.all());
+      }
+      originallyPrefetch = this.requestParams.all().prefetch;
+      const config2 = {
+        method: this.requestParams.all().method,
+        url: urlWithoutHash(this.requestParams.all().url).href,
+        data: this.requestParams.data(),
+        signal: this.cancelToken.signal,
+        headers: this.getHeaders(),
+        onUploadProgress: this.onProgress.bind(this)
+      };
+      if (containsBigInt(config2.data)) {
+        config2.data = stringifyJson(config2.data);
+        config2.headers = { "Content-Type": "application/json", ...config2.headers };
+      }
+      processedConfig = await interceptors.processRequest(this.requestParams.all(), config2);
+    } catch (error) {
+      untrackPropRefresh(this.requestParams.all());
+      throw error;
     }
-    const originallyPrefetch = this.requestParams.all().prefetch;
-    const config2 = {
-      method: this.requestParams.all().method,
-      url: urlWithoutHash(this.requestParams.all().url).href,
-      data: this.requestParams.data(),
-      signal: this.cancelToken.signal,
-      headers: this.getHeaders(),
-      onUploadProgress: this.onProgress.bind(this)
-    };
-    if (containsBigInt(config2.data)) {
-      config2.data = stringifyJson(config2.data);
-      config2.headers = { "Content-Type": "application/json", ...config2.headers };
-    }
-    const processedConfig = await interceptors.processRequest(this.requestParams.all(), config2);
     return http.getClient().request(processedConfig).then((response) => {
       this.response = Response.create(this.requestParams, response, this.page, this.optimisticId);
       return this.response.handle();
@@ -3182,6 +3460,7 @@ var Request = class _Request {
       return;
     }
     this.requestHasFinished = true;
+    untrackPropRefresh(this.requestParams.all());
     fireFinishEvent(this.requestParams.all());
     this.requestParams.onFinish();
   }
@@ -3211,7 +3490,7 @@ var Request = class _Request {
       headers["X-Inertia-Version"] = page2.version;
     }
     const onceProps = Object.entries(page2.onceProps || {}).filter(([, onceProp]) => {
-      if (get6(page2.props, onceProp.prop) === void 0) {
+      if (get7(page2.props, onceProp.prop) === void 0) {
         return false;
       }
       return !onceProp.expiresAt || onceProp.expiresAt > Date.now();
@@ -3299,6 +3578,9 @@ var Router = class {
     eventHandler.on("loadDeferredProps", (deferredProps) => {
       this.loadDeferredProps(deferredProps);
     });
+    eventHandler.on("leavePage", (pageUrl) => {
+      this.cancelAsyncRequestsFor(pageUrl);
+    });
     eventHandler.on("historyQuotaExceeded", (url) => {
       window.location.href = url;
     });
@@ -3322,6 +3604,9 @@ var Router = class {
   delete(url, options = {}) {
     return this.visit(url, { preserveState: true, ...options, method: "delete" });
   }
+  query(url, data = {}, options = {}) {
+    return this.visit(url, { preserveState: true, ...options, method: "query", data });
+  }
   reload(options = {}) {
     return this.doReload(options);
   }
@@ -3329,8 +3614,11 @@ var Router = class {
     if (typeof window === "undefined") {
       return;
     }
+    const queryMethodData = options.method || isFormData(options.data) ? void 0 : page.get().queryMethodData;
+    const queryMethodOptions = queryMethodData ? { method: "query", data: { ...queryMethodData, ...options.data }, queryMethodReload: true } : {};
     return this.visit(window.location.href, {
       ...options,
+      ...queryMethodOptions,
       preserveScroll: true,
       preserveState: true,
       async: true,
@@ -3373,10 +3661,21 @@ var Router = class {
   cancelAll({ async = true, prefetch = true, sync = true } = {}) {
     if (async) {
       this.asyncRequestStream.cancelInFlight({ prefetch });
+      prefetchedRequests.interruptInFlight({ async: true });
     }
     if (sync) {
       this.syncRequestStream.cancelInFlight();
+      prefetchedRequests.interruptInFlight({ async: false });
     }
+  }
+  /**
+   * Cancels the in-flight requests for a page we're leaving, like deferred props, partial reloads and polls.
+   * Prefetches, optimistic requests, and background async visits to other pages are left untouched.
+   */
+  cancelAsyncRequestsFor(pageUrl) {
+    this.asyncRequestStream.cancelInFlight(
+      (request) => !request.isPrefetch() && !request.isOptimistic() && isSameUrlWithoutQueryOrHash(request.getUrl(), pageUrl)
+    );
   }
   poll(interval, requestOptions = {}, options = {}) {
     return polls.add(
@@ -3419,16 +3718,9 @@ var Router = class {
     if (events.onBefore(visit) === false || !fireBeforeEvent(visit)) {
       return;
     }
-    const currentPageUrl = hrefToUrl(page.get().url);
-    const isPartialReload = visit.only.length > 0 || visit.except.length > 0 || visit.reset.length > 0;
-    const isSamePage = isPartialReload ? isSameUrlWithoutQueryOrHash(visit.url, currentPageUrl) : isSameUrlWithoutHash(visit.url, currentPageUrl);
-    if (!isSamePage) {
-      this.asyncRequestStream.cancelInFlight(
-        (request) => !request.isPrefetch() && !request.isOptimistic() && isSameUrlWithoutQueryOrHash(request.getUrl(), currentPageUrl)
-      );
-    }
     if (!visit.async) {
       this.syncRequestStream.interruptInFlight();
+      prefetchedRequests.interruptInFlight({ async: false });
     }
     let optimisticId = null;
     if (options.optimistic) {
@@ -3489,10 +3781,6 @@ var Router = class {
     return prefetchedRequests.findInFlight(this.getPrefetchParams(href, options));
   }
   prefetch(href, options = {}, prefetchOptions = {}) {
-    const method = options.method ?? (isUrlMethodPair(href) ? href.method : "get");
-    if (method !== "get") {
-      throw new Error("Prefetch requests must use the GET method");
-    }
     const visit = this.getPendingVisit(href, {
       ...options,
       async: true,
@@ -3500,9 +3788,12 @@ var Router = class {
       prefetch: true,
       viewTransition: false
     });
+    if (visit.method !== "get" && visit.method !== "query") {
+      throw new Error("Prefetch requests must use the GET or QUERY method");
+    }
     const visitUrl = visit.url.origin + visit.url.pathname + visit.url.search;
     const currentUrl = window.location.origin + window.location.pathname + window.location.search;
-    if (visitUrl === currentUrl) {
+    if (visit.method === "get" && visitUrl === currentUrl) {
       return;
     }
     const events = this.getVisitEvents(options);
@@ -3559,7 +3850,7 @@ var Router = class {
       preserveScroll: true,
       preserveState: true,
       props(currentProps) {
-        const newValue = typeof value === "function" ? value(get7(currentProps, name), currentProps) : value;
+        const newValue = typeof value === "function" ? value(get8(currentProps, name), currentProps) : value;
         return setPathPreservingIdentity(currentProps, name, newValue);
       },
       ...options || {}
@@ -3619,31 +3910,40 @@ var Router = class {
     const onceProps = typeof params.props === "function" ? Object.fromEntries(
       Object.values(current.onceProps ?? {}).map((onceProp) => [
         onceProp.prop,
-        get7(current.props, onceProp.prop)
+        get8(current.props, onceProp.prop)
       ])
     ) : {};
     const props = typeof params.props === "function" ? params.props(current.props, onceProps) : params.props ?? current.props;
     const flash = typeof params.flash === "function" ? params.flash(current.flash) : params.flash;
-    const { viewTransition, onError, onFinish, onFlash, onSuccess, ...pageParams } = params;
+    const { viewTransition, preserveFlash, onError, onFinish, onFlash, onSuccess, ...pageParams } = params;
     const page2 = {
       ...current,
+      clearHistory: false,
       ...pageParams,
-      flash: flash ?? {},
+      flash: preserveFlash ? current.flash : flash ?? {},
       props
     };
+    if (page2.component !== current.component || !isSameUrlWithoutQueryOrHash(hrefToUrl(page2.url), hrefToUrl(current.url))) {
+      delete page2.queryMethodData;
+    }
     const preserveScroll = RequestParams.resolvePreserveOption(params.preserveScroll ?? false, page2);
     const preserveState = RequestParams.resolvePreserveOption(params.preserveState ?? false, page2);
     const visitId = this.createVisitId();
+    const currentPageUrl = hrefToUrl(current.url);
+    if (!isSameUrlWithoutQueryOrHash(hrefToUrl(page2.url), currentPageUrl)) {
+      this.cancelAsyncRequestsFor(currentPageUrl);
+    }
     return page.set(page2, {
       replace,
       preserveScroll,
       preserveState,
       viewTransition,
+      clientSide: true,
       visitId
     }).then(() => {
       fireClientVisitEvent(page.get(), { replace, visitId });
       const currentFlash = page.get().flash;
-      if (Object.keys(currentFlash).length > 0) {
+      if (!preserveFlash && Object.keys(currentFlash).length > 0) {
         fireFlashEvent(currentFlash);
         onFlash?.(currentFlash);
       }
@@ -3696,11 +3996,12 @@ var Router = class {
   preserveOncePropsOnInstantVisit(current, props) {
     const onceProps = {};
     Object.entries(current.onceProps ?? {}).forEach(([key, onceProp]) => {
-      if (get7(props, onceProp.prop) !== void 0) {
+      const currentValue = get8(current.props, onceProp.prop);
+      if (currentValue === void 0) {
         return;
       }
-      const currentValue = get7(current.props, onceProp.prop);
-      if (currentValue === void 0) {
+      const providedValue = get8(props, onceProp.prop);
+      if (providedValue !== void 0 && !isEqual3(providedValue, currentValue)) {
         return;
       }
       set5(props, onceProp.prop, currentValue);
@@ -3846,6 +4147,7 @@ var Router = class {
         this.doReload({ only: props, deferredProps: true, preserveErrors: true });
       });
     }
+    clearPendingDeferredProps();
   }
 };
 
@@ -3896,9 +4198,9 @@ var UseFormUtils = class {
       };
     }
     if (args.length === 2) {
-      if (typeof args[0] === "string") {
+      if (typeof args[0] === "string" || args[0] === null || args[0] === void 0) {
         return {
-          rememberKey: args[0],
+          rememberKey: args[0] ?? null,
           data: args[1],
           precognitionEndpoint: null
         };
@@ -4072,7 +4374,7 @@ function axiosAdapter(instance) {
 }
 
 // src/formObject.ts
-import { get as get8, set as set6 } from "es-toolkit/compat";
+import { get as get9, set as set6 } from "es-toolkit/compat";
 function undotKey(key) {
   if (!key.includes(".")) {
     return key;
@@ -4142,7 +4444,7 @@ function formDataToObject(source) {
     const path = parseKey2(undotKey(key));
     if (path[path.length - 1] === "") {
       const arrayPath = path.slice(0, -1);
-      const existing = get8(form, arrayPath);
+      const existing = get9(form, arrayPath);
       if (Array.isArray(existing)) {
         existing.push(value);
       } else if (existing && typeof existing === "object" && !isFile(existing)) {
@@ -4703,13 +5005,11 @@ var useInfiniteScrollQueryString = (options) => {
 // src/infiniteScroll/scrollPreservation.ts
 var useInfiniteScrollPreservation = (options) => {
   const createCallbacks = () => {
-    let currentScrollTop;
     let referenceElement = null;
     let referenceElementTop = 0;
     const captureScrollPosition = () => {
       const scrollableContainer = options.getScrollableParent();
       const itemsElement = options.getItemsElement();
-      currentScrollTop = scrollableContainer?.scrollTop || window.scrollY;
       const visibleElements = getElementsInViewportFromCollection([...itemsElement.children]);
       if (visibleElements.length > 0) {
         referenceElement = visibleElements[0];
@@ -4741,7 +5041,7 @@ var useInfiniteScrollPreservation = (options) => {
           return;
         }
         if (scrollableContainer) {
-          scrollableContainer.scrollTo({ top: currentScrollTop + adjustment });
+          scrollableContainer.scrollTo({ top: scrollableContainer.scrollTop + adjustment });
         } else {
           window.scrollTo(0, window.scrollY + adjustment);
         }
@@ -4841,19 +5141,19 @@ function createLayoutPropsStore() {
   let shared = {};
   let named = {};
   let snapshot = { shared, named };
-  const listeners = /* @__PURE__ */ new Set();
+  const listeners3 = /* @__PURE__ */ new Set();
   let pendingNotify = false;
   const updateSnapshot = () => {
     snapshot = { shared, named };
   };
-  const notify = () => {
+  const notify2 = () => {
     if (pendingNotify) {
       return;
     }
     pendingNotify = true;
     queueMicrotask(() => {
       pendingNotify = false;
-      listeners.forEach((fn) => fn());
+      listeners3.forEach((fn) => fn());
     });
   };
   return {
@@ -4864,7 +5164,7 @@ function createLayoutPropsStore() {
       }
       shared = merged;
       updateSnapshot();
-      notify();
+      notify2();
     },
     setFor(name, props) {
       const current = named[name] || {};
@@ -4874,17 +5174,17 @@ function createLayoutPropsStore() {
       }
       named = { ...named, [name]: merged };
       updateSnapshot();
-      notify();
+      notify2();
     },
     reset() {
       shared = {};
       named = {};
       updateSnapshot();
-      notify();
+      notify2();
     },
     subscribe(callback) {
-      listeners.add(callback);
-      return () => listeners.delete(callback);
+      listeners3.add(callback);
+      return () => listeners3.delete(callback);
     },
     get: () => snapshot
   };
@@ -4955,6 +5255,357 @@ function normalizeLayouts(layout, isComponent, isRenderFunction) {
   }
   return [];
 }
+
+// src/live.ts
+import { get as get10, toPath as toPath2 } from "es-toolkit/compat";
+
+// src/liveChannel.ts
+var liveChannelKey = (channel) => `${channel.type}:${channel.name}`;
+
+// src/socketId.ts
+var resolver = null;
+var configured = false;
+http.onRequest((config2) => {
+  const current = socketId.resolve();
+  const headers = config2.headers ?? {};
+  const alreadySet = Object.keys(headers).some((header) => header.toLowerCase() === "x-socket-id");
+  if (current && !alreadySet && isSameOrigin(config2.url)) {
+    config2.headers = { ...headers, "X-Socket-Id": current };
+  }
+  return config2;
+});
+var socketId = {
+  /**
+   * Pass `null` to stop sending the socket id along with requests.
+   */
+  resolveUsing(callback) {
+    resolver = callback;
+    configured = true;
+  },
+  /**
+   * Register a resolver for an app that has not chosen one itself, whichever
+   * order the two happen in. Clearing one with `null` counts as choosing.
+   */
+  resolveUsingDefault(callback) {
+    if (configured || resolver !== null) {
+      return;
+    }
+    resolver = callback;
+  },
+  resolve() {
+    return resolver?.() || null;
+  }
+};
+
+// src/live.ts
+var DEFAULT_THROTTLE = 1e3;
+var COLLECT_WINDOW = 32;
+var throttleWait = (throttle, flushedAt, now) => {
+  return Math.max(0, throttle - (now - (flushedAt ?? -Infinity)));
+};
+var subscriptionKey = (channel, event) => `${liveChannelKey(channel)}::${event}`;
+var pageKey = (page2) => `${page2.component}::${page2.url}`;
+var isTransport = (live2) => {
+  return typeof live2.subscribe === "function" || typeof live2.subscribeToChannel === "function";
+};
+var isChannelTransport = (transport) => {
+  return typeof transport.subscribeToChannel === "function";
+};
+var envelope = (payload) => payload?.__inertia;
+var propValues = (payload) => {
+  const props = envelope(payload)?.props;
+  return props && typeof props === "object" ? props : {};
+};
+var liveEventName = (payload) => envelope(payload)?.event;
+var Live = class {
+  transport = null;
+  throttle = DEFAULT_THROTTLE;
+  pauseWhenHidden = true;
+  liveProps = {};
+  subscriptions = /* @__PURE__ */ new Map();
+  unsubscribers = /* @__PURE__ */ new Map();
+  dirty = /* @__PURE__ */ new Set();
+  flushedAt = /* @__PURE__ */ new Map();
+  pending = null;
+  incoming = /* @__PURE__ */ new Map();
+  incomingPage = null;
+  pendingWrite = null;
+  /**
+   * A second configure is ignored because existing listeners and subscriptions
+   * have no disposal path for swapping transports.
+   */
+  configure(live2) {
+    if (typeof window === "undefined" || this.transport) {
+      return;
+    }
+    const options = isTransport(live2) ? { transport: live2 } : live2;
+    this.transport = options.transport;
+    this.throttle = options.throttle ?? DEFAULT_THROTTLE;
+    this.pauseWhenHidden = options.pauseWhenHidden ?? true;
+    if (this.transport.socketId) {
+      socketId.resolveUsingDefault(this.transport.socketId.bind(this.transport));
+    }
+    eventHandler.on("pageUpdated", (page2) => this.sync(page2));
+    propRefreshes.onChange(() => this.scheduleFlush());
+    visibility.onChange((hidden2) => {
+      if (!hidden2) {
+        this.scheduleFlush();
+      }
+    });
+    let wasConnected = false;
+    let hasConnected = false;
+    this.transport.onStatusChange?.((connected) => {
+      const reconnected = connected && !wasConnected && hasConnected;
+      wasConnected = connected;
+      hasConnected ||= connected;
+      if (reconnected) {
+        Object.keys(this.liveProps).filter((prop) => this.isRequested(prop)).forEach((prop) => this.markDirty(prop, { force: true }));
+        this.scheduleFlush();
+      }
+    });
+    if (page.get()) {
+      this.sync(page.get());
+    }
+  }
+  /**
+   * A hidden tab is not worth a request, while a value a broadcast already
+   * delivered is free to apply either way.
+   */
+  isPaused() {
+    return this.pauseWhenHidden && visibility.isHidden();
+  }
+  sync(page2) {
+    const transport = this.transport;
+    if (!transport) {
+      return;
+    }
+    this.liveProps = page2.liveProps ?? {};
+    const desired = /* @__PURE__ */ new Map();
+    Object.entries(this.liveProps).forEach(([prop, entry]) => {
+      entry.listeners.forEach(({ channel, events }) => {
+        events.forEach((event) => {
+          const key = subscriptionKey(channel, event);
+          const existing = desired.get(key);
+          if (existing) {
+            existing.props.add(prop);
+          } else {
+            desired.set(key, { channel, event, props: /* @__PURE__ */ new Set([prop]) });
+          }
+        });
+      });
+    });
+    this.subscriptions = desired;
+    const wanted = this.pendingSubscriptions(transport, desired);
+    wanted.forEach((subscribe, key) => {
+      if (this.unsubscribers.has(key)) {
+        return;
+      }
+      this.unsubscribers.set(key, subscribe());
+    });
+    this.unsubscribers.forEach((unsubscribe, key) => {
+      if (!wanted.has(key)) {
+        unsubscribe();
+        this.unsubscribers.delete(key);
+      }
+    });
+    this.dirty.forEach((prop) => {
+      if (!(prop in this.liveProps)) {
+        this.dirty.delete(prop);
+      }
+    });
+    if (this.incomingPage !== pageKey(page2)) {
+      this.incoming.clear();
+      this.flushedAt.clear();
+      this.incomingPage = pageKey(page2);
+    }
+    this.incoming.forEach((_value, prop) => {
+      if (!(prop in this.liveProps)) {
+        this.incoming.delete(prop);
+      }
+    });
+  }
+  /**
+   * Keyed by what the transport holds: one entry per channel for a channel
+   * transport, which cannot route events of its own, and one per channel and
+   * event for a transport that can.
+   */
+  pendingSubscriptions(transport, desired) {
+    const pending = /* @__PURE__ */ new Map();
+    if (isChannelTransport(transport)) {
+      desired.forEach(({ channel }) => {
+        pending.set(liveChannelKey(channel), () => this.subscribeToChannel(transport, channel));
+      });
+      return pending;
+    }
+    desired.forEach(({ channel, event }, key) => {
+      pending.set(key, () => transport.subscribe(channel, event, (payload) => this.handleEvent(key, payload)));
+    });
+    return pending;
+  }
+  subscribeToChannel(transport, channel) {
+    const readEvent = transport.eventName?.bind(transport) ?? liveEventName;
+    return transport.subscribeToChannel(channel, (payload) => {
+      const event = readEvent(payload);
+      if (event === void 0) {
+        return;
+      }
+      this.handleEvent(subscriptionKey(channel, event), payload);
+    });
+  }
+  handleEvent(key, payload) {
+    const subscription = this.subscriptions.get(key);
+    if (!subscription) {
+      return;
+    }
+    const origin = envelope(payload)?.socketId;
+    if (typeof origin === "string" && origin === socketId.resolve()) {
+      return;
+    }
+    const props = Array.from(subscription.props).filter((prop) => this.isRequested(prop));
+    if (props.length === 0) {
+      return;
+    }
+    const cancelled = !fireLiveEvent({
+      props,
+      channel: subscription.channel,
+      event: subscription.event,
+      payload
+    });
+    if (cancelled) {
+      return;
+    }
+    const values = propValues(payload);
+    let received = false;
+    props.forEach((prop) => {
+      const usable = prop in values && !propRefreshes.isRefreshing(prop);
+      if (usable) {
+        this.dirty.delete(prop);
+        this.incoming.set(prop, values[prop]);
+        received = true;
+        return;
+      }
+      this.incoming.delete(prop);
+      this.markDirty(prop);
+    });
+    this.scheduleFlush();
+    if (received) {
+      this.scheduleWrite();
+    }
+  }
+  /**
+   * A prop the page has, or a request is still fetching, such as a deferred
+   * prop on its way. An optional prop nobody asked for stays out of the page,
+   * even though the server sends its listeners along.
+   */
+  isRequested(prop) {
+    return get10(page.get().props, prop) !== void 0 || propRefreshes.isRefreshing(prop);
+  }
+  /**
+   * Every write replaces the history entry, and one per event trips the
+   * browser's rate limit, so a burst of events becomes a single write.
+   */
+  scheduleWrite() {
+    if (this.pendingWrite !== null || typeof window === "undefined") {
+      return;
+    }
+    this.pendingWrite = window.setTimeout(() => {
+      this.pendingWrite = null;
+      this.write();
+    }, COLLECT_WINDOW);
+  }
+  write() {
+    const values = Array.from(this.incoming.entries());
+    this.incoming.clear();
+    if (values.length === 0) {
+      return;
+    }
+    values.sort(([a], [b]) => toPath2(a).length - toPath2(b).length);
+    router.replace({
+      preserveScroll: true,
+      preserveState: true,
+      preserveFlash: true,
+      props: (props) => values.reduce((carry, [path, value]) => setPathPreservingIdentity(carry, path, value), props)
+    });
+  }
+  /**
+   * Forcing a prop clears the throttle debt it owes, and nothing else. It stays
+   * that prop's business, so forcing one never lets another skip its throttle.
+   */
+  markDirty(prop, { force = false } = {}) {
+    this.dirty.add(prop);
+    if (force) {
+      this.flushedAt.delete(prop);
+    }
+  }
+  /**
+   * Keeps whichever deadline comes first, so a prop that owes nothing never
+   * waits out a slower neighbour's timer.
+   */
+  scheduleFlush() {
+    if (this.dirty.size === 0 || this.isPaused() || typeof window === "undefined") {
+      return;
+    }
+    const wait = this.shortestWait();
+    if (wait === null) {
+      return;
+    }
+    const delay = Math.max(COLLECT_WINDOW, wait);
+    const at = Date.now() + delay;
+    if (this.pending && at >= this.pending.at) {
+      return;
+    }
+    this.clearTimeout();
+    this.pending = {
+      at,
+      timeoutId: window.setTimeout(() => {
+        this.pending = null;
+        this.attemptFlush();
+      }, delay)
+    };
+  }
+  /**
+   * Null for a prop a request in flight already claims, since reloading it risks
+   * overwriting fresher data with an older response.
+   */
+  waitFor(prop, now) {
+    if (propRefreshes.isRefreshing(prop)) {
+      return null;
+    }
+    return throttleWait(this.throttleFor(prop), this.flushedAt.get(prop), now);
+  }
+  shortestWait() {
+    const now = Date.now();
+    const waits = Array.from(this.dirty).map((prop) => this.waitFor(prop, now)).filter((wait) => wait !== null);
+    return waits.length > 0 ? Math.min(...waits) : null;
+  }
+  attemptFlush() {
+    if (this.isPaused()) {
+      return;
+    }
+    const now = Date.now();
+    const ready = Array.from(this.dirty).filter((prop) => this.waitFor(prop, now) === 0);
+    if (ready.length > 0) {
+      ready.forEach((prop) => this.flushedAt.set(prop, now));
+      this.flush(ready);
+    }
+    this.scheduleFlush();
+  }
+  flush(only) {
+    only.forEach((prop) => this.dirty.delete(prop));
+    router.reload({ only, preserveErrors: true });
+  }
+  throttleFor(prop) {
+    return this.liveProps[prop]?.throttle ?? this.throttle;
+  }
+  clearTimeout() {
+    if (this.pending) {
+      window.clearTimeout(this.pending.timeoutId);
+      this.pending = null;
+    }
+  }
+};
+var live = new Live();
+var configureLive = (option) => live.configure(option);
 
 // src/navigationEvents.ts
 function isContentEditableOrPrevented(event) {
@@ -5536,6 +6187,7 @@ export {
   axiosAdapter,
   buildSSRBody,
   config,
+  configureLive,
   createHeadManager,
   createLayoutPropsStore,
   exposeInterceptors,
@@ -5557,6 +6209,7 @@ export {
   partialReloadRequestsProp,
   partialReloadRequestsSomeProps,
   progress,
+  propRefreshes,
   resetFormFields,
   resolveServerHead,
   resolveUrlMethodPairComponent,
@@ -5564,6 +6217,7 @@ export {
   setupProgress,
   shouldIntercept,
   shouldNavigate,
+  socketId,
   urlHasProtocol,
   urlToString,
   urlWithoutHash,
