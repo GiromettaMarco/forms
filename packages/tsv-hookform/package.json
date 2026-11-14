@@ -36,6 +36,7 @@
     "@hookform/resolvers": "^7.0.6"
   },
   "devDependencies": {
+    "@gmcode/tsv-core": "workspace:*",
     "@repo/badge": "workspace:*",
     "@repo/typescript": "workspace:*",
     "@testing-library/dom": "catalog:",
@@ -46,13 +47,14 @@
     "@vitejs/plugin-react": "catalog:",
     "jsdom": "catalog:",
     "react": "catalog:",
+    "react-hook-form": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@gmcode/tsv-core": "workspace:*",
-    "react-hook-form": "catalog:"
+    "@gmcode/tsv-core": "^0.2.5",
+    "react-hook-form": "^7"
   }
 }

@@ -49,6 +49,7 @@
     "react-textarea-autosize": "catalog:"
   },
   "devDependencies": {
+    "@inertiajs/core": "catalog:",
     "@repo/badge": "workspace:*",
     "@repo/mock-inertia": "workspace:*",
     "@repo/msw-fixture": "workspace:*",
@@ -56,7 +57,10 @@
     "@repo/typescript": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "i18next": "catalog:",
     "msw": "catalog:",
+    "react": "catalog:",
+    "react-i18next": "catalog:",
     "sonner": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
@@ -65,11 +69,11 @@
     "vitest-browser-react": "catalog:"
   },
   "peerDependencies": {
-    "@inertiajs/core": "catalog:",
-    "@inertiajs/react": "catalog:",
-    "i18next": "catalog:",
-    "react": "catalog:",
-    "react-dom": "catalog:",
-    "react-i18next": "catalog:"
+    "@inertiajs/core": "^3",
+    "@inertiajs/react": "^3",
+    "i18next": "^26",
+    "react": "^19",
+    "react-dom": "^19",
+    "react-i18next": "^17"
   }
 }

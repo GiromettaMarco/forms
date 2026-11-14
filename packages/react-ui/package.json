@@ -49,6 +49,7 @@
     "@repo/typescript": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "react": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:",
@@ -56,7 +57,7 @@
     "vitest-browser-react": "catalog:"
   },
   "peerDependencies": {
-    "react": "catalog:",
-    "react-dom": "catalog:"
+    "react": "^19",
+    "react-dom": "^19"
   }
 }
