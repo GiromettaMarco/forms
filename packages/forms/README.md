@@ -6,10 +6,10 @@ Form and input components with validations, i18n, tailwind theming and built-in 
 
 ## Requirements
 
-- React and react-dom 19+
-- Inertia React 3+
-- Tailwind CSS 4+
-- i18next (26+) and react-i18next (17+)
+- React and react-dom ^19
+- Inertia React ^3
+- Tailwind CSS ^4
+- i18next (^26 || ^27) and react-i18next (^17 || ^18)
 
 ## Installation
 

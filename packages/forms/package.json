@@ -71,9 +71,9 @@
   "peerDependencies": {
     "@inertiajs/core": "^3",
     "@inertiajs/react": "^3",
-    "i18next": "^26",
+    "i18next": "^26 || ^27",
     "react": "^19",
     "react-dom": "^19",
-    "react-i18next": "^17"
+    "react-i18next": "^17 || ^18"
   }
 }
