@@ -1,5 +1,13 @@
 # @repo/msw-fixture
 
+## 0.0.3
+
+### Patch Changes
+
+- 17b19bc: Update vite-plus
+- fac5ab4: Update vite-plus
+- f58105b: Update node modules
+
 ## 0.0.2
 
 ### Patch Changes
