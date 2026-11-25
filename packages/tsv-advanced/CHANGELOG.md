@@ -1,5 +1,15 @@
 # @gmcode/tsv-advanced
 
+## 0.1.11
+
+### Patch Changes
+
+- 17b19bc: Update vite-plus
+- fac5ab4: Update vite-plus
+- Updated dependencies [17b19bc]
+- Updated dependencies [fac5ab4]
+  - @gmcode/tsv-core@0.2.6
+
 ## 0.1.10
 
 ### Patch Changes
